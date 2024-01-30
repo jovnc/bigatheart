@@ -1,5 +1,7 @@
+import Footer from "@components/Footer";
+import Nav from "@components/Nav";
+import { AuthContextProvider } from "@context/AuthContext";
 import "@styles/globals.css";
-import NavWrapper from "@components/NavWrapper";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
@@ -7,19 +9,24 @@ export const metadata = {
 	description: "Hack4Good Big At Heart",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 	return (
-		<html lang="en">
-			<body>
-				<div className="main">
-					<div className="gradient" />
-				</div>
-				<main className="app">
-					<Toaster position="top-center" />
-					<NavWrapper />
-					{children}
-				</main>
-			</body>
-		</html>
+		<AuthContextProvider>
+			<html lang="en">
+				<body className="flex flex-col min-h-screen">
+					<div className="main">
+						<div className="gradient" />
+					</div>
+					<main className="app w-full">
+						<Toaster position="top-center" />
+						<Nav />
+						{children}
+					</main>
+					<div className="flex-grow"></div>
+
+					<Footer />
+				</body>
+			</html>
+		</AuthContextProvider>
 	);
 }

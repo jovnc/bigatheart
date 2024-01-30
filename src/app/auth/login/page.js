@@ -1,33 +1,44 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { auth } from "@firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const Login = () => {
+export default function page() {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const router = useRouter();
 
-	const onSubmit = (data) => {
-		const { email, password } = data;
-		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-				router.push("/dashboard");
-				toast.success(`Logged in to ${email}`);
-			})
-			.catch((error) => {
-				toast.error("Invalid login credentials");
-			});
+	const router = useRouter();
+	const supabase = createClientComponentClient();
+
+	const onSubmit = async ({ email, password }) => {
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+			options: {
+				emailRedirectTo: `${location.origin}/auth/callback`,
+			},
+		});
+		if (error) {
+			toast.error(error.message);
+		} else {
+			router.push("/dashboard");
+			toast.success("Successfully logged in!");
+		}
 	};
 
 	return (
-		<form className="max-w-sm mx-auto mt-8" onSubmit={handleSubmit(onSubmit)}>
+		<form
+			className="max-w-sm mx-auto mt-8 glassmorphism"
+			onSubmit={handleSubmit(onSubmit)}
+		>
+			<h3 className="orange_gradient text-center font-bold p-5 page_header">
+				Login
+			</h3>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
 					Email:
@@ -66,6 +77,4 @@ const Login = () => {
 			</button>
 		</form>
 	);
-};
-
-export default Login;
+}

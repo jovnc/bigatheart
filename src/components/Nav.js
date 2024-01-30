@@ -1,20 +1,29 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { UserAuth } from "@context/AuthContext";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useSession } from "@context/AuthContext";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-function Nav() {
-	const { user, logOut } = UserAuth();
-	const isUserLoggedIn = user ? true : false;
+export default function Nav() {
+	const router = useRouter();
+	const { session } = useSession();
+	const isUserLoggedIn = session?.user?.role === "authenticated";
 
-	const handleSignOut = async () => {
+	function handleSignOut() {
+		const supabase = createClientComponentClient();
+		const signout = async () => {
+			await supabase.auth.signOut();
+		};
 		try {
-			await logOut();
+			signout();
+			router.push("/");
+			toast.success("Successfully signed out");
 		} catch (error) {
-			console.log(error);
+			toast.error("Failed to log out");
 		}
-	};
+	}
 
 	return (
 		<nav className="flex-between w-full mb-16 pt-3">
@@ -58,5 +67,3 @@ function Nav() {
 		</nav>
 	);
 }
-
-export default Nav;

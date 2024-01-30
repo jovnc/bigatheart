@@ -1,30 +1,37 @@
+"use client";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "@firebase/config";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-	const [user, setUser] = useState(null);
+	const [session, setSession] = useState(null);
+	const supabase = createClientComponentClient();
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			setUser(currentUser);
+		const subscription = supabase.auth.onAuthStateChange((event, session) => {
+			console.log(event);
+			if (event === "SIGNED_OUT") {
+				setSession(null);
+			} else if (session) {
+				setSession(session);
+			}
 		});
-		return () => unsubscribe();
+
+		return () => {
+			subscription.data.subscription.unsubscribe();
+		};
 	}, []);
 
-	const logOut = () => {
-		signOut(auth);
-	};
-
 	return (
-		<AuthContext.Provider value={{ user, logOut }}>
-			{children}
-		</AuthContext.Provider>
+		<AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>
 	);
 };
 
-export const UserAuth = () => {
-	return useContext(AuthContext);
-};
+export function useSession() {
+	const context = useContext(AuthContext);
+	if (context == undefined) {
+		throw new Error("AuthContext was used outside of AuthContextProvider");
+	}
+	return context;
+}
