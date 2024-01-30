@@ -1,9 +1,10 @@
 import "@styles/globals.css";
-import Nav from "@components/Nav";
+import NavWrapper from "@components/NavWrapper";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
-	title: "Big At Heart",
-	description: "Hack4Good 2024 Big At Heart Volunteer Management System",
+	title: "Hack4Good Big At Heart",
+	description: "Hack4Good Big At Heart",
 };
 
 export default function RootLayout({ children }) {
@@ -13,9 +14,9 @@ export default function RootLayout({ children }) {
 				<div className="main">
 					<div className="gradient" />
 				</div>
-
 				<main className="app">
-					<Nav />
+					<Toaster position="top-center" />
+					<NavWrapper />
 					{children}
 				</main>
 			</body>

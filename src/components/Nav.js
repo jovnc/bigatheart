@@ -2,21 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { UserAuth } from "@context/AuthContext";
 
 function Nav() {
-	const isUserLoggedIn = false;
-	const [providers, setProviders] = useState(null);
+	const { user, logOut } = UserAuth();
+	const isUserLoggedIn = user ? true : false;
 
-	useEffect(() => {
-		const setProviders = async () => {
-			const res = await getProviders();
-
-			setProviders(res);
-		};
-		setProviders();
-	}, []);
+	const handleSignOut = async () => {
+		try {
+			await logOut();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<nav className="flex-between w-full mb-16 pt-3">
@@ -26,6 +24,7 @@ function Nav() {
 					width={50}
 					height={50}
 					className="object-contain"
+					alt="logo"
 				/>
 				<p className="logo_text">Big At Heart</p>
 			</Link>
@@ -37,17 +36,21 @@ function Nav() {
 						<Link href="/dashboard" className="black_btn mx-5">
 							<p>To Dashboard</p>
 						</Link>
-						<button type="button" onClick={signOut} className="outline_btn">
+						<button
+							type="button"
+							className="outline_btn"
+							onClick={handleSignOut}
+						>
 							Sign out
 						</button>
 					</>
 				) : (
 					<>
-						<Link href="/register" className="black_btn mx-3">
+						<Link href="/auth/register" className="black_btn mx-3">
 							<p>Register</p>
 						</Link>
-						<Link href="/signin" className="outline_btn">
-							<p>Sign in</p>
+						<Link href="/auth/login" className="outline_btn">
+							<p>Login</p>
 						</Link>
 					</>
 				)}
