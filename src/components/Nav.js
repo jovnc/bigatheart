@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
+import { Link } from "@chakra-ui/next-js";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "@context/AuthContext";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -10,6 +10,7 @@ export default function Nav() {
 	const router = useRouter();
 	const { session } = useSession();
 	const isUserLoggedIn = session?.user?.role === "authenticated";
+	const pathname = usePathname();
 
 	function handleSignOut() {
 		const supabase = createClientComponentClient();
@@ -40,7 +41,17 @@ export default function Nav() {
 
 			{/*  Desktop navigation */}
 			<div className="sm:flex hidden">
-				{isUserLoggedIn ? (
+				{isUserLoggedIn && pathname === "/dashboard" ? (
+					<>
+						<button
+							type="button"
+							className="outline_btn"
+							onClick={handleSignOut}
+						>
+							Sign out
+						</button>
+					</>
+				) : isUserLoggedIn ? (
 					<>
 						<Link href="/dashboard" className="black_btn mx-5">
 							<p>To Dashboard</p>
@@ -64,6 +75,8 @@ export default function Nav() {
 					</>
 				)}
 			</div>
+
+			{/* TODO: Mobile navigation */}
 		</nav>
 	);
 }

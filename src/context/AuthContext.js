@@ -10,7 +10,6 @@ export const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		const subscription = supabase.auth.onAuthStateChange((event, session) => {
-			console.log(event);
 			if (event === "SIGNED_OUT") {
 				setSession(null);
 			} else if (session) {
