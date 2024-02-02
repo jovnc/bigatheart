@@ -1,4 +1,5 @@
 "use client";
+import { getUserDetails } from "@actions/authActions";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -27,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
 	);
 };
 
-export function useSession() {
+export function useAuthContext() {
 	const context = useContext(AuthContext);
 	if (context == undefined) {
 		throw new Error("AuthContext was used outside of AuthContextProvider");

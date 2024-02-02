@@ -3,7 +3,7 @@ import Nav from "@components/Nav";
 import { AuthContextProvider } from "@context/AuthContext";
 import "@styles/globals.css";
 import { Toaster } from "react-hot-toast";
-import { Providers } from "./providers";
+import { Providers } from "@context/ChakraContext";
 
 export const metadata = {
 	title: "Hack4Good Big At Heart",
@@ -14,6 +14,9 @@ export default async function RootLayout({ children }) {
 	return (
 		<AuthContextProvider>
 			<html lang="en">
+				<head>
+					<link rel="icon" href="/assets/images/logo.png" />
+				</head>
 				<body className="flex flex-col min-h-screen">
 					<Providers>
 						<div className="main">

@@ -12,9 +12,5 @@ export default async function RootLayout({ children }) {
 		return redirect("/dashboard");
 	}
 
-	return (
-		<>
-			<div>{children}</div>
-		</>
-	);
+	return <>{children}</>;
 }

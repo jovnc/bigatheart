@@ -1,20 +1,26 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUserDetails } from "@actions/authActions";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export function useUser() {
-	const supabase = createClientComponentClient();
-	const [isAuthenticated, setIsAuthenticated] = useState();
+	const [displayName, setDisplayName] = useState("");
+	const [role, setRole] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+
 	useEffect(() => {
-		const fetchUserData = async () => {
-			const user = await supabase.auth.getUser();
-			if (user.data.user?.role) {
-				setIsAuthenticated(true);
-			} else {
-				setIsAuthenticated(false);
+		setIsLoading(true);
+		const fetchData = async () => {
+			try {
+				const { displayName, role } = await getUserDetails();
+				setDisplayName(displayName);
+				setRole(role);
+			} catch (error) {
+				toast.error(error.message);
 			}
+			setIsLoading(false);
 		};
-		fetchUserData();
+		fetchData();
 	}, []);
 
-	return [isAuthenticated];
+	return { displayName, role, isLoading };
 }

@@ -1,5 +1,4 @@
 import {
-	Button,
 	Card,
 	CardBody,
 	CardFooter,
@@ -8,6 +7,7 @@ import {
 	Image,
 	Text,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function EventCard() {
 	return (
@@ -16,6 +16,7 @@ export default function EventCard() {
 				direction={{ base: "column", sm: "row" }}
 				overflow="hidden"
 				variant="elevated"
+				mb="5"
 			>
 				<Image
 					objectFit="cover"
@@ -26,7 +27,13 @@ export default function EventCard() {
 
 				<Stack>
 					<CardBody>
-						<Heading size="md">The perfect latte</Heading>
+						<Text fontSize="sm" py="2">
+							31 January 2024 | 1300-1400h
+						</Text>
+						<Heading size="lg">The perfect latte</Heading>
+						<Text fontSize="sm" py="2">
+							123 St Address Here S123456
+						</Text>
 
 						<Text py="2">
 							Caffè latte is a coffee beverage of Italian origin made with
@@ -35,9 +42,11 @@ export default function EventCard() {
 					</CardBody>
 
 					<CardFooter>
-						<Button variant="solid" colorScheme="blue">
-							Buy Latte
-						</Button>
+						<Link href="/dashboard/events/1">
+							<button className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+								View Event
+							</button>
+						</Link>
 					</CardFooter>
 				</Stack>
 			</Card>

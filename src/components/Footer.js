@@ -1,58 +1,59 @@
-import Image from "next/image";
+import { Divider, Image } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
 
 export default function Footer() {
 	return (
-		<footer className="shadow m-4 pt-10">
-			<div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+		<footer className="shadow-md m-4 pt-10">
+			<div className="w-full mx-auto px-2">
 				<div className="sm:flex sm:items-center sm:justify-between">
-					<Link
-						href="/"
-						className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-					>
+					<Link href="/" className="flex items-center">
 						<Image
-							src="https://flowbite.com/docs/images/logo.svg"
-							className="h-8"
-							alt="Big At Heart Logo"
+							src="/assets/images/logo.png"
 							width={50}
 							height={50}
+							className="object-contain"
+							alt="logo"
 						/>
-						<span className="self-center text-2xl font-semibold whitespace-nowrap ">
-							Big At Heart
-						</span>
 					</Link>
 
-					<ul className="flex flex-wrap items-center text-sm font-medium ">
+					<ul className="flex flex-wrap items-center text-sm font-medium">
 						<li>
-							<a href="#" className="hover:underline me-4 md:me-6">
-								About
+							<a
+								href="https://www.bigatheart.org/team"
+								className="hover:underline me-4 md:me-6"
+							>
+								Team
 							</a>
 						</li>
 						<li>
-							<a href="#" className="hover:underline me-4 md:me-6">
-								Privacy Policy
+							<a
+								href="https://www.bigatheart.org/media-press"
+								className="hover:underline me-4 md:me-6"
+							>
+								Media & Press
 							</a>
 						</li>
 						<li>
-							<a href="#" className="hover:underline me-4 md:me-6">
-								Licensing
+							<a
+								href="https://www.bigatheart.org/contact"
+								className="hover:underline me-4 md:me-6"
+							>
+								Contact us
 							</a>
 						</li>
 						<li>
-							<a href="#" className="hover:underline">
-								Contact
+							<a
+								href="https://pay.bigatheart.org/b/cN28xS5sMcrufh68wy"
+								className="hover:underline"
+							>
+								Donate here
 							</a>
 						</li>
 					</ul>
 				</div>
-				<hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+				<Divider className="mb-4" />
 				<span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-					© 2024{" "}
-					<a href="https://flowbite.com/" className="hover:underline">
-						Big At Heart™
-					</a>
-					. All Rights Reserved.
+					© 2024 <a href="/">Big At Heart™</a>. All Rights Reserved.
 				</span>
 			</div>
 		</footer>
