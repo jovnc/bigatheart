@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, Flex, Spinner, Text } from "@chakra-ui/react";
 import { useUser } from "@hooks/useUser";
 
@@ -11,7 +12,7 @@ export default function UserProfileNav() {
 	return (
 		<Link href={role === "Admin" ? "/admin/settings" : "/dashboard/settings"}>
 			<Flex mt={4} align="center">
-				<Avatar size="sm" src="avatar-1.jpg" />
+				<Avatar size="sm" />
 				<Flex flexDir="column" ml={4} display="flex">
 					<Text size="md">{displayName}</Text>
 					<Text color="gray" fontSize="sm">

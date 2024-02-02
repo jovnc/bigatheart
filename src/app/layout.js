@@ -1,5 +1,5 @@
 import Footer from "@components/Footer";
-import Nav from "@components/Nav";
+import Nav from "@components/nav/Nav";
 import { AuthContextProvider } from "@context/AuthContext";
 import "@styles/globals.css";
 import { Toaster } from "react-hot-toast";

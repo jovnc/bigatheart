@@ -1,13 +1,6 @@
 "use client";
 
-import {
-	Avatar,
-	Divider,
-	Flex,
-	Heading,
-	IconButton,
-	Text,
-} from "@chakra-ui/react";
+import { Divider, Flex } from "@chakra-ui/react";
 import {
 	FiMenu,
 	FiHome,
@@ -18,7 +11,7 @@ import {
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 
-import Link from "next/link";
+import UserProfileNav from "./UserProfileNav";
 
 export default function AdminDashboardNav() {
 	const pathname = usePathname();
@@ -47,17 +40,7 @@ export default function AdminDashboardNav() {
 
 			<Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>
 				<Divider display="flex" />
-				<Link href="/admin/settings">
-					<Flex mt={4} align="center">
-						<Avatar size="sm" src="avatar-1.jpg" />
-						<Flex flexDir="column" ml={4} display="flex">
-							<Heading as="h3" size="sm">
-								Username
-							</Heading>
-							<Text color="gray">Volunteer</Text>
-						</Flex>
-					</Flex>
-				</Link>
+				<UserProfileNav />
 			</Flex>
 		</Flex>
 	);

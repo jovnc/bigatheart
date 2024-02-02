@@ -1,15 +1,12 @@
 "use client";
-
 import { Divider, Flex } from "@chakra-ui/react";
-import { FiHome, FiCalendar, FiBriefcase, FiSettings } from "react-icons/fi";
-import { usePathname } from "next/navigation";
-import NavItem from "./NavItem";
 
 import UserProfileNav from "./UserProfileNav";
 
-export default function DashboardNav() {
-	const pathname = usePathname();
+import NavItem from "./NavItem";
+import { FiHome, FiCalendar, FiBriefcase, FiSettings } from "react-icons/fi";
 
+export default function DashboardNav() {
 	return (
 		<Flex
 			pos="sticky"
@@ -24,13 +21,13 @@ export default function DashboardNav() {
 				<NavItem icon={FiHome} title="Dashboard" linkTo="/dashboard" />
 				<NavItem
 					icon={FiCalendar}
-					title="New Events"
+					title="Explore New Events"
 					linkTo="/dashboard/events"
 				/>
 
 				<NavItem
 					icon={FiBriefcase}
-					title="Manage Events"
+					title="My Events"
 					linkTo="/dashboard/manage"
 				/>
 				<NavItem

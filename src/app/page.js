@@ -30,7 +30,7 @@ export default function Home() {
 					</section>
 				</GridItem>
 				<GridItem className="invisible md:visible">
-					<Image />
+					<img src="/assets/images/peoplebg.jpg" />
 				</GridItem>
 			</Grid>
 		</div>

@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import AdminDashboardNav from "@components/AdminDashboardNav";
+import AdminDashboardNav from "@components/nav/AdminDashboardNav";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
