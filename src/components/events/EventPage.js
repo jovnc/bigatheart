@@ -2,7 +2,7 @@ import { Button, Image, Text } from "@chakra-ui/react";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 
 import { CiClock1, CiHome, CiLocationOn } from "react-icons/ci";
-import { BiCategory, BiHome } from "react-icons/bi";
+import { BiArrowBack, BiCategory, BiHome } from "react-icons/bi";
 import Link from "next/link";
 
 export default function EventPage({
@@ -17,6 +17,16 @@ export default function EventPage({
 }) {
 	return (
 		<div className="shadow-md p-8 rounded-lg min-h-full">
+			<div className="mb-5">
+				<Button size="sm">
+					<Link href="/dashboard/events">
+						<BiArrowBack className="inline scale-150 mr-2" />
+						<Text className="inline" fontSize="sm">
+							Back
+						</Text>
+					</Link>
+				</Button>
+			</div>
 			<div className="mb-5">
 				<CiClock1 className="inline scale-150 mr-2" />
 				<Text className="inline" fontSize="sm">

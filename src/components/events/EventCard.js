@@ -2,10 +2,11 @@ import {
 	Card,
 	CardBody,
 	CardFooter,
-	Heading,
 	Stack,
 	Image,
 	Text,
+	Button,
+	Divider,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -24,6 +25,7 @@ export default function EventCard({
 				overflow="hidden"
 				variant="elevated"
 				mb="5"
+				className="hover:bg-red-100 hover:bg-opacity-40"
 			>
 				<Image
 					objectFit="cover"
@@ -32,25 +34,27 @@ export default function EventCard({
 					alt="Caffe Latte"
 				/>
 
-				<Stack>
+				<Stack className="w-full">
 					<CardBody>
-						<Text fontSize="sm" py="2">
+						<Text fontSize="xs" py="2">
 							{date} | {time}
 						</Text>
-						<Heading size="lg">{name}</Heading>
-						<Text fontSize="sm" py="2">
+						<Text fontSize="xl" fontWeight="bold">
+							{name}
+						</Text>
+						<Text fontSize="xs" py="2">
 							{location}
 						</Text>
 
-						<Text py="2">{description}</Text>
+						<Text py="2" fontSize="sm">
+							{description}
+						</Text>
 					</CardBody>
-
+					<Divider />
 					<CardFooter>
-						<Link href={`/dashboard/events/${id}`}>
-							<button className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
-								View Event
-							</button>
-						</Link>
+						<Button className="red_outline_btn w-full" size="sm">
+							<Link href={`/dashboard/events/${id}`}>View Event</Link>
+						</Button>
 					</CardFooter>
 				</Stack>
 			</Card>

@@ -5,13 +5,17 @@ import { convertToAMPM, convertDateFormat } from "@utils/helpers";
 
 export default async function page() {
 	// TODO: implement error handling for getEvents
-	const res = await getEvents();
+	const { getEventError, eventData } = await getEvents();
+
+	if (getEventError) {
+		return <div>Error retrieiving events. {getEventError.message}</div>;
+	}
 
 	return (
-		<div>
-			{!res && <Spinner />}
-			{res &&
-				res.map(({ name, date, time, description, location, id }) => {
+		<>
+			{!eventData && <Spinner />}
+			{eventData &&
+				eventData.map(({ name, date, time, description, location, id }) => {
 					return (
 						<EventCard
 							name={name}
@@ -23,6 +27,6 @@ export default async function page() {
 						/>
 					);
 				})}
-		</div>
+		</>
 	);
 }

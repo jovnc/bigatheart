@@ -15,8 +15,8 @@ export default async function RootLayout({ children }) {
 	}
 
 	return (
-		<div className="w-full">
-			<Grid templateColumns="1fr 2fr" gap={8}>
+		<div>
+			<Grid templateColumns="1fr 2.5fr" gap={8}>
 				<GridItem>
 					<DashboardNav />
 				</GridItem>

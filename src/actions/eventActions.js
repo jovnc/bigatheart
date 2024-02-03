@@ -57,11 +57,7 @@ export async function getEvents() {
 		.from("events")
 		.select();
 
-	if (getEventError) {
-		throw new Error("Failed to retrieve event information");
-	}
-
-	return eventData;
+	return { eventData, getEventError };
 }
 
 export async function getEventById(id) {
