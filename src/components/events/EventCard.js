@@ -9,7 +9,14 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-export default function EventCard() {
+export default function EventCard({
+	date,
+	time,
+	location,
+	name,
+	description,
+	id,
+}) {
 	return (
 		<>
 			<Card
@@ -28,21 +35,18 @@ export default function EventCard() {
 				<Stack>
 					<CardBody>
 						<Text fontSize="sm" py="2">
-							31 January 2024 | 1300-1400h
+							{date} | {time}
 						</Text>
-						<Heading size="lg">The perfect latte</Heading>
+						<Heading size="lg">{name}</Heading>
 						<Text fontSize="sm" py="2">
-							123 St Address Here S123456
+							{location}
 						</Text>
 
-						<Text py="2">
-							Caffè latte is a coffee beverage of Italian origin made with
-							espresso and steamed milk.
-						</Text>
+						<Text py="2">{description}</Text>
 					</CardBody>
 
 					<CardFooter>
-						<Link href="/dashboard/events/1">
+						<Link href={`/dashboard/events/${id}`}>
 							<button className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
 								View Event
 							</button>

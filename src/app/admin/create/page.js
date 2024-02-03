@@ -1,8 +1,12 @@
-import CreateEventForm from "@components/CreateEventForm";
+import { Text } from "@chakra-ui/react";
+import CreateEventForm from "@components/events/CreateEventForm";
 
 export default function page() {
 	return (
-		<div className="container shadow-md rounded-lg mx-auto p-7">
+		<div className="container shadow-md rounded-xl mx-auto p-7">
+			<Text className="mb-6 text-center" fontSize="2xl">
+				Create New Event
+			</Text>
 			<CreateEventForm />
 		</div>
 	);

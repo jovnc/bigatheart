@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid, GridItem, Link, Text } from "@chakra-ui/react";
+import { Grid, GridItem, Link, Text, Image } from "@chakra-ui/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -36,19 +36,22 @@ export default function page() {
 		<>
 			<Grid
 				className="w-full"
-				templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+				templateColumns={{ base: "0fr 1fr", md: "1fr 1fr" }}
 				gap={8}
 			>
-				<GridItem className="invisible md:visible">Poster</GridItem>
+				<GridItem className="invisible md:visible">
+					<Image
+						src="/assets/images/poster4.jpeg"
+						alt="poster"
+						className="maxs-h-full"
+					/>
+				</GridItem>
 				<GridItem>
 					<form
 						className="w-full mx-auto glassmorphism"
 						onSubmit={handleSubmit(onSubmit)}
 					>
-						<Text
-							fontSize="2xl"
-							className="orange_gradient text-center font-bold p-5"
-						>
+						<Text fontSize="2xl" className="text-center font-bold p-5">
 							Log In
 						</Text>
 

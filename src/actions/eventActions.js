@@ -3,8 +3,6 @@
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-const supabase = createServerActionClient({ cookies });
-
 export async function createEventAction({
 	eventCategory,
 	eventDate,
@@ -12,7 +10,9 @@ export async function createEventAction({
 	eventName,
 	eventTime,
 	organiser,
+	eventLocation,
 }) {
+	const supabase = createServerActionClient({ cookies });
 	const {
 		data: {
 			user: { id },
@@ -40,6 +40,7 @@ export async function createEventAction({
 			category: eventCategory,
 			organiser: organiser,
 			creator_id: id,
+			location: eventLocation,
 		})
 		.select();
 
@@ -51,6 +52,7 @@ export async function createEventAction({
 }
 
 export async function getEvents() {
+	const supabase = createServerActionClient({ cookies });
 	const { data: eventData, error: getEventError } = await supabase
 		.from("events")
 		.select();
@@ -60,4 +62,14 @@ export async function getEvents() {
 	}
 
 	return eventData;
+}
+
+export async function getEventById(id) {
+	const supabase = createServerActionClient({ cookies });
+	const { data: eventData, error: getEventError } = await supabase
+		.from("events")
+		.select()
+		.eq("id", id);
+
+	return { eventData, getEventError };
 }

@@ -28,7 +28,11 @@ export default function AdminDashboardNav() {
 		>
 			<Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" as="nav">
 				<NavItem icon={FiHome} title="Admin Dashboard" linkTo="/admin" />
-				<NavItem icon={FiCalendar} title="New Events" linkTo="/admin/events" />
+				<NavItem
+					icon={FiCalendar}
+					title="Manage Events"
+					linkTo="/admin/manage"
+				/>
 
 				<NavItem
 					icon={FiBriefcase}

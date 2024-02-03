@@ -1,6 +1,7 @@
 import { getEvents } from "@actions/eventActions";
-import EventCard from "@components/EventCard";
-import EventCardTest from "@components/EventCardTest";
+import { Spinner } from "@chakra-ui/react";
+import EventCard from "@components/events/EventCard";
+import { convertToAMPM, convertDateFormat } from "@utils/helpers";
 
 export default async function page() {
 	// TODO: implement error handling for getEvents
@@ -8,20 +9,20 @@ export default async function page() {
 
 	return (
 		<div>
+			{!res && <Spinner />}
 			{res &&
-				res.map(({ name, date, time, description, location }) => {
+				res.map(({ name, date, time, description, location, id }) => {
 					return (
-						<EventCardTest
+						<EventCard
 							name={name}
-							date={date}
-							time={time}
+							date={convertDateFormat(date)}
+							time={convertToAMPM(time)}
 							description={description}
 							location={location}
+							id={id}
 						/>
 					);
 				})}
-			<EventCard />
-			<EventCard />
 		</div>
 	);
 }

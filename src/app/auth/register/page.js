@@ -6,6 +6,7 @@ import {
 	Grid,
 	GridItem,
 	HStack,
+	Image,
 	Link,
 	Radio,
 	RadioGroup,
@@ -39,16 +40,19 @@ export default function page() {
 	return (
 		<Grid
 			className="w-full"
-			templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+			templateColumns={{ base: "0fr 1fr", md: "1fr 1fr" }}
 			gap={8}
 		>
-			<GridItem className="invisible md:visible">Poster</GridItem>
+			<GridItem className="invisible md:visible">
+				<Image
+					src="/assets/images/poster4.jpeg"
+					alt="poster"
+					className="min-h-full"
+				/>
+			</GridItem>
 			<GridItem>
 				<form className="w-full mx-auto glassmorphism" action={action}>
-					<Text
-						fontSize="2xl"
-						className="orange_gradient text-center font-bold p-5"
-					>
+					<Text fontSize="2xl" className=" text-center font-bold p-5">
 						Sign up with us now!
 					</Text>
 					<div className="mb-4">

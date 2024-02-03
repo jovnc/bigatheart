@@ -65,6 +65,21 @@ export default function CreateEventForm() {
 				</FormErrorMessage>
 			</FormControl>
 
+			<FormControl isInvalid={errors.eventLocation} isRequired className="mt-4">
+				<FormLabel htmlFor="eventName">Location</FormLabel>
+				<Input
+					id="eventLocation"
+					placeholder="Location"
+					{...register("eventLocation", {
+						required: "This is required",
+						minLength: { value: 4, message: "Minimum length should be 4" },
+					})}
+				/>
+				<FormErrorMessage>
+					{errors.eventLocation && errors.eventLocation.message}
+				</FormErrorMessage>
+			</FormControl>
+
 			<FormControl isInvalid={errors.eventCategory} isRequired className="mt-5">
 				<FormLabel htmlFor="eventCategory">Event Category</FormLabel>
 				<Select

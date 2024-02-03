@@ -19,7 +19,9 @@ export default function NavItem({ icon, title, active, linkTo }) {
 								fontSize="xl"
 								color={active ? "#82AAAD" : "gray.500"}
 							/>
-							<Text ml={3}>{title}</Text>
+							<Text textAlign="left" ml={3}>
+								{title}
+							</Text>
 						</Flex>
 					</MenuButton>
 				</Link>
