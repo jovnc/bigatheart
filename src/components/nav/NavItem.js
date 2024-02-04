@@ -19,7 +19,7 @@ export default function NavItem({ icon, title, active, linkTo }) {
 								fontSize="xl"
 								color={active ? "#82AAAD" : "gray.500"}
 							/>
-							<Text textAlign="left" ml={3}>
+							<Text textAlign="left" ml={3} mr={8} fontSize={{ base: "sm", md:"md" }}>
 								{title}
 							</Text>
 						</Flex>

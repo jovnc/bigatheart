@@ -4,68 +4,70 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 export async function createEventAction({
-	eventCategory,
-	eventDate,
-	eventDescription,
-	eventName,
-	eventTime,
-	organiser,
-	eventLocation,
+  eventCategory,
+  eventDate,
+  eventDescription,
+  eventName,
+  eventTime,
+  organiser,
+  eventLocation,
+  url,
 }) {
-	const supabase = createServerActionClient({ cookies });
-	const {
-		data: {
-			user: { id },
-		},
-	} = await supabase.auth.getUser();
-	const { error: userDataError, data: userData } = await supabase
-		.from("users")
-		.select("first_name, last_name")
-		.eq("user_id", id);
+  const supabase = createServerActionClient({ cookies });
+  const {
+    data: {
+      user: { id },
+    },
+  } = await supabase.auth.getUser();
+  const { error: userDataError, data: userData } = await supabase
+    .from("users")
+    .select("first_name, last_name")
+    .eq("user_id", id);
 
-	if (userDataError) {
-		throw new Error("Error retrieving user data");
-	}
+  if (userDataError) {
+    throw new Error("Error retrieving user data");
+  }
 
-	const displayName = `${userData[0].first_name} ${userData[0].last_name}`;
+  const displayName = `${userData[0].first_name} ${userData[0].last_name}`;
 
-	const { data: eventData, error: eventCreationError } = await supabase
-		.from("events")
-		.insert({
-			creator: displayName,
-			time: eventTime,
-			name: eventName,
-			description: eventDescription,
-			date: eventDate,
-			category: eventCategory,
-			organiser: organiser,
-			creator_id: id,
-			location: eventLocation,
-		})
-		.select();
+  const { data: eventData, error: eventCreationError } = await supabase
+    .from("events")
+    .insert({
+      creator: displayName,
+      time: eventTime,
+      name: eventName,
+      description: eventDescription,
+      date: eventDate,
+      category: eventCategory,
+      organiser: organiser,
+      creator_id: id,
+      location: eventLocation,
+      image: url,
+    })
+    .select();
 
-	if (eventCreationError) {
-		throw new Error(eventCreationError.message);
-	}
+  if (eventCreationError) {
+    throw new Error(eventCreationError.message);
+  }
 
-	return eventData;
+  return eventData;
 }
 
 export async function getEvents() {
-	const supabase = createServerActionClient({ cookies });
-	const { data: eventData, error: getEventError } = await supabase
-		.from("events")
-		.select();
+  const supabase = createServerActionClient({ cookies });
+  const { data: eventData, error: getEventError } = await supabase
+    .from("events")
+    .select();
 
-	return { eventData, getEventError };
+  return { eventData, getEventError };
 }
 
 export async function getEventById(id) {
-	const supabase = createServerActionClient({ cookies });
-	const { data: eventData, error: getEventError } = await supabase
-		.from("events")
-		.select()
-		.eq("id", id);
+  const supabase = createServerActionClient({ cookies });
+  const { data: eventData, error: getEventError } = await supabase
+    .from("events")
+    .select()
+    .eq("id", id);
 
-	return { eventData, getEventError };
+  return { eventData, getEventError };
 }
