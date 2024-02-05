@@ -12,6 +12,8 @@ export async function createEventAction({
   organiser,
   eventLocation,
   url,
+  peopleImpacted,
+  eventDuration,
 }) {
   const supabase = createServerActionClient({ cookies });
   const {
@@ -43,6 +45,8 @@ export async function createEventAction({
       creator_id: id,
       location: eventLocation,
       image: url,
+      duration: eventDuration,
+      peopleImpacted: peopleImpacted,
     })
     .select();
 

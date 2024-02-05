@@ -9,6 +9,11 @@ import {
   Grid,
   Textarea,
   Select,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { createEventAction } from "@actions/eventActions";
 import toast from "react-hot-toast";
@@ -49,6 +54,8 @@ export default function CreateEventForm() {
         eventTime,
         organiser,
         eventLocation,
+        peopleImpacted,
+        eventDuration,
       } = data;
 
       let url = "";
@@ -81,6 +88,8 @@ export default function CreateEventForm() {
         organiser,
         eventLocation,
         url,
+        peopleImpacted,
+        eventDuration,
       });
 
       toast.success("Successfully created event");
@@ -136,6 +145,67 @@ export default function CreateEventForm() {
           {errors.eventLocation && errors.eventLocation.message}
         </FormErrorMessage>
       </FormControl>
+
+      <Grid templateColumns="1fr 1fr" gap={8}>
+        <FormControl
+          isInvalid={errors.eventDuration}
+          isRequired
+          className="mt-5"
+        >
+          <FormLabel htmlFor="eventDuration">Event Duration (min)</FormLabel>
+
+          <NumberInput defaultValue={0}>
+            <NumberInputField
+              id="eventDuration"
+              step={1}
+              {...register("eventDuration", {
+                required: "This is required",
+                pattern: {
+                  value: /^\d+$/,
+                  message: "Please enter a valid integer.",
+                },
+              })}
+            />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+
+          <FormErrorMessage>
+            {errors.eventDuration && errors.eventDuration.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          isInvalid={errors.peopleImpacted}
+          isRequired
+          className="mt-5"
+        >
+          <FormLabel htmlFor="peopleImpacted"># People Impacted</FormLabel>
+          <NumberInput defaultValue={0}>
+            <NumberInputField
+              id="peopleImpacted"
+              step={1}
+              {...register("peopleImpacted", {
+                required: "This is required",
+                pattern: {
+                  value: /^\d+$/,
+                  message: "Please enter a valid integer.",
+                },
+              })}
+            />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+
+          <FormErrorMessage>
+            {errors.peopleImpacted && errors.peopleImpacted.message}
+          </FormErrorMessage>
+        </FormControl>
+      </Grid>
 
       <FormControl isInvalid={errors.eventCategory} isRequired className="mt-5">
         <FormLabel htmlFor="eventCategory">Event Category</FormLabel>

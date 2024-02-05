@@ -23,6 +23,7 @@ export default async function page({ params }) {
     description,
     location,
     image,
+    duration,
   } = eventData[0];
 
   return (
@@ -37,6 +38,7 @@ export default async function page({ params }) {
         location={location}
         id={params.id}
         imageUrl={image}
+        duration={duration}
       />
     </>
   );

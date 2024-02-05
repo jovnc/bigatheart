@@ -4,6 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+// TODO: make admin emails persistent and secure
 const ADMIN_EMAIL = ["edtokens@gmail.com", "jjiiaaxxiinn@gmail.com"];
 
 export default async function RootLayout({ children }) {

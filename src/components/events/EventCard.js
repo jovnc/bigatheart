@@ -26,7 +26,7 @@ export default function EventCard({
         overflow="hidden"
         variant="elevated"
         mb="5"
-        className="hover:bg-red-100 hover:bg-opacity-40"
+        className="hover:bg-red-100 hover:bg-opacity-40 bg-stone-50 bg-opacity-50"
       >
         <Image
           objectFit="cover"

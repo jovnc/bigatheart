@@ -1,3 +1,10 @@
+import Container from "@components/Container";
+import UpdateAvatarForm from "@components/settings/UpdateAvatarForm";
+
 export default async function page() {
-	return <>settings</>;
+  return (
+    <Container>
+      <UpdateAvatarForm />
+    </Container>
+  );
 }
