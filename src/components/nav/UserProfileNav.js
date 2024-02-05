@@ -7,7 +7,12 @@ import Link from "next/link";
 export default function UserProfileNav() {
   const { displayName, role, isLoading, avatar } = useUser();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Flex mt={4} align="center">
+        <Spinner />
+      </Flex>
+    );
 
   return (
     <Link href={role === "Admin" ? "/admin/settings" : "/dashboard/settings"}>

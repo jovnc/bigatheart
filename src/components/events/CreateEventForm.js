@@ -263,12 +263,18 @@ export default function CreateEventForm() {
         </FormControl>
       </Grid>
 
-      <FormControl isInvalid={errors.eventDescription} className="mt-5">
+      <FormControl
+        isInvalid={errors.eventDescription}
+        className="mt-5"
+        isRequired
+      >
         <FormLabel htmlFor="eventDescription">Event Description</FormLabel>
         <Textarea
           id="eventDescription"
           placeholder="Event Description"
-          {...register("eventDescription")}
+          {...register("eventDescription", {
+            required: "This is required",
+          })}
           size="sm"
         />
 

@@ -75,3 +75,61 @@ export async function getEventById(id) {
 
   return { eventData, getEventError };
 }
+
+export async function registerForEvent(data, id) {
+  const supabase = createServerActionClient({ cookies });
+  const {
+    data: {
+      user: { id: userid },
+    },
+  } = await supabase.auth.getUser();
+
+  // check eventinfo table if user is already signed up
+  const { data: checkRegistration, error: checkingError } = await supabase
+    .from("eventinfo")
+    .select("volunteer_id, event_id")
+    .eq("volunteer_id", userid)
+    .eq("event_id", id);
+
+  if (checkRegistration.length > 0)
+    throw new Error("Already registered for Event");
+
+  // insert data into eventinfo table
+  const { data: eventData, error: registerEventError } = await supabase
+    .from("eventinfo")
+    .insert({
+      volunteer_id: userid,
+      event_id: id,
+      remarks: data.remarks,
+    })
+    .select();
+
+  if (registerEventError) throw new Error(registerEventError.message);
+
+  return;
+}
+
+export async function getMyEvents() {
+  const supabase = createServerActionClient({ cookies });
+  const {
+    data: {
+      user: { id: userid },
+    },
+  } = await supabase.auth.getUser();
+
+  // get events from event table using data from eventinfo table
+  const { data, error } = await supabase
+    .from("eventinfo")
+    .select(
+      `
+      remarks,
+      attended,
+    events!inner (
+      name, category, organiser, date, time, image, location, duration, peopleImpacted
+    )
+  `
+    )
+    .eq("volunteer_id", userid);
+
+  return { data, error };
+}

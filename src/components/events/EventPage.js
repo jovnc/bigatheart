@@ -1,9 +1,11 @@
-import { Button, Image, Text } from "@chakra-ui/react";
+"use client";
+import { Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 
 import { CiClock1, CiLocationOn } from "react-icons/ci";
 import { BiArrowBack, BiCategory, BiHome, BiHourglass } from "react-icons/bi";
 import Link from "next/link";
+import EventRegistrationForm from "./EventRegistrationForm";
 
 export default function EventPage({
   name,
@@ -17,6 +19,8 @@ export default function EventPage({
   imageUrl,
   duration,
 }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <div className="shadow-md p-8 rounded-lg min-h-full bg-stone-50 bg-opacity-50">
       <div className="mb-5">
@@ -28,6 +32,19 @@ export default function EventPage({
             </Text>
           </Link>
         </Button>
+
+        <Button size="sm" className="float-end" onClick={onOpen}>
+          Register Now!
+        </Button>
+
+        <EventRegistrationForm
+          isOpen={isOpen}
+          onClose={onClose}
+          name={name}
+          id={id}
+          datetime={`${convertDateFormat(date)} ${convertToAMPM(time)}`}
+          duration={duration}
+        />
       </div>
       <div className="mb-5">
         <CiClock1 className="inline scale-150 mr-2" />
@@ -73,8 +90,11 @@ export default function EventPage({
         {description}
       </Text>
 
-      <Button className="w-full mt-10 font-medium font-size text-sm bg-gray-300 hover:bg-gray-400 hover:font-bold">
-        <Link href={`/dashboard/event/${id}`}>Register Now!</Link>
+      <Button
+        onClick={onOpen}
+        className="w-full mt-10 font-medium font-size text-sm bg-gray-300 hover:bg-gray-400 hover:font-bold"
+      >
+        Register Now!
       </Button>
     </div>
   );
