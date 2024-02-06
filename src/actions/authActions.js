@@ -64,6 +64,8 @@ export async function getUserDetails() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) return null;
   const userid = user.id;
 
   // fetch data from users table

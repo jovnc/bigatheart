@@ -1,27 +1,24 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import DashboardNav from "@components/nav/DashboardNav";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+
+import { getUserDetails } from "@actions/authActions";
 
 export default async function RootLayout({ children }) {
-	const supabase = createServerComponentClient({ cookies });
-	const {
-		data: { session },
-	} = await supabase.auth.getSession();
+  const res = await getUserDetails();
+  if (!res) {
+    return redirect("/auth/login");
+  }
+  const { displayName, avatar, role } = res;
 
-	if (!session) {
-		return redirect("/auth/login");
-	}
-
-	return (
-		<div className="w-full">
-			<Grid templateColumns="1fr 2.5fr" gap={8}>
-				<GridItem>
-					<DashboardNav />
-				</GridItem>
-				<GridItem>{children}</GridItem>
-			</Grid>
-		</div>
-	);
+  return (
+    <div className="w-full">
+      <Grid templateColumns="1fr 2.5fr" gap={8}>
+        <GridItem>
+          <DashboardNav displayName={displayName} avatar={avatar} role={role} />
+        </GridItem>
+        <GridItem>{children}</GridItem>
+      </Grid>
+    </div>
+  );
 }

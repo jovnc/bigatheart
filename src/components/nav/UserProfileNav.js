@@ -1,19 +1,9 @@
 "use client";
-import { Avatar, Flex, Spinner, Text } from "@chakra-ui/react";
-import { useUser } from "@hooks/useUser";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
 
 import Link from "next/link";
 
-export default function UserProfileNav() {
-  const { displayName, role, isLoading, avatar } = useUser();
-
-  if (isLoading)
-    return (
-      <Flex mt={4} align="center">
-        <Spinner />
-      </Flex>
-    );
-
+export default function UserProfileNav({ displayName, role, avatar }) {
   return (
     <Link href={role === "Admin" ? "/admin/settings" : "/dashboard/settings"}>
       <Flex mt={4} align="center">

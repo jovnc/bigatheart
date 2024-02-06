@@ -6,7 +6,7 @@ import UserProfileNav from "./UserProfileNav";
 import NavItem from "./NavItem";
 import { FiHome, FiCalendar, FiBriefcase, FiSettings } from "react-icons/fi";
 
-export default function DashboardNav() {
+export default function DashboardNav({ displayName, role, avatar }) {
   return (
     <Flex
       pos="sticky"
@@ -40,7 +40,7 @@ export default function DashboardNav() {
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>
         <Divider display="flex" />
-        <UserProfileNav />
+        <UserProfileNav displayName={displayName} role={role} avatar={avatar} />
       </Flex>
     </Flex>
   );

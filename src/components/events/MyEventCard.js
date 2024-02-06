@@ -5,10 +5,7 @@ import {
   Stack,
   Image,
   Text,
-  Button,
-  Divider,
 } from "@chakra-ui/react";
-import Link from "next/link";
 
 export default function MyEventCard({
   date,
@@ -26,7 +23,10 @@ export default function MyEventCard({
         overflow="hidden"
         variant="elevated"
         mb="5"
-        className="hover:bg-red-100 hover:bg-opacity-40 bg-stone-50 bg-opacity-50"
+        className={
+          "bg-stone-50 bg-opacity-50" +
+          (attended && " border-2 border-green-200")
+        }
       >
         <Image
           objectFit="cover"
@@ -51,12 +51,10 @@ export default function MyEventCard({
               {location}
             </Text>
             <Text fontSize="xs" py="2">
-              {remarks ? "YES-R" : "NO-R"}
-            </Text>
-            <Text fontSize="xs" py="2">
-              {attended ? "YES-A" : "NO-A"}
+              {remarks ? `Remarks: ${remarks}` : "Remarks: NIL"}
             </Text>
           </CardBody>
+          <CardFooter></CardFooter>
         </Stack>
       </Card>
     </>
