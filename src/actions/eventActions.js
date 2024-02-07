@@ -1,7 +1,10 @@
 "use server";
 
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+
+const supabase = createServerActionClient({ cookies });
 
 export async function createEventAction({
   eventCategory,
@@ -15,7 +18,6 @@ export async function createEventAction({
   peopleImpacted,
   eventDuration,
 }) {
-  const supabase = createServerActionClient({ cookies });
   const {
     data: {
       user: { id },
@@ -58,7 +60,6 @@ export async function createEventAction({
 }
 
 export async function getEvents() {
-  const supabase = createServerActionClient({ cookies });
   const { data: eventData, error: getEventError } = await supabase
     .from("events")
     .select();
@@ -67,7 +68,6 @@ export async function getEvents() {
 }
 
 export async function getEventById(id) {
-  const supabase = createServerActionClient({ cookies });
   const { data: eventData, error: getEventError } = await supabase
     .from("events")
     .select()
@@ -77,7 +77,6 @@ export async function getEventById(id) {
 }
 
 export async function registerForEvent(data, id) {
-  const supabase = createServerActionClient({ cookies });
   const {
     data: {
       user: { id: userid },
@@ -110,7 +109,6 @@ export async function registerForEvent(data, id) {
 }
 
 export async function getMyEvents() {
-  const supabase = createServerActionClient({ cookies });
   const {
     data: {
       user: { id: userid },
@@ -124,6 +122,9 @@ export async function getMyEvents() {
       `
       remarks,
       attended,
+      finished,
+      event_id, 
+      volunteer_id,
     events!inner (
       name, category, organiser, date, time, image, location, duration, peopleImpacted
     )
@@ -132,4 +133,45 @@ export async function getMyEvents() {
     .eq("volunteer_id", userid);
 
   return { data, error };
+}
+
+export async function updateMyAttendance(eventid, volunteerid) {
+  // check eventinfo table if user already confirmed attendance
+  const { data: checkFinished, error: checkingError } = await supabase
+    .from("eventinfo")
+    .select("finished")
+    .eq("volunteer_id", volunteerid)
+    .eq("event_id", eventid);
+
+  if (checkingError) throw new Error(checkingError.message);
+  if (checkFinished[0].finished)
+    throw new Error(
+      "Already confirmed attendance for event. Please wait for admin to confirm your attendance."
+    );
+
+  const { error } = await supabase
+    .from("eventinfo")
+    .update({ finished: true })
+    .eq("volunteer_id", volunteerid)
+    .eq("event_id", eventid);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/dashboard/manage");
+
+  return { error };
+}
+
+export async function unregisterEvent(eventid, volunteerid) {
+  const { data, error } = await supabase
+    .from("eventinfo")
+    .delete()
+    .eq("volunteer_id", volunteerid)
+    .eq("event_id", eventid);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/dashboard/manage");
+
+  return { error };
 }

@@ -28,6 +28,9 @@ export default async function page() {
             location={event.events.location}
             attended={event.attended}
             remarks={event.remarks}
+            finished={event.finished}
+            eventid={event.event_id}
+            volunteerid={event.volunteer_id}
           />
         );
       })}

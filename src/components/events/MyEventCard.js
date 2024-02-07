@@ -6,6 +6,9 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import ConfirmMyAttendanceButton from "./ConfirmMyAttendanceButton";
+import UnregisterEventButton from "./UnregisterEventButton";
+import { unregisterEvent, updateMyAttendance } from "@actions/eventActions";
 
 export default function MyEventCard({
   date,
@@ -15,6 +18,9 @@ export default function MyEventCard({
   remarks,
   attended,
   image_url,
+  finished,
+  eventid,
+  volunteerid,
 }) {
   return (
     <>
@@ -54,7 +60,18 @@ export default function MyEventCard({
               {remarks ? `Remarks: ${remarks}` : "Remarks: NIL"}
             </Text>
           </CardBody>
-          <CardFooter></CardFooter>
+          <CardFooter>
+            <ConfirmMyAttendanceButton
+              eventid={eventid}
+              volunteerid={volunteerid}
+              updateMyAttendance={updateMyAttendance}
+            />
+            <UnregisterEventButton
+              eventid={eventid}
+              volunteerid={volunteerid}
+              unregisterEvent={unregisterEvent}
+            />
+          </CardFooter>
         </Stack>
       </Card>
     </>

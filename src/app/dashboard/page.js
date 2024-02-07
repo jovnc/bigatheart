@@ -2,14 +2,11 @@ import { getUserDetails } from "@actions/authActions";
 import { getMyEvents } from "@actions/eventActions";
 import {
   Box,
-  Button,
   Card,
   CardBody,
   Grid,
   GridItem,
   Heading,
-  Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";

@@ -57,7 +57,7 @@ export default function EventRegistrationForm({
         <ModalCloseButton />
         <form action={action}>
           <ModalBody>
-            <FormControl isInvalid={errors.remarks} className="mt-5">
+            <FormControl isInvalid={errors.remarks} className="mt-1">
               <FormLabel htmlFor="remarks">Remarks</FormLabel>
               <Textarea
                 id="remarks"
@@ -77,6 +77,7 @@ export default function EventRegistrationForm({
               isRequired
             >
               <Checkbox
+                size="sm"
                 {...register("confirmRegistration", {
                   required:
                     "Please agree to the terms to complete registration",
@@ -96,11 +97,11 @@ export default function EventRegistrationForm({
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3} onClick={onClose} isLoading={isSubmitting}>
+            <Button size="sm" mr={3} onClick={onClose} isLoading={isSubmitting}>
               Close
             </Button>
-            <Button type="submit" isLoading={isSubmitting}>
-              Confirm Registration
+            <Button size="sm" type="submit" isLoading={isSubmitting}>
+              Confirm
             </Button>
           </ModalFooter>
         </form>
