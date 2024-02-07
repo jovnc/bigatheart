@@ -5,8 +5,10 @@ import MyEventSummary from "@components/events/MyEventSummary";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 
 export default async function page() {
-  // TODO: implement error handling for getMyEvents
-  const { data, error } = await getMyEvents();
+  const res = await getMyEvents();
+  if (!res) return <div>Error retrieiving information</div>;
+
+  const { data, error } = res;
 
   const len = data.length;
   const attendedLen = data.filter((event) => event.attended).length;

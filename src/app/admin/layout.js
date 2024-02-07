@@ -1,12 +1,7 @@
 import { getUserDetails } from "@actions/authActions";
 import { Grid, GridItem } from "@chakra-ui/react";
 import AdminDashboardNav from "@components/nav/AdminDashboardNav";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-// TODO: make admin emails persistent and secure
-const ADMIN_EMAIL = ["edtokens@gmail.com", "jjiiaaxxiinn@gmail.com"];
 
 export default async function RootLayout({ children }) {
   const res = await getUserDetails();

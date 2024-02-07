@@ -8,8 +8,6 @@ import {
   Grid,
   GridItem,
   Heading,
-  Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import AdminStatisticsCard from "@components/admin/AdminStatisticsCard";

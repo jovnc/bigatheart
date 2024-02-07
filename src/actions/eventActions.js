@@ -110,10 +110,12 @@ export async function registerForEvent(data, id) {
 
 export async function getMyEvents() {
   const {
-    data: {
-      user: { id: userid },
-    },
+    data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { id: userid } = user;
 
   // get events from event table using data from eventinfo table
   const { data, error } = await supabase

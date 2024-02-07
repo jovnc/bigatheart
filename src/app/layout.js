@@ -1,10 +1,10 @@
 import Footer from "@components/Footer";
-import Nav from "@components/nav/Nav";
 import "@styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "@context/ChakraContext";
 import { EdgeStoreProvider } from "@context/EdgeStoreContext";
-import { checkLoggedIn } from "@actions/authActions";
+
+import NavWrapper from "@components/NavWrapper";
 
 export const metadata = {
   title: "Hack4Good Big At Heart",
@@ -12,7 +12,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const isLoggedIn = await checkLoggedIn();
   return (
     <html lang="en">
       <head>
@@ -26,7 +25,7 @@ export default async function RootLayout({ children }) {
             </div>
             <main className="app w-full">
               <Toaster position="top-center" />
-              <Nav isLoggedIn={isLoggedIn} />
+              <NavWrapper />
               {children}
             </main>
             <div className="flex-grow"></div>

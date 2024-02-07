@@ -1,5 +1,12 @@
 "use client";
-import { Button, Image, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 
 import { CiClock1, CiLocationOn } from "react-icons/ci";
@@ -23,53 +30,66 @@ export default function EventPage({
 
   return (
     <div className="shadow-md p-8 rounded-lg min-h-full bg-stone-50 bg-opacity-50">
-      <div className="mb-5">
-        <Button size="sm">
-          <Link href="/dashboard/events">
-            <BiArrowBack className="inline scale-150 mr-2" />
-            <Text className="inline" fontSize="sm">
-              Back
-            </Text>
-          </Link>
-        </Button>
+      <Flex className="mb-5" justify="space-between">
+        <Box>
+          <Button size="sm">
+            <Link href="/dashboard/events">
+              <BiArrowBack className="inline scale-150 mr-2" />
+              <Text className="inline" fontSize="sm">
+                Back
+              </Text>
+            </Link>
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            size="sm"
+            className="border border-slate-400 font-medium"
+            onClick={onOpen}
+          >
+            Register Now!
+          </Button>
 
-        <Button size="sm" className="float-end" onClick={onOpen}>
-          Register Now!
-        </Button>
+          <EventRegistrationForm
+            isOpen={isOpen}
+            onClose={onClose}
+            name={name}
+            id={id}
+            datetime={`${convertDateFormat(date)} ${convertToAMPM(time)}`}
+            duration={duration}
+          />
+        </Box>
+      </Flex>
 
-        <EventRegistrationForm
-          isOpen={isOpen}
-          onClose={onClose}
-          name={name}
-          id={id}
-          datetime={`${convertDateFormat(date)} ${convertToAMPM(time)}`}
-          duration={duration}
-        />
-      </div>
-      <div className="mb-5">
-        <CiClock1 className="inline scale-150 mr-2" />
-        <Text className="inline" fontSize="sm">
-          {convertDateFormat(date)} {convertToAMPM(time)}
-        </Text>
+      <Flex className="mb-5" justify="space-between">
+        <Flex gap={2}>
+          <CiClock1 className="mt-1" />
+          <Text fontSize="sm">
+            {convertDateFormat(date)} {convertToAMPM(time)}
+          </Text>
+        </Flex>
+        <Flex gap={2}>
+          <BiHourglass className="mt-1" />
+          <Text fontSize="sm">{duration} minutes</Text>
+        </Flex>
+      </Flex>
 
-        <Text className="float-right" fontSize="sm">
-          {duration} minutes
-        </Text>
-        <BiHourglass className="inline scale-150 mr-2 mt-1 float-right" />
-      </div>
-      <div className="mb-5">
-        <BiHome className="inline scale-150 mr-2" />
-        <Text className="inline" fontSize="sm">
-          <span className="font-semibold">Organiser: </span>
-          {organiser}
-        </Text>
-
-        <Text className="float-right" fontSize="sm">
-          <span className="font-semibold">Category: </span>
-          {category}
-        </Text>
-        <BiCategory className="inline scale-150 mr-2 mt-1 float-right" />
-      </div>
+      <Flex className="mb-5" justify="space-between">
+        <Flex gap={2}>
+          <BiHome className="mt-1" />
+          <Text fontSize="sm">
+            <span className="font-semibold">Organiser: </span>
+            {organiser}
+          </Text>
+        </Flex>
+        <Flex gap={2}>
+          <BiCategory className="mt-1" />
+          <Text fontSize="sm">
+            <span className="font-semibold">Category: </span>
+            {category}
+          </Text>
+        </Flex>
+      </Flex>
 
       <Text textAlign="center" fontWeight="bold" fontSize="lg">
         {name}
@@ -92,7 +112,7 @@ export default function EventPage({
 
       <Button
         onClick={onOpen}
-        className="w-full mt-10 font-medium font-size text-sm bg-gray-300 hover:bg-gray-400 hover:font-bold"
+        className="w-full mt-10 font-medium font-size text-sm border border-slate-500"
       >
         Register Now!
       </Button>

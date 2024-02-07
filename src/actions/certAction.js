@@ -2,35 +2,64 @@
 
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import PDFDocument from "pdfkit";
+import BlobStream from "blob-stream";
+import { initEdgeStoreClient } from "@edgestore/server/core";
+import { initEdgeStore } from "@edgestore/server";
 
+// initialise backend client for edgestore
+const es = initEdgeStore.create();
+const edgeStoreRouter = es.router({
+  publicImages: es.imageBucket(),
+  publicCertificates: es.fileBucket(),
+  publicInvitations: es.fileBucket(),
+});
+const backendClient = initEdgeStoreClient({
+  router: edgeStoreRouter,
+});
+
+// initialise supabase server action client
 const supabase = createServerActionClient({ cookies });
 
-export async function generateCertificate() {
-  const fs = require("fs");
-  const PDFDocument = require("pdfkit");
+export async function generateCertificate(eventid, volunteerid) {
+  // check if user already generated certificate for the event
+  const { data: checkData, error: checkError } = await supabase
+    .from("eventinfo")
+    .select(
+      `certificate,
+    events!inner(duration, name, date),
+    users!inner(first_name, last_name)`
+    )
+    .eq("volunteer_id", volunteerid)
+    .eq("event_id", eventid);
 
+  if (checkError) throw new Error(checkError.message);
+  if (checkData[0].certificate) return checkData[0].certificate;
+
+  const {
+    events: { date: eventDate, name: eventName, duration },
+    users: { last_name, first_name },
+  } = checkData[0];
+
+  const name = `${first_name} ${last_name}`;
+  const hours = `${duration / 60}`;
+
+  // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
+    font: "./public/assets/fonts/Butler_Regular.otf",
     layout: "landscape",
     size: "A4",
   });
 
-  const name = "Name Here";
-  const hours = "178";
-  const eventName = "Event Name Here";
-  const eventDate = "01-01-24";
-
-  doc.pipe(fs.createWriteStream(`${name}.pdf`));
-  doc.image("certificate.png", 0, 0, { width: 842 });
-  doc.font("Times-Roman");
+  // write user data into the PDF certificate
+  const stream = doc.pipe(BlobStream());
+  doc.image("./public/assets/images/certificate.jpg", 0, 0, { width: 842 });
+  doc.font("./public/assets/fonts/Butler_Regular.otf");
   doc.fontSize(60).text(name, 70, 265, {
     align: "center",
   });
 
-  if (hours >= 100) {
-    doc.fontSize(16).text(hours, 280, 359, {});
-  } else {
-    doc.fontSize(16).text(hours, 286, 359, {});
-  }
+  doc.fontSize(16).text(hours, 286, 359, {});
 
   doc.fontSize(20).text(eventName, 70, 412, {
     align: "center",
@@ -39,4 +68,49 @@ export async function generateCertificate() {
   doc.fontSize(16).text(eventDate, 570, 470, {});
 
   doc.end();
+
+  // upload BLOB into EdgeStore storage and return res
+  return new Promise((resolve, reject) => {
+    try {
+      stream.on("finish", async function () {
+        const blob = stream.toBlob("application/pdf");
+
+        console.log("uploading to edgestore");
+
+        // upload blob to EdgeStore object store
+        const res = await backendClient.publicCertificates.upload({
+          content: {
+            blob: blob,
+            extension: "pdf",
+          },
+        });
+
+        console.log("uploaded to edgestore");
+
+        console.log("updating supabase");
+
+        // upload res.url to Supabase EventInfo table to prevent reupload
+        const { data: uploadData, error: uploadError } = await supabase
+          .from("eventinfo")
+          .update({ certificate: res.url })
+          .eq("volunteer_id", volunteerid)
+          .eq("event_id", eventid);
+
+        console.log("updated supabase");
+
+        if (uploadError) throw new Error(uploadError.message);
+
+        // return url of the file
+        resolve(res.url);
+      });
+    } catch (error) {
+      reject(error);
+    }
+
+    stream.on("error", (error) => {
+      reject(error);
+    });
+  });
 }
+
+export async function generateInvitation(eventid, volunteerid) {}

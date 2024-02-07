@@ -1,10 +1,11 @@
 "use server";
 
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import {
+  createServerActionClient,
+  createServerComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-
-const supabase = createServerActionClient({ cookies });
 
 export async function registerAccount({
   firstName,
@@ -13,6 +14,7 @@ export async function registerAccount({
   email,
   password,
 }) {
+  const supabase = createServerActionClient({ cookies });
   // check if email already exists in database
   const { data, error: readUserError } = await supabase
     .from("users")
@@ -62,6 +64,7 @@ export async function registerAccount({
 }
 
 export async function getUserDetails() {
+  const supabase = createServerActionClient({ cookies });
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -86,21 +89,15 @@ export async function getUserDetails() {
   return { displayName, role, avatar };
 }
 
-export async function checkLoggedIn() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return false;
-  return true;
-}
-
 export async function signUserOut() {
+  const supabase = createServerActionClient({ cookies });
   const res = await supabase.auth.signOut();
   revalidatePath("/");
   return res;
 }
 
 export async function logUserIn({ email, password }) {
+  const supabase = createServerActionClient({ cookies });
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure } from "@chakra-ui/react";
 import UnregisterEventConfirm from "./UnregisterEventConfirm";
 import { IoClose, IoCloseCircle } from "react-icons/io5";
 
@@ -14,12 +14,12 @@ export default function UnregisterEventButton({
     <>
       <button
         onClick={onOpen}
-        className="border border-red-500 p-2 mx-5 rounded-lg hover:bg-red-200"
+        className="border border-red-500 px-2 py-1 rounded-lg hover:bg-red-300"
       >
-        <IoCloseCircle className="inline mr-1" size={20} />
-        <Text className="inline" fontSize="sm" font>
-          Unregister
-        </Text>
+        <Flex gap="2">
+          <IoCloseCircle size={14} />
+          <Text fontSize="xs">Unregister</Text>
+        </Flex>
       </button>
       <UnregisterEventConfirm
         isOpen={isOpen}

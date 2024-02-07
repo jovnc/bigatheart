@@ -1,5 +1,5 @@
 "use client";
-import { Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import ConfirmMyAttendance from "./ConfirmMyAttendance";
 import { FcCheckmark } from "react-icons/fc";
@@ -14,12 +14,12 @@ export default function ConfirmMyAttendanceButton({
     <>
       <button
         onClick={onOpen}
-        className="border border-green-500 p-2 rounded-lg hover:bg-green-200"
+        className="border border-green-500 px-2 py-1 rounded-lg hover:bg-green-300"
       >
-        <FcCheckmark size={20} className="inline mr-1" />
-        <Text fontSize="sm" className="inline">
-          Confirm Attendance
-        </Text>
+        <Flex gap={2}>
+          <FcCheckmark size={14} />
+          <Text fontSize="xs">Attend</Text>
+        </Flex>
       </button>
       <ConfirmMyAttendance
         isOpen={isOpen}

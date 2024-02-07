@@ -5,11 +5,15 @@ import {
   Stack,
   Image,
   Text,
+  Flex,
+  Spacer,
+  Box,
 } from "@chakra-ui/react";
 import ConfirmMyAttendanceButton from "./ConfirmMyAttendanceButton";
 import UnregisterEventButton from "./UnregisterEventButton";
 import { unregisterEvent, updateMyAttendance } from "@actions/eventActions";
 import GenerateCertificateButton from "@components/certificate/GenerateCertificateButton";
+import PendingSign from "./PendingSign";
 
 export default function MyEventCard({
   date,
@@ -60,22 +64,31 @@ export default function MyEventCard({
             <Text fontSize="xs" py="2">
               {remarks ? `Remarks: ${remarks}` : "Remarks: NIL"}
             </Text>
-            <GenerateCertificateButton
-              eventid={eventid}
-              volunteerid={volunteerid}
-            />
           </CardBody>
           <CardFooter>
-            <ConfirmMyAttendanceButton
-              eventid={eventid}
-              volunteerid={volunteerid}
-              updateMyAttendance={updateMyAttendance}
-            />
-            <UnregisterEventButton
-              eventid={eventid}
-              volunteerid={volunteerid}
-              unregisterEvent={unregisterEvent}
-            />
+            <Flex justify="end" className="w-full" gap={2}>
+              {finished && attended && (
+                <GenerateCertificateButton
+                  eventid={eventid}
+                  volunteerid={volunteerid}
+                />
+              )}
+              {finished && !attended && <PendingSign />}
+              {!finished && !attended && (
+                <ConfirmMyAttendanceButton
+                  eventid={eventid}
+                  volunteerid={volunteerid}
+                  updateMyAttendance={updateMyAttendance}
+                />
+              )}
+              {!finished && !attended && (
+                <UnregisterEventButton
+                  eventid={eventid}
+                  volunteerid={volunteerid}
+                  unregisterEvent={unregisterEvent}
+                />
+              )}
+            </Flex>
           </CardFooter>
         </Stack>
       </Card>

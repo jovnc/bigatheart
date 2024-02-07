@@ -53,7 +53,10 @@ export default function EventCard({
           </CardBody>
           <Divider />
           <CardFooter>
-            <Button className="red_outline_btn w-full" size="sm">
+            <Button
+              className="border border-red-500 hover:bg-red-400 w-full"
+              size="sm"
+            >
               <Link href={`/dashboard/events/${id}`}>View Event</Link>
             </Button>
           </CardFooter>
