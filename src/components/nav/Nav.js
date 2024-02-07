@@ -3,29 +3,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useAuthContext } from "@context/AuthContext";
+import { useForm } from "react-hook-form";
+import { signUserOut } from "@actions/authActions";
 
-export default function Nav() {
+export default function Nav({ isLoggedIn: isUserLoggedIn }) {
   const router = useRouter();
 
-  const { session } = useAuthContext();
-  const isUserLoggedIn = session?.user?.role === "authenticated";
   const pathname = usePathname();
 
-  function handleSignOut() {
-    const supabase = createClientComponentClient();
-    const signout = async () => {
-      await supabase.auth.signOut();
-    };
-    try {
-      signout();
-      router.push("/");
-      toast.success("Successfully signed out");
-    } catch (error) {
-      toast.error("Failed to log out");
-    }
-  }
+  const { handleSubmit } = useForm();
+
+  const action = handleSubmit(async () => {
+    const res = await signUserOut();
+    router.push("/");
+    toast.success("Successfully signed out");
+  });
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
@@ -43,26 +35,22 @@ export default function Nav() {
       <div className="sm:flex hidden">
         {isUserLoggedIn && pathname === "/dashboard" ? (
           <>
-            <button
-              type="button"
-              className="red_outline_btn scale-75"
-              onClick={handleSignOut}
-            >
-              Sign out
-            </button>
+            <form action={action}>
+              <button type="submit" className="red_outline_btn scale-75">
+                Sign out
+              </button>
+            </form>
           </>
         ) : isUserLoggedIn ? (
           <>
             <Link href="/dashboard" className="red_btn scale-75">
               <p>To Dashboard</p>
             </Link>
-            <button
-              type="button"
-              className="red_outline_btn scale-75"
-              onClick={handleSignOut}
-            >
-              Sign out
-            </button>
+            <form action={action}>
+              <button type="submit" className="red_outline_btn scale-75">
+                Sign out
+              </button>
+            </form>
           </>
         ) : (
           <>

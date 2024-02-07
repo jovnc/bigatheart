@@ -1,3 +1,4 @@
+import { getUserDetails } from "@actions/authActions";
 import { Grid, GridItem } from "@chakra-ui/react";
 import AdminDashboardNav from "@components/nav/AdminDashboardNav";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -8,20 +9,24 @@ import { redirect } from "next/navigation";
 const ADMIN_EMAIL = ["edtokens@gmail.com", "jjiiaaxxiinn@gmail.com"];
 
 export default async function RootLayout({ children }) {
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const res = await getUserDetails();
 
-  if (!ADMIN_EMAIL.includes(session.user.email)) {
-    return redirect("/");
-  }
+  // handle case: user not signed in
+  if (!res) redirect("/");
+
+  // destructure res object
+  const { displayName, avatar, role } = res;
+  if (role !== "Admin") redirect("/");
 
   return (
     <div className="w-full">
-      <Grid templateColumns="1fr 2fr" gap={8}>
+      <Grid templateColumns="1fr 2.5fr" gap={8}>
         <GridItem>
-          <AdminDashboardNav />
+          <AdminDashboardNav
+            displayName={displayName}
+            avatar={avatar}
+            role={role}
+          />
         </GridItem>
         <GridItem>{children}</GridItem>
       </Grid>

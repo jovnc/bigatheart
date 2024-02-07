@@ -48,11 +48,7 @@ export default function EventCard({
               {name}
             </Text>
             <Text fontSize="xs" py="2">
-              {location}
-            </Text>
-
-            <Text py="2" fontSize="sm">
-              {description}
+              Location: {location}
             </Text>
           </CardBody>
           <Divider />

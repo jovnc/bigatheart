@@ -175,3 +175,48 @@ export async function unregisterEvent(eventid, volunteerid) {
 
   return { error };
 }
+
+export async function getPendingApprovalEvents() {
+  const { data, error } = await supabase
+    .from("eventinfo")
+    .select(
+      `
+      volunteer_id, 
+      event_id, 
+      remarks,
+      users!inner(first_name, last_name, avatar),
+      events!inner(name, date, time)
+    `
+    )
+    .eq("attended", false)
+    .eq("finished", true);
+
+  if (error) throw new Error(error.message);
+
+  return { data, error };
+}
+
+export async function approveEvent(event_id, volunteer_id) {
+  // check eventinfo table if user already confirmed attendance
+  const { data: checkAttended, error: checkingError } = await supabase
+    .from("eventinfo")
+    .select("attended")
+    .eq("volunteer_id", volunteer_id)
+    .eq("event_id", event_id);
+
+  if (checkingError) throw new Error(checkingError.message);
+  if (checkAttended[0].attended)
+    throw new Error("Already confirmed approved attendance");
+
+  const { error } = await supabase
+    .from("eventinfo")
+    .update({ attended: true })
+    .eq("volunteer_id", volunteer_id)
+    .eq("event_id", event_id);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/manage");
+
+  return { error };
+}

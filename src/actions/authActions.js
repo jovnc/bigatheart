@@ -1,6 +1,7 @@
 "use server";
 
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 const supabase = createServerActionClient({ cookies });
@@ -36,8 +37,6 @@ export async function registerAccount({
     },
   });
 
-  console.log(signUpError);
-
   if (signUpError) {
     throw new Error("Error signing up for account. Please try again later.");
   }
@@ -56,6 +55,8 @@ export async function registerAccount({
   if (updateUserError) {
     throw new Error("Error updating user info in user details");
   }
+
+  revalidatePath("/");
 
   return { user };
 }
@@ -83,4 +84,31 @@ export async function getUserDetails() {
   const displayName = `${first_name} ${last_name}`;
 
   return { displayName, role, avatar };
+}
+
+export async function checkLoggedIn() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return false;
+  return true;
+}
+
+export async function signUserOut() {
+  const res = await supabase.auth.signOut();
+  revalidatePath("/");
+  return res;
+}
+
+export async function logUserIn({ email, password }) {
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/");
+
+  return error;
 }

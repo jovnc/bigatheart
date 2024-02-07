@@ -13,7 +13,7 @@ import NavItem from "./NavItem";
 
 import UserProfileNav from "./UserProfileNav";
 
-export default function AdminDashboardNav() {
+export default function AdminDashboardNav({ avatar, displayName, role }) {
   const pathname = usePathname();
 
   return (
@@ -31,7 +31,7 @@ export default function AdminDashboardNav() {
         <NavItem icon={FiHome} title="Admin Dashboard" linkTo="/admin" />
         <NavItem
           icon={FiCalendar}
-          title="Manage Events"
+          title="Approve Attendance"
           linkTo="/admin/manage"
         />
 
@@ -45,7 +45,7 @@ export default function AdminDashboardNav() {
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>
         <Divider display="flex" />
-        <UserProfileNav />
+        <UserProfileNav avatar={avatar} displayName={displayName} role={role} />
       </Flex>
     </Flex>
   );

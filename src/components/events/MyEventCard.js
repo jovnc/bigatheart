@@ -9,6 +9,7 @@ import {
 import ConfirmMyAttendanceButton from "./ConfirmMyAttendanceButton";
 import UnregisterEventButton from "./UnregisterEventButton";
 import { unregisterEvent, updateMyAttendance } from "@actions/eventActions";
+import GenerateCertificateButton from "@components/certificate/GenerateCertificateButton";
 
 export default function MyEventCard({
   date,
@@ -59,6 +60,10 @@ export default function MyEventCard({
             <Text fontSize="xs" py="2">
               {remarks ? `Remarks: ${remarks}` : "Remarks: NIL"}
             </Text>
+            <GenerateCertificateButton
+              eventid={eventid}
+              volunteerid={volunteerid}
+            />
           </CardBody>
           <CardFooter>
             <ConfirmMyAttendanceButton
