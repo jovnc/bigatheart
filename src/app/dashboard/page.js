@@ -12,7 +12,7 @@ import {
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
 import WelcomeBackCard from "@components/dashboard/WelcomeBackCard";
-import { getTodayDate, sortByDate } from "@utils/helpers";
+import { getTodayDate } from "@utils/helpers";
 
 export default async function page() {
   // Getting event details
@@ -45,9 +45,7 @@ export default async function page() {
   );
 
   // sort events by date
-  const sortedEvents = sortByDate(data);
-
-  //
+  // const sortedEvents = sortByDate(data);
 
   return (
     <div className="flex-col flex gap-y-5 w-full">

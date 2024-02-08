@@ -1,25 +1,70 @@
 import { getMyEvents } from "@actions/eventActions";
-import { Spinner } from "@chakra-ui/react";
+import { Divider, Spinner, filter } from "@chakra-ui/react";
+import EventsFilterBar from "@components/events/EventsFilterBar";
 import MyEventCard from "@components/events/MyEventCard";
 import MyEventSummary from "@components/events/MyEventSummary";
-import { convertDateFormat, convertToAMPM } from "@utils/helpers";
+import { convertDateFormat, convertToAMPM, sortByDate } from "@utils/helpers";
 
-export default async function page() {
+const filterField = [
+  "Current Events",
+  "Events Ended",
+  "Attended Events",
+  "Pending Events",
+  "All Events",
+];
+const options = ["current", "ended", "attended", "pending", "all"];
+
+export default async function page({ searchParams }) {
   const res = await getMyEvents();
   if (!res) return <div>Error retrieiving information</div>;
 
   const { data, error } = res;
+  if (error) return <div>Error retrieiving events. {error.message}</div>;
 
   const len = data.length;
   const attendedLen = data.filter((event) => event.attended).length;
 
-  if (error) return <div>Error retrieiving events. {error.message}</div>;
+  // filter data
+  let filteredEvents = data;
+
+  if (searchParams.filter == "ended") {
+    filteredEvents = filteredEvents.filter((event) => {
+      const today = new Date();
+      const target = new Date(event.events.date);
+      return target < today;
+    });
+  } else if (searchParams.filter == "attended") {
+    filteredEvents = filteredEvents.filter((event) => {
+      return event.attended && event.finished;
+    });
+  } else if (searchParams.filter == "pending") {
+    filteredEvents = filteredEvents.filter((event) => {
+      return !event.attended && event.finished;
+    });
+  } else {
+    // current events
+    filteredEvents = filteredEvents.filter((event) => {
+      const today = new Date();
+      const target = new Date(event.events.date);
+      return target >= today;
+    });
+  }
+
+  // sort data
+  sortByDate(filteredEvents);
 
   return (
     <>
       <MyEventSummary totalEvents={len} attendedEvents={attendedLen} />
-      {!data && <Spinner />}
-      {data.map((event, i) => {
+      {!filteredEvents && <Spinner />}
+
+      <EventsFilterBar filterField={filterField} options={options} />
+
+      <Divider className="border-black mb-5" />
+
+      {filteredEvents.length === 0 && <p>No event matching filter</p>}
+
+      {filteredEvents.map((event, i) => {
         return (
           <MyEventCard
             key={i}

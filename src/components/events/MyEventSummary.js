@@ -12,7 +12,7 @@ import { FaCalendarDays } from "react-icons/fa6";
 
 export default function MyEventSummary({ totalEvents, attendedEvents }) {
   return (
-    <Grid templateColumns="1fr 1fr" gap={8} mb={10}>
+    <Grid templateColumns="1fr 1fr" gap={8} mb={3}>
       <GridItem>
         <Card className="flex mt-5 bg-stone-50 bg-opacity-50 border-l-4 border-blue-300">
           <CardBody>
