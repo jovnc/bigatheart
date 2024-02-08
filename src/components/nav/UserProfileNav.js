@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function UserProfileNav({ displayName, role, avatar }) {
   return (
-    <Link href={role === "Admin" ? "/admin/settings" : "/dashboard/settings"}>
+    <Link href={"/dashboard/settings"}>
       <Flex mt={4} align="center">
         <Avatar
           size="sm"
