@@ -124,7 +124,7 @@ export async function generateInvitation(
   doc.image("./public/assets/images/invitation.jpg", 0, 0, { width: 842 });
   doc.font("./public/assets/fonts/Butler_Regular.otf");
   doc.fontSize(35).text(name, 95, 230, {});
-  doc.fontSize(45).text(eventName, 95, 320, {});
+  doc.fontSize(20).text(eventName, 95, 320, {});
   doc.fontSize(17).text(eventDate, 155, 385, {});
   doc.fontSize(17).text(eventTime, 152, 425, {});
   doc.end();

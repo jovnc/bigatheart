@@ -3,6 +3,7 @@ import { Divider, Flex, Grid, Text } from "@chakra-ui/react";
 import VolunteerRow from "./VolunteerRow";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useState } from "react";
+import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 
 export default function ManageEventCard({ eventName, event }) {
   const [show, setShow] = useState();
@@ -23,6 +24,10 @@ export default function ManageEventCard({ eventName, event }) {
             <Text fontSize="sm">{show ? "Hide" : "Show"}</Text>
           </button>
         </Flex>
+        <Text fontSize="xs">
+          {convertDateFormat(event[0].events.date)}{" "}
+          {convertToAMPM(event[0].events.time)}
+        </Text>
 
         {show && (
           <>

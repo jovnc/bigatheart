@@ -79,7 +79,7 @@ export default function UpdateAvatarForm() {
           </Flex>
           <Flex gap={3} mt={2}>
             {avatarList.map((avatar, i) => {
-              if (avatar.cost < durations) {
+              if (avatar.cost < durations || avatar.cost == 0) {
                 return (
                   <Image
                     key={i}
