@@ -1,5 +1,6 @@
-import { Box, Card, CardBody, CardFooter, Text } from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function TodayEventCard({ numberOfEventsToday, todayEvents }) {
   let shortTodayEvents = todayEvents;
@@ -8,10 +9,10 @@ export default function TodayEventCard({ numberOfEventsToday, todayEvents }) {
   }
 
   return (
-    <Card className="flex w-full bg-opacity-50 bg-stone-50 border-l-4 border-red-300 min-h-full">
+    <Card className="flex w-full bg-opacity-50 bg-stone-50 border-l-4 border-orange-300 min-h-full">
       <CardBody>
-        <Box>
-          <Text size="lg" fontWeight="bold" className="mb-3">
+        <Flex flexDir="column" gap={3}>
+          <Text size="lg" fontWeight="bold">
             Events Today
           </Text>
           {numberOfEventsToday === 0 ? (
@@ -20,18 +21,23 @@ export default function TodayEventCard({ numberOfEventsToday, todayEvents }) {
             shortTodayEvents.map((event, i) => {
               return (
                 <Text key={i} fontSize="sm">
-                  {event.events.name}
+                  {i + 1}. {event.events.name}
                 </Text>
               );
             })
           )}
-        </Box>
+        </Flex>
       </CardBody>
       <CardFooter>
         {numberOfEventsToday > 2 && (
-          <Link href="/dashboard/manage">
-            <Text fontSize="sm">Show more...</Text>
-          </Link>
+          <Flex className="w-full" flexDir="row-reverse">
+            <Link href="/dashboard/manage">
+              <Flex gap={2} className="hover:font-bold">
+                <Text fontSize="sm">Show more</Text>
+                <FaArrowRight size={14} className="mt-1" />
+              </Flex>
+            </Link>
+          </Flex>
         )}
       </CardFooter>
     </Card>

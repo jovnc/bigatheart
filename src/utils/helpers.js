@@ -58,3 +58,53 @@ export function getTodayDate() {
 
   return formattedDate;
 }
+
+export function sortByDate(dataArr) {
+  function compare(a, b) {
+    const aTime = new Date(a.events.date);
+    const bTime = new Date(b.events.date);
+
+    if (aTime > bTime) {
+      return 1;
+    }
+    if (aTime < bTime) {
+      return -1;
+    }
+    return 0;
+  }
+
+  return dataArr.sort(compare);
+}
+
+export function eventsPerMonthGraph(dataArr) {
+  const output = [];
+  const today = new Date();
+  const currMonth = today.getMonth();
+
+  for (let i = currMonth - 6; i <= currMonth; i++) {
+    let monthString = today.toLocaleString("default", { month: "short" });
+    createAndPush(monthString, getTotalHours(i));
+  }
+
+  return output;
+
+  function createAndPush(name, uv) {
+    let obj = {};
+    obj.name = name;
+    obj.uv = uv;
+    output.append(obj);
+  }
+
+  function getTotalHours(month) {
+    function acc(next, acc) {
+      let eventDate = new Date(next.events.date);
+      let eventMonth = eventDate.getTime();
+      if (eventMonth == month) {
+        return Math.floor(next.events.duration / 60) + acc;
+      } else {
+        return acc;
+      }
+    }
+    return dataArr.reduce(acc, 0);
+  }
+}

@@ -120,8 +120,6 @@ export async function registerForEvent(data, id) {
   // generate invitation
   const url = await generateInvitation(displayName, name, date, time);
 
-  console.log(url);
-
   // insert data into eventinfo table
   const { data: eventData, error: registerEventError } = await supabase
     .from("eventinfo")
@@ -271,4 +269,32 @@ export async function getEventInfoById(id) {
   if (getEventInfoError) throw new Error(getEventInfoError.message);
 
   return getEventInfo[0];
+}
+
+export async function getUnregisteredEvents() {}
+
+export async function getAllEventsAndVolunteers() {
+  const { data: eventData, error: getDataError } = await supabase
+    .from("eventinfo")
+    .select(
+      `remarks, attended, finished, volunteer_id, event_id, events!inner(name, date, time), users!inner(first_name, last_name)`
+    );
+
+  if (getDataError) throw new Error(getDataError.message);
+
+  return { eventData };
+}
+
+export async function adminDeleteEvent(eventid, volunteerid) {
+  const { data, error } = await supabase
+    .from("eventinfo")
+    .delete()
+    .eq("volunteer_id", volunteerid)
+    .eq("event_id", eventid);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/manage");
+
+  return { error };
 }

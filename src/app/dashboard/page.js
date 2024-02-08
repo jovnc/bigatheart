@@ -12,11 +12,14 @@ import {
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
 import WelcomeBackCard from "@components/dashboard/WelcomeBackCard";
-import { getTodayDate } from "@utils/helpers";
+import { getTodayDate, sortByDate } from "@utils/helpers";
 
 export default async function page() {
   // Getting event details
-  const { data, error } = await getMyEvents();
+  const res = await getMyEvents();
+  if (!res) return null;
+
+  const { data, error } = res;
   if (error) return <div>Error retrieiving events. {error.message}</div>;
 
   // Getting user details
@@ -25,19 +28,26 @@ export default async function page() {
   // filter events by today's date
   const date = getTodayDate();
   const todayEvents = data.filter((event) => {
-    return event.events.date !== date;
+    return event.events.date === date;
   });
   const numberOfEventsToday = todayEvents.length;
 
   // filter events by attended
   const attendedEvents = data.filter((event) => event.attended);
   const numEventsAttended = attendedEvents.length;
-  const hoursVolunteered =
-    attendedEvents.reduce((a, b) => a + b.events.duration, 0) / 60;
+  const minsVolunteered = attendedEvents.reduce(
+    (a, b) => a + b.events.duration,
+    0
+  );
   const peopleImpacted = attendedEvents.reduce(
     (a, b) => a + b.events.peopleImpacted,
     0
   );
+
+  // sort events by date
+  const sortedEvents = sortByDate(data);
+
+  //
 
   return (
     <div className="flex-col flex gap-y-5 w-full">
@@ -53,7 +63,7 @@ export default async function page() {
         <GridItem>
           <QuickStatsCard
             numEventsAttended={numEventsAttended}
-            hoursVolunteered={hoursVolunteered}
+            minsVolunteered={minsVolunteered}
             peopleImpacted={peopleImpacted}
           />
         </GridItem>

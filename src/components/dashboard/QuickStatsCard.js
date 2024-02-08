@@ -15,7 +15,7 @@ import { FaCalendar, FaRegClock } from "react-icons/fa";
 
 export default function QuickStatsCard({
   numEventsAttended,
-  hoursVolunteered,
+  minsVolunteered,
   peopleImpacted,
 }) {
   return (
@@ -39,8 +39,8 @@ export default function QuickStatsCard({
           </Grid>
           <Grid templateColumns="2fr 1fr" gap={4}>
             <GridItem>
-              <Text fontSize="xs">Hours Volunteered</Text>
-              <Heading size="md">{hoursVolunteered}</Heading>
+              <Text fontSize="xs">Mins Volunteered</Text>
+              <Heading size="md">{minsVolunteered}</Heading>
             </GridItem>
             <GridItem
               style={{

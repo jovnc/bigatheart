@@ -6,8 +6,6 @@ import {
   Image,
   Text,
   Flex,
-  Spacer,
-  Box,
 } from "@chakra-ui/react";
 import ConfirmMyAttendanceButton from "./ConfirmMyAttendanceButton";
 import UnregisterEventButton from "./UnregisterEventButton";

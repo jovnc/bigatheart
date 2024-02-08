@@ -6,6 +6,7 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function registerAccount({
   firstName,
@@ -108,5 +109,5 @@ export async function logUserIn({ email, password }) {
 
   revalidatePath("/");
 
-  return error;
+  return { error };
 }

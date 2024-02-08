@@ -92,9 +92,11 @@ export default function UpdateAvatarForm() {
                 );
               } else {
                 return (
-                  <Tooltip label={`Requires ${avatar.cost} mins to unlock`}>
+                  <Tooltip
+                    label={`Requires ${avatar.cost} mins to unlock`}
+                    key={i}
+                  >
                     <Image
-                      key={i}
                       src={avatar.url}
                       alt="profile photo"
                       value={avatar.url}

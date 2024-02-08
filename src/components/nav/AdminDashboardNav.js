@@ -1,15 +1,10 @@
 "use client";
 
 import { Divider, Flex } from "@chakra-ui/react";
-import {
-  FiMenu,
-  FiHome,
-  FiCalendar,
-  FiBriefcase,
-  FiSettings,
-} from "react-icons/fi";
+import { FiHome, FiCalendar, FiBriefcase } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
+import { TiTickOutline } from "react-icons/ti";
 
 import UserProfileNav from "./UserProfileNav";
 
@@ -31,16 +26,19 @@ export default function AdminDashboardNav({ avatar, displayName, role }) {
         <NavItem icon={FiHome} title="Admin Dashboard" linkTo="/admin" />
         <NavItem
           icon={FiCalendar}
-          title="Approve Attendance"
+          title="Manage Events"
           linkTo="/admin/manage"
         />
-
+        <NavItem
+          icon={TiTickOutline}
+          title="Approve Attendance"
+          linkTo="/admin/attendance"
+        />
         <NavItem
           icon={FiBriefcase}
           title="Create Event"
           linkTo="/admin/create"
         />
-        {/* <NavItem icon={FiSettings} title="Settings" linkTo="/admin/settings" /> */}
       </Flex>
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>

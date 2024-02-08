@@ -1,8 +1,7 @@
 "use client";
 
 import { logUserIn } from "@actions/authActions";
-import { Grid, GridItem, Link, Text, Image } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { Grid, GridItem, Link, Text, Image, Spinner } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -13,13 +12,10 @@ export default function page() {
     formState: { errors },
   } = useForm();
 
-  const router = useRouter();
-
   const action = handleSubmit(async (data) => {
     try {
       const res = logUserIn(data);
       toast.success("Successfully logged user in");
-      router.push("/dashboard");
     } catch (error) {
       toast.error(error.message);
     }

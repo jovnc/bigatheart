@@ -23,14 +23,16 @@ export default async function RootLayout({ children }) {
             <div className="main">
               <div className="gradient" />
             </div>
+
             <main className="app w-full">
               <Toaster position="top-center" />
               <NavWrapper />
               {children}
             </main>
             <div className="flex-grow"></div>
-
-            <Footer />
+            <div className="app w-full">
+              <Footer />
+            </div>
           </Providers>
         </EdgeStoreProvider>
       </body>

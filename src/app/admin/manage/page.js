@@ -1,16 +1,14 @@
-import { getPendingApprovalEvents } from "@actions/eventActions";
-import EventAttendanceList from "@components/attendance/EventAttendanceList";
-import NoPending from "@components/attendance/NoPending";
+import { getAllEventsAndVolunteers } from "@actions/eventActions";
+import { Flex } from "@chakra-ui/react";
+import ManageEventCard from "@components/admin/ManageEventCard";
 
 export default async function page() {
-  const { data: pendingEvents, error: pendingEventsError } =
-    await getPendingApprovalEvents();
-
-  if (pendingEvents.length === 0) return <NoPending />;
+  // need to fetch all data for all volunteers and all events
+  const { eventData } = await getAllEventsAndVolunteers();
 
   // Group By Events
-  var groupedEventsArray = Object.values(
-    pendingEvents.reduce(function (acc, obj) {
+  const groupedEventsArray = Object.values(
+    eventData.reduce(function (acc, obj) {
       var eventName = obj.events.name;
       if (!acc[eventName]) {
         acc[eventName] = [];
@@ -22,9 +20,17 @@ export default async function page() {
 
   return (
     <div className="w-full">
-      {groupedEventsArray.map((event, i) => {
-        return <EventAttendanceList key={i} event={event} />;
-      })}
+      <Flex flexDir="column" gap={4}>
+        {groupedEventsArray.map((event, i) => {
+          return (
+            <ManageEventCard
+              key={i}
+              eventName={event[0].events.name}
+              event={event}
+            />
+          );
+        })}
+      </Flex>
     </div>
   );
 }

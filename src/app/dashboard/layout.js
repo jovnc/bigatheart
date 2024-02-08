@@ -5,6 +5,8 @@ import { getUserDetails } from "@actions/authActions";
 
 export default async function RootLayout({ children }) {
   const res = await getUserDetails();
+
+  if (!res) return null;
   const { displayName, avatar, role } = res;
 
   return (

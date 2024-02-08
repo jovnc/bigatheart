@@ -14,6 +14,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Flex,
 } from "@chakra-ui/react";
 import { createEventAction } from "@actions/eventActions";
 import toast from "react-hot-toast";
@@ -298,19 +299,16 @@ export default function CreateEventForm() {
         </FormErrorMessage>
       </FormControl>
 
-      <Grid templateColumns="1fr 1fr" gap={8}>
-        <Button mt={8} isLoading={isSubmitting} className="red_outline_btn">
-          Preview
-        </Button>
+      <Flex className="mt-5">
         <Button
-          mt={8}
           isLoading={isSubmitting}
           type="submit"
-          className="red_btn"
+          className="border border-red-300 w-full hover:bg-red-500 hover:text-white"
+          fontSize="sm"
         >
           Submit
         </Button>
-      </Grid>
+      </Flex>
     </form>
   );
 }
