@@ -5,10 +5,11 @@ import {
   Stack,
   Image,
   Text,
-  Button,
   Divider,
+  Flex,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { CiClock1, CiLocationOn } from "react-icons/ci";
 
 export default function EventCard({
   date,
@@ -26,7 +27,7 @@ export default function EventCard({
         overflow="hidden"
         variant="elevated"
         mb="5"
-        className="hover:bg-red-100 hover:bg-opacity-40 bg-stone-50 bg-opacity-50"
+        className="hover:shadow-lg bg-stone-50 bg-opacity-50"
       >
         <Image
           objectFit="cover"
@@ -41,24 +42,36 @@ export default function EventCard({
 
         <Stack className="w-full">
           <CardBody>
-            <Text fontSize="xs" py="2">
-              {date} | {time}
-            </Text>
-            <Text fontSize="xl" fontWeight="bold">
+            <Flex justify="space-between">
+              <Flex gap={1} pb={2}>
+                <CiClock1 />
+                <Text fontSize="xs">
+                  {date} | {time}
+                </Text>
+              </Flex>
+              <Flex gap={1} pb={2}>
+                <CiLocationOn />
+                <Text fontSize="xs">Location: {location}</Text>
+              </Flex>
+            </Flex>
+            <Text fontSize="lg" fontWeight="bold">
               {name}
-            </Text>
-            <Text fontSize="xs" py="2">
-              Location: {location}
             </Text>
           </CardBody>
           <Divider />
           <CardFooter>
-            <Button
-              className="border border-red-500 hover:bg-red-400 w-full"
-              size="sm"
-            >
-              <Link href={`/dashboard/events/${id}`}>View Event</Link>
-            </Button>
+            <Flex className="w-full" justify="flex-end">
+              <button
+                className="border border-slate-500 hover:bg-slate-400 w-1/2 px-2 py-1 rounded-lg"
+                size="sm"
+              >
+                <Link href={`/dashboard/events/${id}`}>
+                  <Text fontSize="sm" fontWeight="semibold">
+                    View Event Details
+                  </Text>
+                </Link>
+              </button>
+            </Flex>
           </CardFooter>
         </Stack>
       </Card>

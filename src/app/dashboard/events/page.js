@@ -4,7 +4,6 @@ import EventCard from "@components/events/EventCard";
 import { convertToAMPM, convertDateFormat } from "@utils/helpers";
 
 export default async function page() {
-  // TODO: implement error handling for getEvents
   const { getEventError, eventData } = await getEvents();
 
   if (getEventError) {

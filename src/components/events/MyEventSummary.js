@@ -1,4 +1,14 @@
-import { Box, Card, CardBody, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+} from "@chakra-ui/react";
+import { TiTickOutline } from "react-icons/ti";
+import { FaCalendarDays } from "react-icons/fa6";
 
 export default function MyEventSummary({ totalEvents, attendedEvents }) {
   return (
@@ -6,30 +16,30 @@ export default function MyEventSummary({ totalEvents, attendedEvents }) {
       <GridItem>
         <Card className="flex mt-5 bg-stone-50 bg-opacity-50 border-l-4 border-blue-300">
           <CardBody>
-            <Box>
-              <Text size="2xl" fontWeight="bold">
-                Total
+            <Flex justify="space-between">
+              <Flex gap={1}>
+                <FaCalendarDays size={16} />
+                <Text fontSize="sm">Registered Events</Text>
+              </Flex>
+              <Text fontSize="sm" fontWeight="bold">
+                {totalEvents}
               </Text>
-              <Text size="md">
-                You registered for{" "}
-                <span className="font-bold">{totalEvents}</span> Event(s)
-              </Text>
-            </Box>
+            </Flex>
           </CardBody>
         </Card>
       </GridItem>
       <GridItem>
-        <Card className="flex mt-5 bg-stone-50 bg-opacity-50 border-l-4 border-red-300">
+        <Card className="flex mt-5 bg-stone-50 bg-opacity-50 border-l-4 border-green-300">
           <CardBody>
-            <Box>
-              <Text size="2xl" fontWeight="bold">
-                Attended
+            <Flex justify="space-between">
+              <Flex gap={1}>
+                <TiTickOutline size={18} />
+                <Text fontSize="sm">Attended Events</Text>
+              </Flex>
+              <Text fontSize="sm" fontWeight="bold">
+                {attendedEvents}
               </Text>
-              <Text size="md">
-                You have attended{" "}
-                <span className="font-bold">{attendedEvents}</span> Event(s)
-              </Text>
-            </Box>
+            </Flex>
           </CardBody>
         </Card>
       </GridItem>

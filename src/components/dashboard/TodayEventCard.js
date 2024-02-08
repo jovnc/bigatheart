@@ -17,8 +17,12 @@ export default function TodayEventCard({ numberOfEventsToday, todayEvents }) {
           {numberOfEventsToday === 0 ? (
             <Text fontSize="sm">You have no events today!</Text>
           ) : (
-            shortTodayEvents.map((event) => {
-              return <Text fontSize="sm">{event.events.name}</Text>;
+            shortTodayEvents.map((event, i) => {
+              return (
+                <Text key={i} fontSize="sm">
+                  {event.events.name}
+                </Text>
+              );
             })
           )}
         </Box>

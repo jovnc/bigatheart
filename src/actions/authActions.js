@@ -65,6 +65,7 @@ export async function registerAccount({
 
 export async function getUserDetails() {
   const supabase = createServerActionClient({ cookies });
+
   const {
     data: { user },
   } = await supabase.auth.getUser();

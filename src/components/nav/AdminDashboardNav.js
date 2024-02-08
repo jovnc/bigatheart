@@ -40,7 +40,7 @@ export default function AdminDashboardNav({ avatar, displayName, role }) {
           title="Create Event"
           linkTo="/admin/create"
         />
-        <NavItem icon={FiSettings} title="Settings" linkTo="/admin/settings" />
+        {/* <NavItem icon={FiSettings} title="Settings" linkTo="/admin/settings" /> */}
       </Flex>
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>

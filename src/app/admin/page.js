@@ -17,10 +17,13 @@ import WelcomeAdminCard from "@components/admin/WelcomeAdminCard";
 export default async function page() {
   // Getting user details
   const { displayName, avatar } = await getUserDetails();
+  // const displayName = "test";
+  // const avatar = "test";
 
   // Get requests that are marked as attended by user and require admin approval
   const { data: pendingEvents, error: getPendingError } =
     await getPendingApprovalEvents();
+  // const pendingEvents = [];
 
   const numEventsPending = pendingEvents.length;
 

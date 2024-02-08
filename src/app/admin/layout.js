@@ -1,17 +1,12 @@
 import { getUserDetails } from "@actions/authActions";
 import { Grid, GridItem } from "@chakra-ui/react";
 import AdminDashboardNav from "@components/nav/AdminDashboardNav";
-import { redirect } from "next/navigation";
 
 export default async function RootLayout({ children }) {
   const res = await getUserDetails();
 
-  // handle case: user not signed in
-  if (!res) redirect("/");
-
   // destructure res object
   const { displayName, avatar, role } = res;
-  if (role !== "Admin") redirect("/");
 
   return (
     <div className="w-full">
@@ -22,6 +17,7 @@ export default async function RootLayout({ children }) {
             avatar={avatar}
             role={role}
           />
+          {/* <AdminDashboardNav /> */}
         </GridItem>
         <GridItem>{children}</GridItem>
       </Grid>

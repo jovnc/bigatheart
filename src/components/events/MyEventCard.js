@@ -14,6 +14,7 @@ import UnregisterEventButton from "./UnregisterEventButton";
 import { unregisterEvent, updateMyAttendance } from "@actions/eventActions";
 import GenerateCertificateButton from "@components/certificate/GenerateCertificateButton";
 import PendingSign from "./PendingSign";
+import { CiClock1, CiLocationOn } from "react-icons/ci";
 
 export default function MyEventCard({
   date,
@@ -35,7 +36,7 @@ export default function MyEventCard({
         variant="elevated"
         mb="5"
         className={
-          "bg-stone-50 bg-opacity-50" +
+          "bg-stone-50 bg-opacity-50 hover:shadow-lg" +
           (attended && " border-2 border-green-200")
         }
       >
@@ -52,15 +53,23 @@ export default function MyEventCard({
 
         <Stack className="w-full">
           <CardBody>
-            <Text fontSize="xs" py="2">
-              {date} | {time}
-            </Text>
+            <Flex justify="space-between">
+              <Flex gap={1} pb={2}>
+                <CiClock1 />
+                <Text fontSize="xs">
+                  {date} | {time}
+                </Text>
+              </Flex>
+              <Flex gap={1} pb={2}>
+                <CiLocationOn />
+                <Text fontSize="xs">Location: {location}</Text>
+              </Flex>
+            </Flex>
+
             <Text fontSize="xl" fontWeight="bold">
               {name}
             </Text>
-            <Text fontSize="xs" py="2">
-              {location}
-            </Text>
+
             <Text fontSize="xs" py="2">
               {remarks ? `Remarks: ${remarks}` : "Remarks: NIL"}
             </Text>

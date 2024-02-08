@@ -31,7 +31,6 @@ export default function Nav({ isLoggedIn: isUserLoggedIn }) {
         />
       </Link>
 
-      {/*  Desktop navigation */}
       <div className="sm:flex hidden">
         {isUserLoggedIn && pathname === "/dashboard" ? (
           <>
@@ -63,8 +62,6 @@ export default function Nav({ isLoggedIn: isUserLoggedIn }) {
           </>
         )}
       </div>
-
-      {/* TODO: Mobile navigation */}
     </nav>
   );
 }
