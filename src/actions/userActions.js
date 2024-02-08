@@ -1,6 +1,7 @@
 "use server";
 
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function updateAvatar(currImage) {
@@ -18,6 +19,8 @@ export async function updateAvatar(currImage) {
     .select();
 
   if (updateAvatarError) throw new Error(updateAvatarError.message);
+
+  revalidatePath("/dashboard/settings");
 
   return { data, updateAvatarError };
 }

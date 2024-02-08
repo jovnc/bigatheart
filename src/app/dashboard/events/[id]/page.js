@@ -1,18 +1,22 @@
+"use client";
 import { getEventById } from "@actions/eventActions";
+import { Spinner } from "@chakra-ui/react";
 import EventPage from "@components/events/EventPage";
+import { useEffect, useState } from "react";
 
 export default async function page({ params }) {
-  const res = await getEventById(params.id);
+  const [eventData, setEventData] = useState();
 
-  const { eventData, getEventError } = res;
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getEventById(params.id);
+      const { eventData: eventDataFetch, getEventError } = res;
+      setEventData(eventDataFetch);
+    };
+    fetchData();
+  }, []);
 
-  if (getEventError) {
-    return <div>Error fetching data</div>;
-  }
-
-  if (eventData.length === 0) {
-    return <div>No such event found</div>;
-  }
+  if (!eventData) return <Spinner />;
 
   const {
     name,

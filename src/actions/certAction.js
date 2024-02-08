@@ -75,8 +75,6 @@ export async function generateCertificate(eventid, volunteerid) {
       stream.on("finish", async function () {
         const blob = stream.toBlob("application/pdf");
 
-        console.log("uploading to edgestore");
-
         // upload blob to EdgeStore object store
         const res = await backendClient.publicCertificates.upload({
           content: {
@@ -85,18 +83,12 @@ export async function generateCertificate(eventid, volunteerid) {
           },
         });
 
-        console.log("uploaded to edgestore");
-
-        console.log("updating supabase");
-
         // upload res.url to Supabase EventInfo table to prevent reupload
         const { data: uploadData, error: uploadError } = await supabase
           .from("eventinfo")
           .update({ certificate: res.url })
           .eq("volunteer_id", volunteerid)
           .eq("event_id", eventid);
-
-        console.log("updated supabase");
 
         if (uploadError) throw new Error(uploadError.message);
 
@@ -113,4 +105,53 @@ export async function generateCertificate(eventid, volunteerid) {
   });
 }
 
-export async function generateInvitation(eventid, volunteerid) {}
+export async function generateInvitation(
+  name,
+  eventName,
+  eventDate,
+  eventTime
+) {
+  // create new PDF document to write onto using pdfkit
+  const doc = new PDFDocument({
+    font: "./public/assets/fonts/Butler_Regular.otf",
+    layout: "landscape",
+    size: "A4",
+  });
+
+  // write user data into the PDF certificate
+  const stream = doc.pipe(BlobStream());
+
+  doc.image("./public/assets/images/invitation.jpg", 0, 0, { width: 842 });
+  doc.font("./public/assets/fonts/Butler_Regular.otf");
+  doc.fontSize(35).text(name, 95, 230, {});
+  doc.fontSize(45).text(eventName, 95, 320, {});
+  doc.fontSize(17).text(eventDate, 155, 385, {});
+  doc.fontSize(17).text(eventTime, 152, 425, {});
+  doc.end();
+
+  // upload BLOB into EdgeStore storage and return res
+  return new Promise((resolve, reject) => {
+    try {
+      stream.on("finish", async function () {
+        const blob = stream.toBlob("application/pdf");
+
+        // upload blob to EdgeStore object store
+        const res = await backendClient.publicInvitations.upload({
+          content: {
+            blob: blob,
+            extension: "pdf",
+          },
+        });
+
+        // return url of the file
+        resolve(res.url);
+      });
+    } catch (error) {
+      reject(error);
+    }
+
+    stream.on("error", (error) => {
+      reject(error);
+    });
+  });
+}

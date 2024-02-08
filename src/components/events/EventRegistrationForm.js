@@ -16,6 +16,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -32,12 +33,14 @@ export default function EventRegistrationForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+  const router = useRouter();
 
   const action = handleSubmit(async (data) => {
     try {
       const res = await registerForEvent(data, id);
       toast.success(`Successfully registered for ${name}`);
       onClose();
+      router.push(`/dashboard/events/${id}/registered`);
     } catch (error) {
       onClose();
       toast.error(error.message);

@@ -3,6 +3,7 @@
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { generateInvitation } from "./certAction";
 
 const supabase = createServerActionClient({ cookies });
 
@@ -86,12 +87,40 @@ export async function registerForEvent(data, id) {
   // check eventinfo table if user is already signed up
   const { data: checkRegistration, error: checkingError } = await supabase
     .from("eventinfo")
-    .select("volunteer_id, event_id")
+    .select(
+      "volunteer_id, event_id, users!inner(first_name, last_name), events!inner(name, date, time)"
+    )
     .eq("volunteer_id", userid)
     .eq("event_id", id);
 
+  if (checkingError) throw new Error(checkingError.message);
+
   if (checkRegistration.length > 0)
     throw new Error("Already registered for Event");
+
+  const { data: getUsername, error: checkUserError } = await supabase
+    .from("users")
+    .select("first_name, last_name")
+    .eq("user_id", userid);
+
+  if (checkUserError) throw new Error(checkUserError.message);
+
+  const { data: getEvent, error: checkEventError } = await supabase
+    .from("events")
+    .select("name, date, time")
+    .eq("id", id);
+
+  if (checkEventError) throw new Error(checkEventError.message);
+
+  // destructure data
+  const { first_name, last_name } = getUsername[0];
+  const displayName = `${first_name} ${last_name}`;
+  const { name, date, time } = getEvent[0];
+
+  // generate invitation
+  const url = await generateInvitation(displayName, name, date, time);
+
+  console.log(url);
 
   // insert data into eventinfo table
   const { data: eventData, error: registerEventError } = await supabase
@@ -100,6 +129,7 @@ export async function registerForEvent(data, id) {
       volunteer_id: userid,
       event_id: id,
       remarks: data.remarks,
+      invitation: url,
     })
     .select();
 
@@ -221,4 +251,24 @@ export async function approveEvent(event_id, volunteer_id) {
   revalidatePath("/admin/manage");
 
   return { error };
+}
+
+export async function getEventInfoById(id) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { id: userid } = user;
+
+  const { data: getEventInfo, error: getEventInfoError } = await supabase
+    .from("eventinfo")
+    .select("invitation")
+    .eq("volunteer_id", userid)
+    .eq("event_id", id);
+
+  if (getEventInfoError) throw new Error(getEventInfoError.message);
+
+  return getEventInfo[0];
 }

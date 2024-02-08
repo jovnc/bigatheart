@@ -19,7 +19,7 @@ export default function UpdateAvatarForm() {
     if (updateAvatarError) {
       toast.error("Failed to update Avatar");
     } else {
-      toast.success("Successfully updated Avatar, refresh page to see changes");
+      toast.success("Successfully updated Avatar");
     }
   };
 
@@ -30,9 +30,8 @@ export default function UpdateAvatarForm() {
         <Flex>
           {avatarList.map((avatar, i) => {
             return (
-              <Box py="3" pr="3">
+              <Box py="3" pr="3" key={i}>
                 <Image
-                  key={i}
                   src={avatar}
                   alt="profile photo"
                   value="/assets/images/bear1.jpg"
