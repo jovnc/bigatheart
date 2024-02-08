@@ -1,7 +1,9 @@
 "use client";
 import { getEventInfoById } from "@actions/eventActions";
-import { Flex, Spinner, Text } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
 
 export default function page({ params }) {
   const [event, setEvent] = useState();
@@ -19,7 +21,23 @@ export default function page({ params }) {
       className="shadow-md bg-stone-50 bg-opacity-50 w-full  p-5 rounded-md"
       flexDir="column"
     >
-      <Text align="center" fontWeight="bold">
+      <Flex justify="space-between">
+        <Button size="sm">
+          <Link href="/dashboard/events">
+            <BiArrowBack className="inline scale-150 mr-2" />
+            <Text className="inline" fontSize="sm">
+              Back
+            </Text>
+          </Link>
+        </Button>
+        <Button
+          className="px-2 py-1 border border-slate-400 rounded-lg"
+          size="sm"
+        >
+          View all my Events
+        </Button>
+      </Flex>
+      <Text align="center" fontWeight="bold" className="mt-5">
         Thank you for registering for the event!
       </Text>
       {event?.invitation ? (
@@ -34,9 +52,6 @@ export default function page({ params }) {
           <Spinner className="mx-auto m-5" />
         </Flex>
       )}
-      <button className="px-2 py-1 border border-slate-400 rounded-lg mx-auto">
-        View all my Events
-      </button>
     </Flex>
   );
 }
