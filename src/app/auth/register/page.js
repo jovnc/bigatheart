@@ -3,6 +3,8 @@
 import { registerAccount } from "@actions/authActions";
 import {
   Flex,
+  FormControl,
+  FormErrorMessage,
   Grid,
   GridItem,
   HStack,
@@ -10,6 +12,7 @@ import {
   Link,
   Radio,
   RadioGroup,
+  Select,
   Spinner,
   Text,
 } from "@chakra-ui/react";
@@ -18,6 +21,24 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaMale, FaFemale, FaGenderless } from "react-icons/fa";
+
+const OCCUPATIONS = ["Student", "Unemployed", "Employed", "Others"];
+const IMMIGRATION_STATUS = [
+  "Singapore Citizen",
+  "Singapore PR",
+  "Student Pass",
+  "Work Pass",
+  "Foreigner",
+  "Others",
+];
+const EDUCATION = [
+  "PSLE",
+  "O Levels",
+  "A Levels",
+  "University",
+  "Post Graduate",
+  "Others",
+];
 
 export default function page() {
   const {
@@ -189,6 +210,11 @@ export default function page() {
               type="tel"
               {...register("phone", {
                 required: "Phone Number is required",
+                minLength: 8,
+                pattern: {
+                  value: /^\d{8}$/,
+                  message: "Not a valid SG phone number",
+                },
               })}
             />
             {errors.phone && (
@@ -216,39 +242,63 @@ export default function page() {
             )}
           </div>
 
-          <div className="mb-4">
+          <FormControl
+            isInvalid={errors.occupation}
+            isRequired
+            className="mb-5"
+          >
             <label className="block text-gray-700 text-sm mb-2">
               <span className="text-red-300">* </span>Occupation
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
+            <Select
+              placeholder="Select option"
               {...register("occupation", {
-                required: "Occupation is required",
+                required: "This is required",
               })}
-            />
-            {errors.occupation && (
-              <p className="text-red-500 text-xs italic">
-                {errors.occupation.message}
-              </p>
-            )}
-          </div>
+            >
+              {/* TODO: fetch options from database*/}
+              {OCCUPATIONS.map((category, i) => {
+                return (
+                  <option key={i} value={category}>
+                    {category}
+                  </option>
+                );
+              })}
+            </Select>
 
-          <div className="mb-4">
+            <FormErrorMessage>
+              {errors.occupation && errors.occupation.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl
+            isInvalid={errors.immigration}
+            isRequired
+            className="mb-5"
+          >
             <label className="block text-gray-700 text-sm mb-2">
               <span className="text-red-300">* </span>Immigration Status
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              {...register("immigration")}
-            />
-            {errors.immigration && (
-              <p className="text-red-500 text-xs italic">
-                {errors.immigration.message}
-              </p>
-            )}
-          </div>
+            <Select
+              placeholder="Select option"
+              {...register("immigration", {
+                required: "This is required",
+              })}
+            >
+              {/* TODO: fetch options from database*/}
+              {IMMIGRATION_STATUS.map((category, i) => {
+                return (
+                  <option key={i} value={category}>
+                    {category}
+                  </option>
+                );
+              })}
+            </Select>
+
+            <FormErrorMessage>
+              {errors.immigration && errors.immigration.message}
+            </FormErrorMessage>
+          </FormControl>
 
           <Grid
             templateColumns={{ base: "1fr", md: "1fr 1fr" }}
@@ -271,21 +321,35 @@ export default function page() {
               )}
             </GridItem>
             <GridItem>
-              <label className="block text-gray-700 text-sm mb-2">
-                <span className="text-red-300">* </span>Educational Background
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                {...register("educationalBackground", {
-                  required: "This field is required",
-                })}
-              />
-              {errors.educationalBackground && (
-                <p className="text-red-500 text-xs italic">
-                  {errors.educationalBackground.message}
-                </p>
-              )}
+              <FormControl
+                isInvalid={errors.educationalBackground}
+                isRequired
+                className="mb-5"
+              >
+                <label className="block text-gray-700 text-sm mb-2">
+                  <span className="text-red-300">* </span>Educational Background
+                </label>
+                <Select
+                  placeholder="Select option"
+                  {...register("educationalBackground", {
+                    required: "This is required",
+                  })}
+                >
+                  {/* TODO: fetch options from database*/}
+                  {EDUCATION.map((category, i) => {
+                    return (
+                      <option key={i} value={category}>
+                        {category}
+                      </option>
+                    );
+                  })}
+                </Select>
+
+                <FormErrorMessage>
+                  {errors.educationalBackground &&
+                    errors.educationalBackground.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
           </Grid>
 

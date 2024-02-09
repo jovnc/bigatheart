@@ -1,6 +1,7 @@
 import { getUserDetails } from "@actions/authActions";
 import { getAllEvents } from "@actions/eventActions";
 import { Grid, GridItem } from "@chakra-ui/react";
+import AdminMinsByGenderCard from "@components/admin/AdminMinsByGenderCard";
 import AdminMinsByMonthCard from "@components/admin/AdminMinsByMonthCard";
 import PendingRequestCard from "@components/admin/PendingRequestCard";
 import WelcomeAdminCard from "@components/admin/WelcomeAdminCard";
@@ -33,7 +34,7 @@ export default async function page() {
           <AdminMinsByMonthCard events={completedEvents} />
         </GridItem>
         <GridItem>
-          <AdminMinsByMonthCard events={completedEvents} />
+          <AdminMinsByGenderCard events={completedEvents} />
         </GridItem>
       </Grid>
     </div>

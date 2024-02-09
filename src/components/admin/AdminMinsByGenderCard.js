@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
-import { minsPerDemographic, minsPerMonthGraph } from "@utils/helpers";
+import { minsPerDemographic } from "@utils/helpers";
 import {
   Bar,
   BarChart,
@@ -13,16 +13,15 @@ import {
   YAxis,
 } from "recharts";
 
-export default function AdminMinsByMonthCard({ events }) {
-  const cleanedData = minsPerMonthGraph(events);
-  console.log(cleanedData);
+export default function AdminMinsByGenderCard({ events }) {
+  const cleanedData = minsPerDemographic(events, "gender");
 
   return (
     <Card className="flex w-full border-l-4 border-blue-200">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">
-            Total Mins Volunteered by Month
+            Total Mins Volunteered by Gender
           </Text>
 
           {events.length === 0 && (

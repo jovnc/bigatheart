@@ -215,7 +215,7 @@ export async function getAllEvents() {
       finished,
       attended,
       users!inner(first_name, last_name, avatar, gender),
-      events!inner(name, date, time)
+      events!inner(name, date, time, duration)
     `
   );
 

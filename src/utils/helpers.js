@@ -212,3 +212,64 @@ export function topCategoriesGraph(dataArr) {
     return sum;
   }
 }
+
+export function minsPerDemographic(dataArr, category) {
+  if (dataArr.length == 0) {
+    return null;
+  }
+  const output = [];
+
+  if (category == "gender") {
+    let maleMins = 0;
+    let femaleMins = 0;
+    let othersMins = 0;
+
+    for (let i = 0; i < dataArr.length; i++) {
+      switch (dataArr[i].users.gender) {
+        case "Male":
+          maleMins += dataArr[i].events.duration;
+          break;
+        case "Female":
+          femaleMins += dataArr[i].events.duration;
+          break;
+        case "Others":
+          othersMins += dataArr[i].events.duration;
+          break;
+      }
+    }
+
+    createAndPush("Male", maleMins);
+    createAndPush("Female", femaleMins);
+    createAndPush("Others", othersMins);
+  } else if (category == "employment") {
+    let employedMins = 0;
+    let unemployedMins = 0;
+    let studentMins = 0;
+
+    for (let i = 0; i < dataArr.length; i++) {
+      switch (dataArr[i].users.employment) {
+        case "Employed":
+          employedMins += dataArr[i].events.duration;
+          break;
+        case "Unemployed":
+          unemployedMins += dataArr[i].events.duration;
+          break;
+        case "Student":
+          studentMins += dataArr[i].events.duration;
+          break;
+      }
+    }
+
+    createAndPush("Employed", employedMins);
+    createAndPush("Unemployed", unemployedMins);
+    createAndPush("Student", studentMins);
+  }
+  return output;
+
+  function createAndPush(name, uv) {
+    let obj = {};
+    obj.name = name;
+    obj.minutes = uv;
+    output.push(obj);
+  }
+}
