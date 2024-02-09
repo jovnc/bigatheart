@@ -22,6 +22,21 @@ const backendClient = initEdgeStoreClient({
 const supabase = createServerActionClient({ cookies });
 
 export async function generateCertificate(eventid, volunteerid) {
+  const path = require("path");
+  const fontPath = path.join(
+    process.cwd(),
+    "public",
+    "assets",
+    "fonts",
+    "Butler_Regular.otf"
+  );
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "assets",
+    "images",
+    "certificate.jpg"
+  );
   // check if user already generated certificate for the event
   const { data: checkData, error: checkError } = await supabase
     .from("eventinfo")
@@ -46,17 +61,17 @@ export async function generateCertificate(eventid, volunteerid) {
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: "/var/task/public/assets/fonts/butler_regular.otf",
+    font: fontPath,
     layout: "landscape",
     size: "A4",
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
-  doc.image("/var/task/public/assets/images/certificate.jpg", 0, 0, {
+  doc.image(imagePath, 0, 0, {
     width: 842,
   });
-  doc.font("/var/task/public/assets/fonts/butler_regular.otf");
+  doc.font(fontPath);
   doc.fontSize(60).text(name, 70, 265, {
     align: "center",
   });
@@ -128,9 +143,6 @@ export async function generateInvitation(
     "images",
     "invitation.jpg"
   );
-
-  console.log(fontPath);
-  console.log(imagePath);
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
