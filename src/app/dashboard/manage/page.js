@@ -41,6 +41,8 @@ export default async function page({ searchParams }) {
     filteredEvents = filteredEvents.filter((event) => {
       return !event.attended && event.finished;
     });
+  } else if (searchParams.filter == "all") {
+    // do nothing
   } else {
     // current events
     filteredEvents = filteredEvents.filter((event) => {
