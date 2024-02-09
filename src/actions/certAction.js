@@ -111,6 +111,7 @@ export async function generateInvitation(
   eventDate,
   eventTime
 ) {
+  console.log("Current directory: ", __dirname);
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
     font: "./assets/fonts/butler_regular.otf",
