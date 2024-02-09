@@ -115,7 +115,7 @@ export async function generateInvitation(
 ) {
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: "/var/task/.next/assets/fonts/butler_regular.otf",
+    font: "butler_regular.otf",
     layout: "landscape",
     size: "A4",
   });
@@ -123,10 +123,10 @@ export async function generateInvitation(
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
 
-  doc.image("/var/task/.next/assets/images/invitation.jpg", 0, 0, {
+  doc.image("invitation.jpg", 0, 0, {
     width: 842,
   });
-  doc.font("/var/task/.next/assets/fonts/butler_regular.otf");
+  doc.font("butler_regular.otf");
   doc.fontSize(35).text(name, 95, 230, {});
   doc.fontSize(20).text(eventName, 95, 320, {});
   doc.fontSize(17).text(eventDate, 155, 385, {});
