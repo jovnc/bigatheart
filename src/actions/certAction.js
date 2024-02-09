@@ -46,15 +46,15 @@ export async function generateCertificate(eventid, volunteerid) {
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: "./public/assets/fonts/Butler_Regular.otf",
+    font: "./assets/fonts/Butler_Regular.otf",
     layout: "landscape",
     size: "A4",
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
-  doc.image("./public/assets/images/certificate.jpg", 0, 0, { width: 842 });
-  doc.font("./public/assets/fonts/Butler_Regular.otf");
+  doc.image("./assets/images/certificate.jpg", 0, 0, { width: 842 });
+  doc.font("./assets/fonts/Butler_Regular.otf");
   doc.fontSize(60).text(name, 70, 265, {
     align: "center",
   });
@@ -113,7 +113,7 @@ export async function generateInvitation(
 ) {
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: "./public/assets/fonts/Butler_Regular.otf",
+    font: "./assets/fonts/Butler_Regular.otf",
     layout: "landscape",
     size: "A4",
   });
@@ -121,8 +121,8 @@ export async function generateInvitation(
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
 
-  doc.image("./public/assets/images/invitation.jpg", 0, 0, { width: 842 });
-  doc.font("./public/assets/fonts/Butler_Regular.otf");
+  doc.image("./assets/images/invitation.jpg", 0, 0, { width: 842 });
+  doc.font("./assets/fonts/Butler_Regular.otf");
   doc.fontSize(35).text(name, 95, 230, {});
   doc.fontSize(20).text(eventName, 95, 320, {});
   doc.fontSize(17).text(eventDate, 155, 385, {});
