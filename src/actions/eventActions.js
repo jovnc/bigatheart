@@ -214,6 +214,7 @@ export async function getAllEvents() {
       remarks,
       finished,
       attended,
+      reflection,
       users!inner(first_name, last_name, avatar, gender),
       events!inner(name, date, time, duration)
     `
