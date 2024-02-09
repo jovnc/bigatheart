@@ -46,17 +46,17 @@ export async function generateCertificate(eventid, volunteerid) {
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: "public/assets/fonts/butler_regular.otf",
+    font: "/var/task/public/assets/fonts/butler_regular.otf",
     layout: "landscape",
     size: "A4",
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
-  doc.image("public/assets/images/certificate.jpg", 0, 0, {
+  doc.image("/var/task/public/assets/images/certificate.jpg", 0, 0, {
     width: 842,
   });
-  doc.font("public/assets/fonts/butler_regular.otf");
+  doc.font("/var/task/public/assets/fonts/butler_regular.otf");
   doc.fontSize(60).text(name, 70, 265, {
     align: "center",
   });
@@ -115,21 +115,24 @@ export async function generateInvitation(
 ) {
   const path = require("path");
   const publicDirectory = path.resolve("public");
+  const fontsDirectory = path.resolve("fonts");
   console.log(publicDirectory);
+  console.log(fontsDirectory);
+
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
     layout: "landscape",
     size: "A4",
-    font: "public/assets/fonts/butler_regular.otf",
+    font: "/var/task/public/assets/fonts/butler_regular.otf",
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
 
-  doc.image("public/assets/images/invitation.jpg", 0, 0, {
+  doc.image("/var/task/public/assets/images/invitation.jpg", 0, 0, {
     width: 842,
   });
-  doc.font("public/assets/fonts/butler_regular.otf");
+  doc.font("/var/task/public/assets/fonts/butler_regular.otf");
   doc.fontSize(35).text(name, 95, 230, {});
   doc.fontSize(20).text(eventName, 95, 320, {});
   doc.fontSize(17).text(eventDate, 155, 385, {});
