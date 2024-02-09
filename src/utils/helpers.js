@@ -81,7 +81,6 @@ export function sortByDateAlt(dataArr) {
   function compare(a, b) {
     const aTime = new Date(`${a.date} ${a.time}`);
     const bTime = new Date(`${b.date} ${b.time}`);
-    console.log(aTime);
 
     if (aTime > bTime) {
       return -1;

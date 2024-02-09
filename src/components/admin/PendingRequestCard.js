@@ -1,4 +1,5 @@
 import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { FcCheckmark, FcHighPriority } from "react-icons/fc";
 
 export default function PendingRequestCard({ numEventsPending }) {
@@ -30,7 +31,9 @@ export default function PendingRequestCard({ numEventsPending }) {
             </Flex>
           </Box>
           <Box>
-            <Button className={"text-xs border " + buttonStyle}>View</Button>
+            <Button className={"text-xs border " + buttonStyle}>
+              <Link href="/admin/attendance">View</Link>
+            </Button>
           </Box>
         </Flex>
       </CardBody>

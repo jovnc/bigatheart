@@ -34,7 +34,7 @@ export default function page({ params }) {
           className="px-2 py-1 border border-slate-400 rounded-lg"
           size="sm"
         >
-          View all my Events
+          <Link href="/dashboard/manage">View all my Events</Link>
         </Button>
       </Flex>
       <Text align="center" fontWeight="bold" className="mt-5">
