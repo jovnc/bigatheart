@@ -118,12 +118,14 @@ export async function generateInvitation(
     process.cwd(),
     "public",
     "assets",
+    "fonts",
     "Butler_Regular.otf"
   );
   const imagePath = path.join(
     process.cwd(),
     "public",
     "assets",
+    "images",
     "invitation.jpg"
   );
 
