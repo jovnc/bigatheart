@@ -114,33 +114,36 @@ export async function generateInvitation(
   eventTime
 ) {
   const path = require("path");
-  const fontPath = "./public/assets/fonts/butler_regular.otf".replace(
-    "./public/",
-    ""
+  const fontPath = path.join(
+    process.cwd(),
+    "public",
+    "assets",
+    "Butler_Regular.otf"
   );
-  const updatedFontPath = path.resolve("./public", fontPath);
-  const imagePath = "./public/assets/images/invitation.jpg".replace(
-    "./public/",
-    ""
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "assets",
+    "invitation.jpg"
   );
-  const updatedImagePath = path.resolve("./public", imagePath);
-  console.log(updatedFontPath);
-  console.log(updatedImagePath);
+
+  console.log(fontPath);
+  console.log(imagePath);
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
     layout: "landscape",
     size: "A4",
-    font: updatedFontPath,
+    font: fontPath,
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
 
-  doc.image(updatedImagePath, 0, 0, {
+  doc.image(imagePath, 0, 0, {
     width: 842,
   });
-  doc.font(updatedFontPath);
+  doc.font(fontPath);
   doc.fontSize(35).text(name, 95, 230, {});
   doc.fontSize(20).text(eventName, 95, 320, {});
   doc.fontSize(17).text(eventDate, 155, 385, {});
