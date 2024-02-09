@@ -46,17 +46,17 @@ export async function generateCertificate(eventid, volunteerid) {
 
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
-    font: ".public/assets/fonts/butler_regular.otf",
+    font: "/assets/fonts/butler_regular.otf",
     layout: "landscape",
     size: "A4",
   });
 
   // write user data into the PDF certificate
   const stream = doc.pipe(BlobStream());
-  doc.image("./public/assets/images/certificate.jpg", 0, 0, {
+  doc.image("/assets/images/certificate.jpg", 0, 0, {
     width: 842,
   });
-  doc.font("./public/assets/fonts/butler_regular.otf");
+  doc.font("/assets/fonts/butler_regular.otf");
   doc.fontSize(60).text(name, 70, 265, {
     align: "center",
   });
