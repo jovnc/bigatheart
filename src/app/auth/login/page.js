@@ -15,7 +15,11 @@ export default function page() {
   const action = handleSubmit(async (data) => {
     try {
       const res = logUserIn(data);
-      toast.success("Successfully logged user in");
+      if (res) {
+        toast.error("Failed to Login");
+      } else {
+        toast.success("Successfully logged user in");
+      }
     } catch (error) {
       toast.error(error.message);
     }

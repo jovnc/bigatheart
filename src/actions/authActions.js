@@ -115,9 +115,7 @@ export async function logUserIn({ email, password }) {
     password,
   });
 
-  if (error) throw new Error(error.message);
-
   revalidatePath("/");
 
-  return { error };
+  return error?.message;
 }
