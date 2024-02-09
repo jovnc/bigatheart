@@ -113,6 +113,9 @@ export async function generateInvitation(
   eventDate,
   eventTime
 ) {
+  const path = require("path");
+  const publicDirectory = path.resolve("public");
+  console.log(publicDirectory);
   // create new PDF document to write onto using pdfkit
   const doc = new PDFDocument({
     layout: "landscape",
