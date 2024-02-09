@@ -3,6 +3,7 @@ import {
   Checkbox,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Textarea,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -31,7 +33,11 @@ export default function ConfirmMyAttendance({
   const action = handleSubmit(async (data) => {
     try {
       if (data.confirmAttendance) {
-        const { erro } = await updateMyAttendance(eventid, volunteerid);
+        const { error } = await updateMyAttendance(
+          eventid,
+          volunteerid,
+          data.reflection
+        );
         toast.success(
           `Confirmed attendance for event, please wait for admin to approve your request`
         );
@@ -63,7 +69,22 @@ export default function ConfirmMyAttendance({
               event, and received approval from your supervisor to confirm your
               attendance for the event.
             </Text>
-            <FormControl isInvalid={errors.confirmAttendance} isRequired mt={3}>
+            <FormLabel fontSize="sm" mt={3}>
+              Reflection
+            </FormLabel>
+            <FormControl isInvalid={errors.reflection} isRequired>
+              <Textarea
+                fontSize="sm"
+                {...register("reflection", {
+                  required: "Please do a short reflection on your experience",
+                })}
+              />
+
+              <FormErrorMessage>
+                {errors.reflection && errors.reflection.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.reflection} isRequired mt={3}>
               <Checkbox
                 size="sm"
                 {...register("confirmAttendance", {

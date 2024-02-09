@@ -89,3 +89,10 @@ export async function updateUserInfo({
 
   return error;
 }
+
+export async function getAllUsers() {
+  const supabase = createServerActionClient({ cookies });
+  const { data: users, error } = await supabase.from("users").select();
+  if (error) throw new Error(error.message);
+  return { users };
+}

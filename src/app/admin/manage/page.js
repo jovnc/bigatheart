@@ -1,10 +1,17 @@
 import { getAllEventsAndVolunteers } from "@actions/eventActions";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import ManageEventCard from "@components/admin/ManageEventCard";
 
 export default async function page() {
   // need to fetch all data for all volunteers and all events
   const { eventData } = await getAllEventsAndVolunteers();
+
+  if (eventData.length === 0)
+    return (
+      <Flex>
+        <Text>There are no events yet</Text>
+      </Flex>
+    );
 
   // Group By Events
   const groupedEventsArray = Object.values(

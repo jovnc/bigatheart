@@ -165,7 +165,7 @@ export async function getMyEvents() {
   return { data, error };
 }
 
-export async function updateMyAttendance(eventid, volunteerid) {
+export async function updateMyAttendance(eventid, volunteerid, reflection) {
   // check eventinfo table if user already confirmed attendance
   const { data: checkFinished, error: checkingError } = await supabase
     .from("eventinfo")
@@ -181,7 +181,7 @@ export async function updateMyAttendance(eventid, volunteerid) {
 
   const { error } = await supabase
     .from("eventinfo")
-    .update({ finished: true })
+    .update({ finished: true, reflection })
     .eq("volunteer_id", volunteerid)
     .eq("event_id", eventid);
 
