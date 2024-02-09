@@ -43,7 +43,7 @@ export default function EventRegistrationForm({
       router.push(`/dashboard/events/${id}/registered`);
     } catch (error) {
       onClose();
-      toast.error(error.message);
+      toast.error("You have already registered for the Event");
     }
   });
 

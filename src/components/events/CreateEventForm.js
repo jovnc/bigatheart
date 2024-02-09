@@ -41,6 +41,8 @@ export default function CreateEventForm() {
     "Special Needs",
     "Underprivileged",
     "Food",
+    "Healthcare",
+    "Others",
   ];
 
   const action = handleSubmit(async (data) => {

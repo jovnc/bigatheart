@@ -36,9 +36,12 @@ export default function page() {
       const res = await registerAccount(data);
       setIsLoading(false);
       router.push("/auth/verification");
-      toast.success("Please verify your email to complete registration");
+      toast.success(
+        "Please verify your email to complete registration and re-login"
+      );
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Error registering user, email already exists");
+      setIsLoading(false);
     }
   });
 
