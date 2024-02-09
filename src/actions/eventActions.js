@@ -206,20 +206,18 @@ export async function unregisterEvent(eventid, volunteerid) {
   return { error };
 }
 
-export async function getPendingApprovalEvents() {
-  const { data, error } = await supabase
-    .from("eventinfo")
-    .select(
-      `
+export async function getAllEvents() {
+  const { data, error } = await supabase.from("eventinfo").select(
+    `
       volunteer_id, 
       event_id, 
       remarks,
-      users!inner(first_name, last_name, avatar),
+      finished,
+      attended,
+      users!inner(first_name, last_name, avatar, gender),
       events!inner(name, date, time)
     `
-    )
-    .eq("attended", false)
-    .eq("finished", true);
+  );
 
   if (error) throw new Error(error.message);
 

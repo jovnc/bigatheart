@@ -93,3 +93,122 @@ export function sortByDateAlt(dataArr) {
 
   return dataArr.sort(compare);
 }
+
+// get the mins volunteered for the past 4 months
+
+export function minsPerMonthGraph(dataArr) {
+  const output = [];
+  const today = new Date();
+  const currMonth = today.getMonth();
+
+  for (let i = currMonth - 3; i <= currMonth; i++) {
+    let monthString = "null";
+    switch ((i + 12) % 12) {
+      case 0:
+        monthString = "Jan";
+        break;
+      case 1:
+        monthString = "Feb";
+        break;
+      case 2:
+        monthString = "Mar";
+        break;
+      case 3:
+        monthString = "Apr";
+        break;
+      case 4:
+        monthString = "May";
+        break;
+      case 5:
+        monthString = "Jun";
+        break;
+      case 6:
+        monthString = "Jul";
+        break;
+      case 7:
+        monthString = "Aug";
+        break;
+      case 8:
+        monthString = "Sep";
+        break;
+      case 9:
+        monthString = "Oct";
+        break;
+      case 10:
+        monthString = "Nov";
+        break;
+      case 11:
+        monthString = "Dec";
+        break;
+    }
+    createAndPush(monthString, getTotalMins(dataArr, i));
+  }
+
+  return output;
+
+  function createAndPush(name, uv) {
+    let obj = {};
+    obj.name = name;
+    obj.minutes = uv;
+    output.push(obj);
+  }
+
+  function getTotalMins(dataArr, month) {
+    let sum = 0;
+    for (let i = 0; i < dataArr.length; i++) {
+      let eventDate = new Date(dataArr[i].events.date);
+      let eventMonth = eventDate.getMonth();
+      if (eventMonth == month) {
+        sum += dataArr[i].events.duration;
+      }
+    }
+    return sum;
+  }
+}
+
+export function topCategoriesGraph(dataArr) {
+  if (!dataArr) return null;
+  const output = [];
+  const memo = [];
+
+  for (let i = 0; i < dataArr.length; i++) {
+    if (!isMemberOf(dataArr[i].events.category, memo)) {
+      createAndPush(
+        dataArr[i].events.category,
+        getTotalMins(dataArr[i].events.category)
+      );
+      memo.push(dataArr[i].events.category);
+    }
+  }
+  return output;
+
+  function createAndPush(name, uv) {
+    let obj = {};
+    obj.name = name;
+    obj.minutes = uv;
+    output.push(obj);
+  }
+
+  function isMemberOf(key, arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (key == arr[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function getTotalMins(categories) {
+    let sum = 0;
+    for (let i = 0; i < dataArr.length; i++) {
+      if (
+        dataArr[i].events.category == categories &&
+        dataArr[i].attended &&
+        dataArr[i].finished
+      ) {
+        sum += dataArr[i].events.duration;
+      }
+    }
+    return sum;
+  }
+}

@@ -24,3 +24,68 @@ export async function updateAvatar(currImage) {
 
   return { data, updateAvatarError };
 }
+
+export async function getAllUserDetails() {
+  const supabase = createServerActionClient({ cookies });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+  const userid = user.id;
+
+  // fetch data from users table
+  const { data: userData, error: readUserError } = await supabase
+    .from("users")
+    .select()
+    .eq("user_id", userid);
+
+  if (readUserError) {
+    throw new Error("Error retrieving user information");
+  }
+
+  return { userData };
+}
+
+export async function updateUserInfo({
+  dob,
+  educationalBackground,
+  firstName,
+  immigration,
+  lastName,
+  occupation,
+  phone,
+  school,
+  skills,
+}) {
+  const supabase = createServerActionClient({ cookies });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+  const userid = user.id;
+
+  const { error } = await supabase
+    .from("users")
+    .update({
+      dob,
+      educationalBackground,
+      first_name: firstName,
+      immigration,
+      last_name: lastName,
+      occupation,
+      phone,
+      school,
+      skills,
+    })
+    .eq("user_id", userid);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/dashboard/settings");
+
+  return error;
+}

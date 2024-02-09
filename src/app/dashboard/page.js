@@ -1,16 +1,12 @@
 import { getUserDetails } from "@actions/authActions";
 import { getMyEvents } from "@actions/eventActions";
-import {
-  Box,
-  Card,
-  CardBody,
-  Grid,
-  GridItem,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
+import MyMinsPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
+import EventRegisteredPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
+
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
+import TopCategoriesCard from "@components/dashboard/TopCategoriesCard";
 import WelcomeBackCard from "@components/dashboard/WelcomeBackCard";
 import { getTodayDate } from "@utils/helpers";
 
@@ -66,17 +62,14 @@ export default async function page() {
           />
         </GridItem>
       </Grid>
-
-      <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-blue-200 bg-stone-50">
-        <CardBody>
-          <Box>
-            <Heading size="md">Your volunteering journey at a glance.</Heading>
-            <Text fontSize="sm" className="mt-2">
-              graphs
-            </Text>
-          </Box>
-        </CardBody>
-      </Card>
+      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
+        <GridItem>
+          <MyMinsPerMonthCard events={data} />
+        </GridItem>
+        <GridItem>
+          <TopCategoriesCard events={data} />
+        </GridItem>
+      </Grid>
     </div>
   );
 }

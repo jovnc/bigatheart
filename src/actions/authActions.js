@@ -10,6 +10,13 @@ export async function registerAccount({
   gender,
   email,
   password,
+  dob,
+  educationalBackground,
+  immigration,
+  occupation,
+  phone,
+  school,
+  skills,
 }) {
   const supabase = createServerActionClient({ cookies });
   // check if email already exists in database
@@ -49,6 +56,13 @@ export async function registerAccount({
     first_name: firstName,
     last_name: lastName,
     gender,
+    phone,
+    dob,
+    educationalBackground,
+    immigration,
+    occupation,
+    school,
+    skills,
   });
 
   if (updateUserError) {

@@ -10,6 +10,7 @@ import {
   Avatar,
   Tooltip,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -17,6 +18,7 @@ import toast from "react-hot-toast";
 export default function UpdateAvatarForm() {
   const [currImage, setCurrImage] = useState();
   const [durations, setDurations] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,12 +63,14 @@ export default function UpdateAvatarForm() {
   }
 
   const action = async () => {
+    setIsLoading(true);
     const { data, updateAvatarError } = await updateAvatar(currImage);
     if (updateAvatarError) {
       toast.error("Failed to update Avatar");
     } else {
       toast.success("Successfully updated Avatar");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -137,7 +141,7 @@ export default function UpdateAvatarForm() {
                 size="sm"
                 fontWeight="semi-bold"
               >
-                Update
+                {isLoading ? <Spinner /> : "Update"}
               </Button>
             </Box>
           </Flex>
