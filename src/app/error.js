@@ -22,7 +22,7 @@ export default function error({ error, reset }) {
       </Box>
       <Box>
         <button
-          onClick={() => window.refresh()}
+          onClick={() => location.reload()}
           className="border border-black rounded-lg hover:text-white hover:bg-black font-bold p-2 text-sm mt-3"
         >
           Try again

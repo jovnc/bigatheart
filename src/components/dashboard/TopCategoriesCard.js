@@ -20,7 +20,9 @@ export default function TopCategoriesCard({ events }) {
     <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-slate-200 bg-stone-50">
       <CardBody>
         <Flex flexDir="column" gap={8}>
-          <Text fontWeight="bold">Top Categories</Text>
+          <Text fontWeight="bold" fontSize="sm" align="center">
+            Minutes Volunteered By Category
+          </Text>
           {events.length === 0 && (
             <Text fontSize="sm">You have not attended any events</Text>
           )}

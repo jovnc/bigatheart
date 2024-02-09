@@ -2,8 +2,6 @@ import { getUserDetails } from "@actions/authActions";
 import { getMyEvents } from "@actions/eventActions";
 import { Grid, GridItem } from "@chakra-ui/react";
 import MyMinsPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
-import EventRegisteredPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
-
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
 import TopCategoriesCard from "@components/dashboard/TopCategoriesCard";
@@ -64,10 +62,10 @@ export default async function page() {
       </Grid>
       <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
         <GridItem>
-          <MyMinsPerMonthCard events={data} />
+          <MyMinsPerMonthCard events={attendedEvents} />
         </GridItem>
         <GridItem>
-          <TopCategoriesCard events={data} />
+          <TopCategoriesCard events={attendedEvents} />
         </GridItem>
       </Grid>
     </div>

@@ -20,7 +20,9 @@ export default function MyMinsPerMonthCard({ events }) {
     <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-blue-200 bg-stone-50">
       <CardBody>
         <Flex flexDir="column" gap={8}>
-          <Text fontWeight="bold">Minutes Volunteered per month</Text>
+          <Text fontWeight="bold" fontSize="sm" align="center">
+            Minutes Volunteered By Month
+          </Text>
           {events.length === 0 && (
             <Text fontSize="sm">You have not attended any events</Text>
           )}

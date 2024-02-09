@@ -20,7 +20,7 @@ export default function UserInfoRow({ user }) {
   }
   return (
     <>
-      <Grid templateColumns="0.8fr 1fr 1fr 1fr 1fr 1fr" gap={2}>
+      <Grid templateColumns="0.5fr 1fr 1fr 2fr 0.5fr" gap={2}>
         <GridItem>
           <Avatar src={user.avatar} size="sm" />
         </GridItem>
@@ -33,9 +33,7 @@ export default function UserInfoRow({ user }) {
         <GridItem>
           <Text fontSize="sm">{user.phone}</Text>
         </GridItem>
-        <GridItem>
-          <Text fontSize="sm">{user.age}</Text>
-        </GridItem>
+
         <GridItem>
           <Text fontSize="sm">{user.email}</Text>
         </GridItem>

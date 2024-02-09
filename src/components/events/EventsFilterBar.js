@@ -42,7 +42,7 @@ export default function EventsFilterBar({ filterField, options }) {
     `${currFilter.charAt(0).toUpperCase() + currFilter.slice(1)} Events`;
   return (
     <Flex className="py-2">
-      <FaFilter size={14} className="mt-2 mr-1" />
+      <FaFilter size={14} className="mt-2 mr-2" />
       <Menu>
         <MenuButton as={Button} rightIcon={<FaChevronDown />} size="sm">
           {isValid ? currFilterField : "Current Events"}

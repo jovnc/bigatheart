@@ -1,6 +1,6 @@
 "use client";
 import { getAllUsers } from "@actions/userActions";
-import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Divider, Flex, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
 import Container from "@components/Container";
 import UserInfoRow from "@components/admin/UserInfoRow";
 import { useEffect, useState } from "react";
@@ -33,6 +33,26 @@ export default function page() {
           User Information Summary
         </Text>
         <Divider />
+        <Grid templateColumns="0.5fr 1fr 1fr 2fr 0.5fr" gap={2}>
+          <GridItem></GridItem>
+          <GridItem>
+            <Text fontSize="sm" fontWeight="medium">
+              Name
+            </Text>
+          </GridItem>
+
+          <GridItem>
+            <Text fontSize="sm" fontWeight="medium">
+              Phone
+            </Text>
+          </GridItem>
+          <GridItem>
+            <Text fontSize="sm" fontWeight="medium">
+              Email
+            </Text>
+          </GridItem>
+          <GridItem></GridItem>
+        </Grid>
         {data &&
           data.map((user, i) => {
             return <UserInfoRow key={i} user={user} />;
