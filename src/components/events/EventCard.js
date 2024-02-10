@@ -62,7 +62,7 @@ export default function EventCard({
           <CardFooter>
             <Flex className="w-full" justify="flex-end">
               <button
-                className="border border-slate-500 hover:bg-slate-400 w-1/2 px-2 py-1 rounded-lg"
+                className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
                 size="sm"
               >
                 <Link href={`/dashboard/events/${id}`}>
