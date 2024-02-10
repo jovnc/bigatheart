@@ -215,7 +215,7 @@ export async function getAllEvents() {
       finished,
       attended,
       reflection,
-      users!inner(first_name, last_name, avatar, gender),
+      users!inner(first_name, last_name, avatar, gender, occupation, immigration),
       events!inner(name, date, time, duration)
     `
   );

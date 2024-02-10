@@ -1,10 +1,20 @@
 "use client";
 import { getAllUsers } from "@actions/userActions";
-import { Divider, Flex, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
+import {
+  Divider,
+  Flex,
+  Grid,
+  GridItem,
+  Spinner,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import Container from "@components/Container";
 import UserInfoRow from "@components/admin/UserInfoRow";
+import { generateExcel } from "@utils/helpers";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaDownload } from "react-icons/fa6";
 
 export default function page() {
   const [data, setData] = useState();
@@ -22,6 +32,19 @@ export default function page() {
     };
     fetchData();
   }, []);
+
+  const handleDownload = () => {
+    const excelBlob = generateExcel(data, "User Information");
+
+    const url = URL.createObjectURL(excelBlob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "user_info.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
   if (isLoading) return <Spinner />;
   if (!data) return <Spinner />;
@@ -51,7 +74,14 @@ export default function page() {
               Email
             </Text>
           </GridItem>
-          <GridItem></GridItem>
+          <Tooltip label="Export as XLSX">
+            <GridItem>
+              <FaDownload
+                onClick={handleDownload}
+                className="hover:shadow-lg hover:cursor-pointer"
+              />
+            </GridItem>
+          </Tooltip>
         </Grid>
         {data &&
           data.map((user, i) => {

@@ -1,6 +1,8 @@
 import { getAllEventsAndVolunteers } from "@actions/eventActions";
-import { Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
+import DownloadEventsButton from "@components/admin/DownloadEventsButton";
 import ManageEventCard from "@components/admin/ManageEventCard";
+import { cleanDataForExcel } from "@utils/helpers";
 
 export default async function page() {
   // need to fetch all data for all volunteers and all events
@@ -25,9 +27,20 @@ export default async function page() {
     }, {})
   );
 
+  if (!groupedEventsArray) return <Spinner />;
+
   return (
     <div className="w-full">
       <Flex flexDir="column" gap={4}>
+        <Flex justify="space-between">
+          <Text fontSize="sm" fontWeight="medium">
+            Manage Events
+          </Text>
+          <DownloadEventsButton groupedEventsArray={groupedEventsArray} />
+        </Flex>
+
+        <Divider />
+
         {groupedEventsArray.map((event, i) => {
           return (
             <ManageEventCard

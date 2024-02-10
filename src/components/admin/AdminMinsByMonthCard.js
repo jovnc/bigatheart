@@ -15,7 +15,6 @@ import {
 
 export default function AdminMinsByMonthCard({ events }) {
   const cleanedData = minsPerMonthGraph(events);
-  console.log(cleanedData);
 
   return (
     <Card className="flex w-full border-l-4 border-blue-200">

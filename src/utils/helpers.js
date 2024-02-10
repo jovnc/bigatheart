@@ -1,3 +1,5 @@
+import * as XLSX from "xlsx";
+
 export function convertToAMPM(time24) {
   // Split the input time string into hours, minutes, and seconds
   const [hours, minutes, seconds] = time24.split(":");
@@ -241,13 +243,14 @@ export function minsPerDemographic(dataArr, category) {
     createAndPush("Male", maleMins);
     createAndPush("Female", femaleMins);
     createAndPush("Others", othersMins);
-  } else if (category == "employment") {
+  } else if (category == "occupation") {
     let employedMins = 0;
     let unemployedMins = 0;
     let studentMins = 0;
+    let othersMins = 0;
 
     for (let i = 0; i < dataArr.length; i++) {
-      switch (dataArr[i].users.employment) {
+      switch (dataArr[i].users.occupation) {
         case "Employed":
           employedMins += dataArr[i].events.duration;
           break;
@@ -257,13 +260,55 @@ export function minsPerDemographic(dataArr, category) {
         case "Student":
           studentMins += dataArr[i].events.duration;
           break;
+        case "Others":
+          othersMins += dataArr[i].events.duration;
+          break;
       }
     }
 
     createAndPush("Employed", employedMins);
     createAndPush("Unemployed", unemployedMins);
     createAndPush("Student", studentMins);
+    createAndPush("Others", othersMins);
+  } else if (category == "immigration") {
+    let a = 0;
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+    let f = 0;
+
+    for (let i = 0; i < dataArr.length; i++) {
+      switch (dataArr[i].users.immigration) {
+        case "Singapore Citizen":
+          a += dataArr[i].events.duration;
+          break;
+        case "Singapore PR":
+          b += dataArr[i].events.duration;
+          break;
+        case "Student Pass":
+          c += dataArr[i].events.duration;
+          break;
+        case "Work Pass":
+          d += dataArr[i].events.duration;
+          break;
+        case "Foreigner":
+          e += dataArr[i].events.duration;
+          break;
+        default:
+          f += dataArr[i].events.duration;
+          break;
+      }
+    }
+
+    createAndPush("Singapore Citizen", a);
+    createAndPush("Singapore PR", b);
+    createAndPush("Student Pass", c);
+    createAndPush("Work Pass", d);
+    createAndPush("Foreigner", e);
+    createAndPush("Others", f);
   }
+
   return output;
 
   function createAndPush(name, uv) {
@@ -273,3 +318,47 @@ export function minsPerDemographic(dataArr, category) {
     output.push(obj);
   }
 }
+
+// generate excel sheet
+export const generateExcel = (data, sheetName = "Sheet 1") => {
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+  const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  return blob;
+};
+
+// clean data to add to excel sheet
+export const cleanDataForExcel = (dataArr) => {
+  // Flatten the nested arrays into a single array
+  const flattenedData = dataArr.map((res) => {
+    const data = res[0];
+    return {
+      remarks: data?.remarks,
+      attended: data?.attended,
+      finished: data?.finished,
+      volunteer_id: data?.volunteer_id,
+      event_id: data?.event_id,
+      eventName: data?.events?.name,
+      eventDate: data?.events?.date,
+      eventTime: data?.events?.time,
+      userFirstName: data?.users?.first_name,
+      userLastName: data?.users?.last_name,
+    };
+  });
+
+  // Extract the headers from the first object
+  const headers = Object.keys(flattenedData[0]);
+
+  // // Create an array of arrays containing header and data rows
+  const excelData = [
+    headers,
+    ...flattenedData.map((obj) => Object.values(obj)),
+  ];
+
+  return excelData;
+};

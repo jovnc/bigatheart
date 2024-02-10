@@ -15,7 +15,6 @@ export default function page() {
   const action = handleSubmit(async (data) => {
     try {
       const res = await logUserIn(data);
-      console.log(res);
       if (res) {
         toast.error("Failed to Login");
       } else {
