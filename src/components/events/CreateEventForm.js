@@ -59,6 +59,7 @@ export default function CreateEventForm() {
         eventLocation,
         peopleImpacted,
         eventDuration,
+        capacity,
       } = data;
 
       let url = "";
@@ -93,6 +94,7 @@ export default function CreateEventForm() {
         url,
         peopleImpacted,
         eventDuration,
+        capacity,
       });
 
       toast.success("Successfully created event");
@@ -283,6 +285,31 @@ export default function CreateEventForm() {
 
         <FormErrorMessage>
           {errors.eventDescription && errors.eventDescription.message}
+        </FormErrorMessage>
+      </FormControl>
+
+      <FormControl isInvalid={errors.capacity} isRequired className="mt-5">
+        <FormLabel htmlFor="capacity">Event Capacity</FormLabel>
+        <NumberInput defaultValue={0}>
+          <NumberInputField
+            id="peopleImpacted"
+            step={1}
+            {...register("capacity", {
+              required: "This is required",
+              pattern: {
+                value: /^\d+$/,
+                message: "Please enter a valid integer.",
+              },
+            })}
+          />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+
+        <FormErrorMessage>
+          {errors.capacity && errors.capacity.message}
         </FormErrorMessage>
       </FormControl>
 

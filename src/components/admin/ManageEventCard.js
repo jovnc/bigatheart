@@ -4,6 +4,7 @@ import VolunteerRow from "./VolunteerRow";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useState } from "react";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
+import { FcApproval, FcClock, FcHighPriority } from "react-icons/fc";
 
 export default function ManageEventCard({ eventName, event }) {
   const [show, setShow] = useState();
@@ -11,6 +12,8 @@ export default function ManageEventCard({ eventName, event }) {
   function handleClick() {
     setShow((curr) => !curr);
   }
+
+  const isFull = event.length >= event[0].events.capacity;
 
   return (
     <div className="w-full bg-stone-100 bg-opacity-50 rounded-lg shadow-lg p-5">
@@ -24,10 +27,19 @@ export default function ManageEventCard({ eventName, event }) {
             <Text fontSize="sm">{show ? "Hide" : "Show"}</Text>
           </button>
         </Flex>
-        <Text fontSize="xs">
-          {convertDateFormat(event[0].events.date)}{" "}
-          {convertToAMPM(event[0].events.time)}
-        </Text>
+        <Flex gap={2}>
+          <FcClock />
+          <Text fontSize="xs">
+            {convertDateFormat(event[0].events.date)}{" "}
+            {convertToAMPM(event[0].events.time)}
+          </Text>
+        </Flex>
+        <Flex gap={2}>
+          {isFull ? <FcHighPriority /> : <FcApproval />}
+          <Text fontSize="xs">
+            Capacity: {event.length} / {event[0].events.capacity}
+          </Text>
+        </Flex>
 
         {show && (
           <>

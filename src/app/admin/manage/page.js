@@ -2,7 +2,6 @@ import { getAllEventsAndVolunteers } from "@actions/eventActions";
 import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
 import DownloadEventsButton from "@components/admin/DownloadEventsButton";
 import ManageEventCard from "@components/admin/ManageEventCard";
-import { cleanDataForExcel } from "@utils/helpers";
 
 export default async function page() {
   // need to fetch all data for all volunteers and all events

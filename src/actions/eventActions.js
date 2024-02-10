@@ -18,6 +18,7 @@ export async function createEventAction({
   url,
   peopleImpacted,
   eventDuration,
+  capacity,
 }) {
   const {
     data: {
@@ -50,6 +51,7 @@ export async function createEventAction({
       image: url,
       duration: eventDuration,
       peopleImpacted: peopleImpacted,
+      capacity,
     })
     .select();
 
@@ -276,7 +278,7 @@ export async function getAllEventsAndVolunteers() {
   const { data: eventData, error: getDataError } = await supabase
     .from("eventinfo")
     .select(
-      `remarks, attended, finished, volunteer_id, event_id, events!inner(name, date, time), users!inner(first_name, last_name)`
+      `remarks, attended, finished, volunteer_id, event_id, events!inner(name, date, time, capacity), users!inner(first_name, last_name)`
     );
 
   if (getDataError) throw new Error(getDataError.message);
