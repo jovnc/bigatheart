@@ -1,4 +1,5 @@
-import { Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
+import EventCarousel from "@components/EventCarousel";
 import Link from "next/link";
 
 export default function Home() {
@@ -28,6 +29,13 @@ export default function Home() {
             <Image src="/assets/images/logo.png" className="w-1/2" />
           </div>
         </section>
+
+        <div className="py-10 px-5 bg-white bg-opacity-40 rounded-lg">
+          <Text fontWeight="bold" align="center" py={10} fontSize="lg">
+            Events Gallery
+          </Text>
+          <EventCarousel />
+        </div>
       </div>
     </>
   );

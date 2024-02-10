@@ -11,12 +11,11 @@ import {
 import Link from "next/link";
 import { CiClock1, CiLocationOn } from "react-icons/ci";
 
-export default function EventCard({
+export default function CarouselEventCard({
   date,
   time,
   location,
   name,
-  id,
   image_url,
 }) {
   return (
@@ -26,11 +25,11 @@ export default function EventCard({
         overflow="hidden"
         variant="elevated"
         mb="5"
-        className="hover:shadow-lg bg-stone-50 bg-opacity-50"
+        className="hover:shadow-lg bg-stone-50 bg-opacity-50 mr-5"
       >
         <Image
           objectFit="cover"
-          maxW={{ base: "100%", sm: "200px" }}
+          maxW={{ base: "50%", sm: "150px" }}
           src={
             image_url
               ? image_url
@@ -64,9 +63,9 @@ export default function EventCard({
                 className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
                 size="sm"
               >
-                <Link href={`/dashboard/events/${id}`}>
+                <Link href={`/auth/login`}>
                   <Text fontSize="sm" fontWeight="semibold">
-                    View Event Details
+                    Login to View
                   </Text>
                 </Link>
               </button>
