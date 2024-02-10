@@ -32,9 +32,10 @@ These are the steps to get started with Hack4Heart website
 5. `npm install` to install all node dependencies for the project
 6. Create a `.env.local` file at the root of the `bigatheart` directory
 7. Sign up for a Supabase account and create a new bucket and obtain the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` and place them inside the `.env.local` file
-8. Configure the tables and fields of the Supabase database with relevant fields
-9. Configure appropriate RLS for the tables
-10. Sign up for an Edgestore account and create a new project and obtain `EDGE_STORE_ACCESS_KEY` and `EDGE_STORE_SECRET_KEY` and place them inside the `.env.local` file
+8. `npx supabase init` to initialise supabase on local development environment, then `npx supabase login` to login to your supabase account from the terminal
+9. `npx supabase link` to link your supabase database to the local development environment
+10. `npx supabase db push` to push the supabase database schema from the supabase/migrations folder to supabase to create all the tables and configure appropriate row level security for your database
+11. Sign up for an Edgestore account and create a new project and obtain `EDGE_STORE_ACCESS_KEY` and `EDGE_STORE_SECRET_KEY` and place them inside the `.env.local` file
 
 ```
 NEXT_PUBLIC_SUPABASE_URL = your_url
@@ -43,9 +44,9 @@ EDGE_STORE_ACCESS_KEY = your_key
 EDGE_STORE_SECRET_KEY = your_key
 ```
 
-11. `npm run dev` to run the website in local development server
-12. `npm run build` then `npm run start` to build and run the production server locally
-13. Optionally, you can choose to deploy on CI/CD web hosting sites such as Vercel or Netlify
+12. `npm run dev` to run the website in local development server
+13. `npm run build` then `npm run start` to build and run the production server locally
+14. Optionally, you can choose to deploy on CI/CD web hosting sites such as Vercel or Netlify
 
 ## Future Development of Hack4Heart
 
