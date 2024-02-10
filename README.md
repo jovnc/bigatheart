@@ -58,6 +58,5 @@ Due to time and manpower limitations, we could only do so much and there are man
 5. Implement tighter RLS security policies for database to prevent hacking
 6. Lazy loading of events and creating pages to browse events
 7. Generate more various kinds of certificates and invitation templates for better user experience
-8. Generate Excel file from the user data for easier housekeeping for admins
 
 Credits: Jovan Ng Chengen, Loh Jia Xin
