@@ -53,8 +53,8 @@ Due to time and manpower limitations, we could only do so much and there are man
 
 1. Next.JS performance optimisation for faster speed loads
 2. Additional sorting and filter fields for better user experience
-3. Additional Graphs generated based on data fetched from the API
-4. Integration of ChatGPT into the poster description for creation of events to help administrators write out the poster description
+3. More data visualisation options by using additional graphs and charts generated based on data fetched from the API, and possibly integrating Power BI for more powerful data visualisation
+4. Integration of ChatGPT into the poster description for creation of events to help administrators write out the poster description and generate posters
 5. Implement tighter RLS security policies for database to prevent hacking
 6. Lazy loading of events and creating pages to browse events
 7. Generate more various kinds of certificates and invitation templates for better user experience
