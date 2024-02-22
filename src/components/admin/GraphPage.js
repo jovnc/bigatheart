@@ -7,6 +7,7 @@ import GenderPieChart from "@components/admin/GenderPieChart";
 import ImmigrationPieChart from "@components/admin/ImmigrationPieChart";
 import OccupationPieChart from "@components/admin/OccupationPieChart";
 import { useState } from "react";
+import TopCategoriesPieChart from "./TopCategoriesPieChart";
 
 const OPTIONS = [
   { label: "Total Mins Volunteered By Month", value: "month" },
@@ -19,9 +20,13 @@ const OPTIONS = [
     label: "Proporiton of Immigration Status by Volunteering Minutes",
     value: "immigration",
   },
+  {
+    label: "Top Categories among Volunteers",
+    value: "categories",
+  },
 ];
 
-export default function GraphPage({ completedEvents }) {
+export default function GraphPage({ completedEvents, userCleaned }) {
   const [show, setShow] = useState(OPTIONS);
 
   const arrayOfShow = show.map((option) => option.value);
@@ -54,6 +59,11 @@ export default function GraphPage({ completedEvents }) {
         {arrayOfShow.includes("immigration") && (
           <GridItem>
             <ImmigrationPieChart events={completedEvents} />
+          </GridItem>
+        )}
+        {arrayOfShow.includes("categories") && (
+          <GridItem>
+            <TopCategoriesPieChart userCleaned={userCleaned} />
           </GridItem>
         )}
       </Grid>

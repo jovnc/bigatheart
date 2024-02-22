@@ -19,7 +19,7 @@ export default function QuickStatsCard({
   peopleImpacted,
 }) {
   return (
-    <Card className="border-l-4 bg-stone-50 bg-opacity-50 border-green-300">
+    <Card className="border-l-4 bg-stone-50 bg-opacity-50 border-yellow-300">
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           <Grid templateColumns="2fr 1fr" gap={4}>

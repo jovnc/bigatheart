@@ -9,7 +9,14 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "#F3CFC6",
+  "#FFC0CB",
+  "#C9A9A6",
+  "#FAA0A0",
+  "#E37383",
+  "#CA9E9E",
+];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -42,7 +49,7 @@ export default function OccupationPieChart({ events }) {
   const cleanedData = minsPerDemographic(events, "occupation");
 
   return (
-    <Card className="flex w-full border-l-4 border-purple-500 h-full">
+    <Card className="flex w-full border-l-4 border-rose-500 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">

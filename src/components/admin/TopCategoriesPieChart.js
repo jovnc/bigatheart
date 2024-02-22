@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
-import { minsPerMonthGraph } from "@utils/helpers";
+import { FaStar } from "react-icons/fa6";
 import {
   Bar,
   BarChart,
@@ -13,23 +13,29 @@ import {
   YAxis,
 } from "recharts";
 
-export default function MyMinsPerMonthCard({ events }) {
-  const eventsPerMonth = minsPerMonthGraph(events);
-
+export default function TopCategoriesPieChart({ userCleaned }) {
   return (
-    <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-rose-300 bg-stone-50">
+    <Card className="flex w-full border-l-4 border-pink-200 h-full">
       <CardBody>
-        <Flex flexDir="column" gap={8}>
+        <Flex flexDir="column" gap={4}>
+          <Flex className="w-full bg-pink-200 p-3 shadow-lg rounded-lg">
+            <Text fontSize="sm">
+              <FaStar className="inline mr-2" />
+              Most Popular Category: {userCleaned[0].name}
+            </Text>
+          </Flex>
+
           <Text fontWeight="bold" fontSize="sm" align="center">
-            Minutes Volunteered By Month
+            Top Categories among Volunteers
           </Text>
-          {events.length === 0 && (
-            <Text fontSize="sm">No events attended yet.</Text>
+
+          {userCleaned.length === 0 && (
+            <Text fontSize="sm">No one has attended any event</Text>
           )}
-          {events.length > 0 && (
+          {userCleaned.length > 0 && (
             <ResponsiveContainer width="95%" height={400}>
               <BarChart
-                data={eventsPerMonth}
+                data={userCleaned}
                 margin={{
                   top: 5,
                   right: 10,
@@ -42,7 +48,7 @@ export default function MyMinsPerMonthCard({ events }) {
                 <Tooltip />
                 <Legend />
                 <Bar
-                  dataKey="minutes"
+                  dataKey="count"
                   fill="#F3CFC6"
                   activeBar={<Rectangle fill="#E37383" stroke="blue" />}
                 />

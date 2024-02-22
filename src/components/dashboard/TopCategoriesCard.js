@@ -17,7 +17,7 @@ export default function TopCategoriesCard({ events }) {
   const minsPerCategory = topCategoriesGraph(events);
 
   return (
-    <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-slate-200 bg-stone-50">
+    <Card className="flex w-full mt-5 border-l-4 bg-opacity-50 border-red-100 bg-stone-50">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">
@@ -43,8 +43,8 @@ export default function TopCategoriesCard({ events }) {
                 <Legend />
                 <Bar
                   dataKey="minutes"
-                  fill="#8884d8"
-                  activeBar={<Rectangle fill="green" stroke="blue" />}
+                  fill="#F3CFC6"
+                  activeBar={<Rectangle fill="#E37383" stroke="blue" />}
                 />
               </BarChart>
             </ResponsiveContainer>

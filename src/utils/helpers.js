@@ -430,7 +430,7 @@ export const cleanDataForExcel = (dataArr) => {
   return excelData;
 };
 
-function countInterests(dataArr) {
+export function countInterests(dataArr) {
   function locateObject(name) {
     for (let i = 0; i < result.length; i++) {
       if (result[i].name == name) {

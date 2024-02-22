@@ -17,7 +17,7 @@ export default function AdminMinsByMonthCard({ events }) {
   const cleanedData = minsPerMonthGraph(events);
 
   return (
-    <Card className="flex w-full border-l-4 border-blue-200 h-full">
+    <Card className="flex w-full border-l-4 border-rose-200 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">
@@ -44,8 +44,8 @@ export default function AdminMinsByMonthCard({ events }) {
                 <Legend />
                 <Bar
                   dataKey="minutes"
-                  fill="#8884d8"
-                  activeBar={<Rectangle fill="green" stroke="blue" />}
+                  fill="#F3CFC6"
+                  activeBar={<Rectangle fill="#E37383" stroke="blue" />}
                 />
               </BarChart>
             </ResponsiveContainer>

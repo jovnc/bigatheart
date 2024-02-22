@@ -10,12 +10,12 @@ import {
   Tooltip,
 } from "recharts";
 const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#40E0D0",
-  "#9951C4 ",
+  "#FFC0CB",
+  "#F3CFC6",
+  "#C9A9A6",
+  "#FAA0A0",
+  "#E37383",
+  "#CA9E9E",
 ];
 
 const RADIAN = Math.PI / 180;

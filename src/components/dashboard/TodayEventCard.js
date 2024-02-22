@@ -9,7 +9,7 @@ export default function TodayEventCard({ numberOfEventsToday, todayEvents }) {
   }
 
   return (
-    <Card className="flex w-full bg-opacity-50 bg-stone-50 border-l-4 border-orange-300 min-h-full">
+    <Card className="flex w-full bg-opacity-50 bg-stone-50 border-l-4 border-rose-200 min-h-full">
       <CardBody>
         <Flex flexDir="column" gap={3}>
           <Text size="lg" fontWeight="bold">

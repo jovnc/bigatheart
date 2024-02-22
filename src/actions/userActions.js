@@ -129,3 +129,15 @@ export async function getAllUserDetailsLeaderboard() {
 
   return { userData };
 }
+
+export async function getAllUserCategories() {
+  const supabase = createServerActionClient({ cookies });
+
+  const { data: userData, error } = await supabase
+    .from("users")
+    .select("skills");
+
+  if (error) throw new Error(error.message);
+
+  return { userData };
+}
