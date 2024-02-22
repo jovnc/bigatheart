@@ -1,15 +1,20 @@
 import { getEvents } from "@actions/eventActions";
-import { Divider, Spinner } from "@chakra-ui/react";
+import { Divider, Flex, Spinner } from "@chakra-ui/react";
 import EventCard from "@components/events/EventCard";
 import EventsFilterBar from "@components/events/EventsFilterBar";
+import EventsSortBar from "@components/events/EventsSortBar";
 import {
   convertToAMPM,
   convertDateFormat,
   sortByDateAlt,
+  sortByDateEarliest,
 } from "@utils/helpers";
 
-const filterField = ["Current Events", "Past Events", "All"];
-const options = ["current", "past", "all"];
+const filterField = ["Current Events", "Past Events", "All Events"];
+const filterOptions = ["current", "past", "all"];
+
+const sortField = ["By Date (latest)", "By Date (earliest)"];
+const sortOptions = ["date-latest", "date-earliest"];
 
 export default async function page({ searchParams }) {
   const { getEventError, eventData } = await getEvents();
@@ -17,6 +22,12 @@ export default async function page({ searchParams }) {
   if (getEventError) {
     return <div>Error retrieiving events. {getEventError.message}</div>;
   }
+
+  const checkHasEventEnded = (date) => {
+    const currDate = new Date();
+    const targetDate = new Date(date);
+    return targetDate < currDate;
+  };
 
   let filteredEventData = eventData;
 
@@ -37,14 +48,21 @@ export default async function page({ searchParams }) {
     });
   }
 
-  // sort by date
-  sortByDateAlt(filteredEventData);
+  // sort filter fields
+  if (searchParams.sort == "date-earliest") {
+    sortByDateEarliest(filteredEventData);
+  } else {
+    sortByDateAlt(filteredEventData);
+  }
 
   return (
     <>
       {!filteredEventData && <Spinner />}
 
-      <EventsFilterBar filterField={filterField} options={options} />
+      <Flex justify="space-between">
+        <EventsFilterBar filterField={filterField} options={filterOptions} />
+        <EventsSortBar sortFields={sortField} options={sortOptions} />
+      </Flex>
       <Divider className="border-black mb-5" />
 
       {filteredEventData.length === 0 && <p>No event matching filter</p>}
@@ -62,6 +80,7 @@ export default async function page({ searchParams }) {
                 location={location}
                 id={id}
                 image_url={image}
+                hasEnded={checkHasEventEnded(date)}
               />
             );
           }

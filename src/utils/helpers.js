@@ -65,7 +65,6 @@ export function sortByDate(dataArr) {
   function compare(a, b) {
     const aTime = new Date(`${a.events.date} ${a.events.time}`);
     const bTime = new Date(`${b.events.date} ${b.events.time}`);
-    console.log(aTime);
 
     if (aTime > bTime) {
       return -1;
@@ -89,6 +88,74 @@ export function sortByDateAlt(dataArr) {
     }
     if (aTime < bTime) {
       return 1;
+    }
+    return 0;
+  }
+
+  return dataArr.sort(compare);
+}
+
+export function sortByDateEarliest(dataArr) {
+  function compare(a, b) {
+    const aTime = new Date(`${a.date} ${a.time}`);
+    const bTime = new Date(`${b.date} ${b.time}`);
+
+    if (aTime > bTime) {
+      return 1;
+    }
+    if (aTime < bTime) {
+      return -1;
+    }
+    return 0;
+  }
+
+  return dataArr.sort(compare);
+}
+
+export function sortByDateEarliestX(dataArr) {
+  function compare(a, b) {
+    const aTime = new Date(`${a[0].events.date} ${a[0].events.time}`);
+    const bTime = new Date(`${b[0].events.date} ${b[0].events.time}`);
+
+    if (aTime > bTime) {
+      return 1;
+    }
+    if (aTime < bTime) {
+      return -1;
+    }
+    return 0;
+  }
+
+  return dataArr.sort(compare);
+}
+
+export function sortByDateLatestX(dataArr) {
+  function compare(a, b) {
+    const aTime = new Date(`${a[0].events.date} ${a[0].events.time}`);
+    const bTime = new Date(`${b[0].events.date} ${b[0].events.time}`);
+
+    if (aTime > bTime) {
+      return -1;
+    }
+    if (aTime < bTime) {
+      return 1;
+    }
+    return 0;
+  }
+
+  return dataArr.sort(compare);
+}
+
+export function sortByDateEarliestAlt(dataArr) {
+  function compare(a, b) {
+    const aTime = new Date(`${a.events.date} ${a.events.time}`);
+    const bTime = new Date(`${b.events.date} ${b.events.time}`);
+
+    if (aTime > bTime) {
+      return 1;
+    }
+    if (aTime < bTime) {
+      return -1;
     }
     return 0;
   }
@@ -362,3 +429,37 @@ export const cleanDataForExcel = (dataArr) => {
 
   return excelData;
 };
+
+function countInterests(dataArr) {
+  function locateObject(name) {
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].name == name) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function createObject(name, count) {
+    let obj = {};
+    obj.name = name;
+    obj.count = count;
+    return obj;
+  }
+
+  let result = [];
+  for (let i = 0; i < dataArr.length; i++) {
+    for (let j = 0; j < dataArr[i].length; j++) {
+      if (locateObject(dataArr[i][j]) == -1) {
+        result.push(createObject(dataArr[i][j], 1));
+      } else {
+        result[locateObject(dataArr[i][j])].count += 1;
+      }
+    }
+  }
+
+  result.sort(function (o1, o2) {
+    return o2.count - o1.count;
+  });
+  return result;
+}

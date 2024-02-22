@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Flex,
   Menu,
@@ -9,9 +8,9 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { FaChevronDown, FaFilter } from "react-icons/fa";
+import { FaChevronDown, FaSort } from "react-icons/fa";
 
-export default function EventsFilterBar({ filterField, options }) {
+export default function EventsSortBar({ sortFields, options }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -23,9 +22,9 @@ export default function EventsFilterBar({ filterField, options }) {
     // update as necessary
 
     if (!current) {
-      current.delete("filter");
+      current.delete("sort");
     } else {
-      current.set("filter", value);
+      current.set("sort", value);
     }
 
     // cast to string
@@ -35,17 +34,19 @@ export default function EventsFilterBar({ filterField, options }) {
     router.push(`${pathname}${query}`);
   };
 
-  const currFilter = searchParams.get("filter");
-  const isValid = options.includes(currFilter);
-  const index = isValid && options.indexOf(currFilter);
-  const currFilterField = isValid && filterField[index];
+  const currSort = searchParams.get("sort");
+  const isValid = options.includes(currSort);
+  // const currSortField =
+  //   isValid && `${currSort.charAt(0).toUpperCase() + currSort.slice(1)}`;
+  const index = isValid && options.indexOf(currSort);
+  const currSortField = isValid && sortFields[index];
 
   return (
     <Flex className="py-2">
-      <FaFilter size={14} className="mt-2 mr-2" />
+      <FaSort size={14} className="mt-2 mr-2" />
       <Menu>
         <MenuButton as={Button} rightIcon={<FaChevronDown />} size="sm">
-          {isValid ? currFilterField : filterField[0]}
+          {isValid ? currSortField : sortFields[0]}
         </MenuButton>
         <MenuList>
           {options.map((option, i) => {
@@ -55,7 +56,7 @@ export default function EventsFilterBar({ filterField, options }) {
                 onClick={() => handleClick(option)}
                 className="hover:bg-gray-300"
               >
-                {filterField[i]}
+                {sortFields[i]}
               </MenuItem>
             );
           })}

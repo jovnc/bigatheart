@@ -22,20 +22,17 @@ export default function CarouselEventCard({
     <>
       <Card
         direction={{ base: "column", sm: "row" }}
+        height="300px"
         overflow="hidden"
         variant="elevated"
-        mb="5"
+        mb="10"
         className="hover:shadow-lg bg-stone-50 bg-opacity-50 mr-5"
       >
         <Image
           objectFit="cover"
           maxW={{ base: "50%", sm: "150px" }}
-          src={
-            image_url
-              ? image_url
-              : "https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-          }
-          alt="Caffe Latte"
+          src={image_url}
+          alt="Poster"
         />
 
         <Stack className="w-full">
@@ -65,7 +62,7 @@ export default function CarouselEventCard({
               >
                 <Link href={`/auth/login`}>
                   <Text fontSize="sm" fontWeight="semibold">
-                    Login to View
+                    View
                   </Text>
                 </Link>
               </button>

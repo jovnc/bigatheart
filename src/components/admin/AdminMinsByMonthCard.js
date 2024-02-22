@@ -17,7 +17,7 @@ export default function AdminMinsByMonthCard({ events }) {
   const cleanedData = minsPerMonthGraph(events);
 
   return (
-    <Card className="flex w-full border-l-4 border-blue-200">
+    <Card className="flex w-full border-l-4 border-blue-200 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">

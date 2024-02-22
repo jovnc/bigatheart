@@ -7,10 +7,11 @@ export default function Home() {
     <>
       <div className="w-full">
         <section className="w-full flex-center flex-col">
-          <Text fontSize="4xl" textAlign="center">
+          <Text fontSize="4xl" textAlign="center" fontWeight="bold">
             Volunteer to <br className="lg:hidden" />
             Change Lives
           </Text>
+
           <Text textAlign="center" className="mt-5 w-3/4">
             Big At Heart is a Non-Profit Social Service Organization inspiring
             GIVING through Volunteering, Donations-in-kind, and Fundraising. We
@@ -19,6 +20,7 @@ export default function Home() {
             create custom giving projects or connect you to existing causes that
             you can get involved in.
           </Text>
+
           <Link href="/auth/register">
             <button className="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded mt-5">
               Begin your journey now!
@@ -30,10 +32,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="py-10 px-5 bg-white bg-opacity-40 rounded-lg">
-          <Text fontWeight="bold" align="center" py={10} fontSize="lg">
-            Events Gallery
-          </Text>
+        <div className="py-10 px-5 rounded-lg">
           <EventCarousel />
         </div>
       </div>

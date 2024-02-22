@@ -1,7 +1,7 @@
 import { getAllEventsAndVolunteers } from "@actions/eventActions";
 import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
 import DownloadEventsButton from "@components/admin/DownloadEventsButton";
-import ManageEventCard from "@components/admin/ManageEventCard";
+import ManageEventPage from "@components/admin/ManageEventPage";
 
 export default async function page() {
   // need to fetch all data for all volunteers and all events
@@ -40,15 +40,7 @@ export default async function page() {
 
         <Divider />
 
-        {groupedEventsArray.map((event, i) => {
-          return (
-            <ManageEventCard
-              key={i}
-              eventName={event[0].events.name}
-              event={event}
-            />
-          );
-        })}
+        <ManageEventPage events={groupedEventsArray} />
       </Flex>
     </div>
   );

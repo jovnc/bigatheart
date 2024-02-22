@@ -42,7 +42,7 @@ export default function GenderPieChart({ events }) {
   const cleanedData = minsPerDemographic(events, "gender");
 
   return (
-    <Card className="flex w-full border-l-4 border-yellow-200">
+    <Card className="flex w-full border-l-4 border-yellow-200 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">

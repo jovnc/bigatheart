@@ -10,10 +10,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
+import { MultiSelect } from "react-multi-select-component";
 
 const OCCUPATIONS = ["Student", "Unemployed", "Employed", "Others"];
+
 const IMMIGRATION_STATUS = [
   "Singapore Citizen",
   "Singapore PR",
@@ -22,6 +24,7 @@ const IMMIGRATION_STATUS = [
   "Foreigner",
   "Others",
 ];
+
 const EDUCATION = [
   "PSLE",
   "O Levels",
@@ -31,13 +34,34 @@ const EDUCATION = [
   "Others",
 ];
 
+const PREFFERED_CATEGORIES = [
+  "Environment",
+  "Tutoring",
+  "Mental Health",
+  "Migrant Workers",
+  "Children",
+  "Elderly Care",
+  "Special Needs",
+  "Underprivileged",
+  "Food",
+  "Healthcare",
+  "Others",
+].map((category) => {
+  return { label: category, value: category };
+});
+
 export default function UpdateUserForm({ data }) {
   const [isLoading, setIsLoading] = useState(false);
+
+  const cleanedCategory = JSON.parse(data.skills).map((skill) => {
+    return { label: skill, value: skill };
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     defaultValues: {
       firstName: data.first_name,
@@ -48,7 +72,7 @@ export default function UpdateUserForm({ data }) {
       immigration: data.immigration,
       school: data.school,
       educationalBackground: data.educationalBackground,
-      skills: data.skills,
+      skills: cleanedCategory,
     },
   });
 
@@ -59,7 +83,6 @@ export default function UpdateUserForm({ data }) {
       toast.success("Successfully updated user info");
       setIsLoading(false);
     } catch (error) {
-      // toast.error(error.message);
       toast.error("Failed to update user info");
       setIsLoading(false);
     }
@@ -219,6 +242,38 @@ export default function UpdateUserForm({ data }) {
           )}
         </div>
 
+        <div className="mb-4 w-max-full">
+          <label className="block text-gray-700 text-sm mb-2">
+            <span className="text-red-300">* </span>Preferred Event Category /
+            Skills
+          </label>
+
+          <Controller
+            control={control}
+            name="skills"
+            rules={{
+              required: "This field is required",
+            }}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <MultiSelect
+                  options={PREFFERED_CATEGORIES}
+                  value={value ? value : []}
+                  onChange={onChange}
+                  labelledBy="Select"
+                  className="w-[736px]"
+                />
+              );
+            }}
+          />
+
+          {errors.skills && (
+            <p className="text-red-500 text-xs italic">
+              {errors.skills.message}
+            </p>
+          )}
+        </div>
+
         <FormControl isInvalid={errors.occupation} isRequired className="mb-5">
           <label className="block text-gray-700 text-sm mb-2">
             <span className="text-red-300">* </span>Occupation
@@ -244,22 +299,6 @@ export default function UpdateUserForm({ data }) {
             {errors.occupation && errors.occupation.message}
           </FormErrorMessage>
         </FormControl>
-
-        {/* <div className="mb-4">
-          <label className="block text-gray-700 text-sm mb-2">
-            <span className="text-red-300">* </span>Immigration Status
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            {...register("immigration")}
-          />
-          {errors.immigration && (
-            <p className="text-red-500 text-xs italic">
-              {errors.immigration.message}
-            </p>
-          )}
-        </div> */}
 
         <FormControl isInvalid={errors.immigration} isRequired className="mb-5">
           <label className="block text-gray-700 text-sm mb-2">
@@ -307,21 +346,6 @@ export default function UpdateUserForm({ data }) {
             )}
           </GridItem>
           <GridItem>
-            {/* <label className="block text-gray-700 text-sm mb-2">
-              <span className="text-red-300">* </span>Educational Background
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              {...register("educationalBackground", {
-                required: "This field is required",
-              })}
-            />
-            {errors.educationalBackground && (
-              <p className="text-red-500 text-xs italic">
-                {errors.educationalBackground.message}
-              </p>
-            )} */}
             <FormControl
               isInvalid={errors.educationalBackground}
               isRequired
@@ -354,7 +378,7 @@ export default function UpdateUserForm({ data }) {
           </GridItem>
         </Grid>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-gray-700 text-sm mb-2">
             Relevant Skills for Volunteering
           </label>
@@ -368,7 +392,7 @@ export default function UpdateUserForm({ data }) {
               {errors.skills.message}
             </p>
           )}
-        </div>
+        </div> */}
 
         <button
           className="bg-yellow-500 hover:shadow-lg text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"

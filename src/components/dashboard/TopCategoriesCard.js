@@ -24,7 +24,7 @@ export default function TopCategoriesCard({ events }) {
             Minutes Volunteered By Category
           </Text>
           {events.length === 0 && (
-            <Text fontSize="sm">You have not attended any events</Text>
+            <Text fontSize="sm">No events attended yet.</Text>
           )}
           {events.length > 0 && (
             <ResponsiveContainer width="95%" height={400}>

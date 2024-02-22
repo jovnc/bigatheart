@@ -5,8 +5,9 @@ import UserProfileNav from "./UserProfileNav";
 
 import NavItem from "./NavItem";
 import { FiHome, FiCalendar, FiBriefcase, FiSettings } from "react-icons/fi";
+import { RiAdminLine } from "react-icons/ri";
 
-export default function DashboardNav({ displayName, role, avatar }) {
+export default function DashboardNav({ displayName, role, avatar, user_id }) {
   return (
     <Flex
       pos="sticky"
@@ -36,11 +37,23 @@ export default function DashboardNav({ displayName, role, avatar }) {
           title="Settings"
           linkTo="/dashboard/settings"
         />
+        {role === "Admin" && (
+          <NavItem
+            icon={RiAdminLine}
+            title="To Admin Dashboard"
+            linkTo="/admin"
+          />
+        )}
       </Flex>
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>
         <Divider display="flex" />
-        <UserProfileNav displayName={displayName} role={role} avatar={avatar} />
+        <UserProfileNav
+          displayName={displayName}
+          role={role}
+          avatar={avatar}
+          user_id={user_id}
+        />
       </Flex>
     </Flex>
   );

@@ -46,15 +46,13 @@ export default function EventCarousel({ deviceType }) {
 
   if (isLoading || !data) return <Spinner />;
 
-  console.log(data);
-
   return (
     <Carousel
       swipeable={false}
       draggable={false}
       showDots={true}
       responsive={responsive}
-      ssr={true} // means to render carousel on server-side.
+      ssr={true}
       infinite={true}
       autoPlay={deviceType !== "mobile" ? true : false}
       autoPlaySpeed={3000}
@@ -66,6 +64,8 @@ export default function EventCarousel({ deviceType }) {
       deviceType={deviceType}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item-padding-40-px"
+      partialVisbile={true}
+      focusOnSelect={true}
     >
       {data &&
         data.map((event, i) => {

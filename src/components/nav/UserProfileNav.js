@@ -3,9 +3,9 @@ import { Avatar, Flex, Text } from "@chakra-ui/react";
 
 import Link from "next/link";
 
-export default function UserProfileNav({ displayName, role, avatar }) {
+export default function UserProfileNav({ displayName, role, avatar, user_id }) {
   return (
-    <Link href={"/dashboard/settings"}>
+    <Link href={`/users/${user_id}`}>
       <Flex mt={4} align="center">
         <Avatar
           size="sm"

@@ -8,7 +8,12 @@ import { TiTickOutline } from "react-icons/ti";
 
 import UserProfileNav from "./UserProfileNav";
 
-export default function AdminDashboardNav({ avatar, displayName, role }) {
+export default function AdminDashboardNav({
+  avatar,
+  displayName,
+  role,
+  user_id,
+}) {
   const pathname = usePathname();
 
   return (
@@ -44,7 +49,12 @@ export default function AdminDashboardNav({ avatar, displayName, role }) {
 
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" mb={4}>
         <Divider display="flex" />
-        <UserProfileNav avatar={avatar} displayName={displayName} role={role} />
+        <UserProfileNav
+          avatar={avatar}
+          displayName={displayName}
+          role={role}
+          user_id={user_id}
+        />
       </Flex>
     </Flex>
   );

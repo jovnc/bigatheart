@@ -18,6 +18,7 @@ export default function EventCard({
   name,
   id,
   image_url,
+  hasEnded,
 }) {
   return (
     <>
@@ -26,16 +27,14 @@ export default function EventCard({
         overflow="hidden"
         variant="elevated"
         mb="5"
-        className="hover:shadow-lg bg-stone-50 bg-opacity-50"
+        className={`hover:shadow-lg bg-stone-50 bg-opacity-50 ${
+          hasEnded && "border-[0.5px] border-red-400 opacity-70"
+        }`}
       >
         <Image
           objectFit="cover"
           maxW={{ base: "100%", sm: "200px" }}
-          src={
-            image_url
-              ? image_url
-              : "https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-          }
+          src={image_url}
           alt="Caffe Latte"
         />
 
@@ -60,16 +59,28 @@ export default function EventCard({
           <Divider />
           <CardFooter>
             <Flex className="w-full" justify="flex-end">
-              <button
-                className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
-                size="sm"
-              >
-                <Link href={`/dashboard/events/${id}`}>
+              {!hasEnded && (
+                <button
+                  className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
+                  size="sm"
+                >
+                  <Link href={`/dashboard/events/${id}`}>
+                    <Text fontSize="sm" fontWeight="semibold">
+                      View Event Details
+                    </Text>
+                  </Link>
+                </button>
+              )}
+              {hasEnded && (
+                <button
+                  className="cursor-not-allowed bg-red-400 text-white w-1/2 px-2 py-1 rounded-lg"
+                  size="sm"
+                >
                   <Text fontSize="sm" fontWeight="semibold">
-                    View Event Details
+                    Event Registration Closed
                   </Text>
-                </Link>
-              </button>
+                </button>
+              )}
             </Flex>
           </CardFooter>
         </Stack>

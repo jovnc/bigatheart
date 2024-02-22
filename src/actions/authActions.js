@@ -47,8 +47,11 @@ export async function registerAccount({
     throw new Error("Error signing up for account. Please try again later.");
   }
 
-  // // update user in user database
+  // update user in user database
   const user_id = user.user.id;
+
+  // modify skills array
+  skills = skills.map((skill) => skill.value);
 
   const { error: updateUserError } = await supabase.from("users").insert({
     email,
@@ -87,7 +90,7 @@ export async function getUserDetails() {
   // fetch data from users table
   const { data: userData, error: readUserError } = await supabase
     .from("users")
-    .select("first_name, last_name, role, avatar")
+    .select("first_name, last_name, role, avatar, user_id")
     .eq("user_id", userid);
 
   if (readUserError) {
@@ -95,10 +98,10 @@ export async function getUserDetails() {
   }
 
   const userInfo = userData[0];
-  const { role, first_name, last_name, avatar } = userInfo;
+  const { role, first_name, last_name, avatar, user_id } = userInfo;
   const displayName = `${first_name} ${last_name}`;
 
-  return { displayName, role, avatar };
+  return { displayName, role, avatar, user_id };
 }
 
 export async function signUserOut() {

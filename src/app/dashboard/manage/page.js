@@ -1,9 +1,15 @@
 import { getMyEvents } from "@actions/eventActions";
-import { Divider, Spinner, filter } from "@chakra-ui/react";
+import { Divider, Flex, Spinner } from "@chakra-ui/react";
 import EventsFilterBar from "@components/events/EventsFilterBar";
+import EventsSortBar from "@components/events/EventsSortBar";
 import MyEventCard from "@components/events/MyEventCard";
 import MyEventSummary from "@components/events/MyEventSummary";
-import { convertDateFormat, convertToAMPM, sortByDate } from "@utils/helpers";
+import {
+  convertDateFormat,
+  convertToAMPM,
+  sortByDate,
+  sortByDateEarliestAlt,
+} from "@utils/helpers";
 
 const filterField = [
   "Current Events",
@@ -12,7 +18,11 @@ const filterField = [
   "Pending Events",
   "All Events",
 ];
-const options = ["current", "ended", "attended", "pending", "all"];
+const filterOptions = ["current", "ended", "attended", "pending", "all"];
+
+const sortField = ["By Date (latest)", "By Date (earliest)"];
+
+const sortOptions = ["date-latest", "date-earliest"];
 
 export default async function page({ searchParams }) {
   const res = await getMyEvents();
@@ -52,15 +62,22 @@ export default async function page({ searchParams }) {
     });
   }
 
-  // sort data
-  sortByDate(filteredEvents);
+  // sort filter fields
+  if (searchParams.sort == "date-earliest") {
+    sortByDateEarliestAlt(filteredEvents);
+  } else {
+    sortByDate(filteredEvents);
+  }
 
   return (
     <>
       <MyEventSummary totalEvents={len} attendedEvents={attendedLen} />
       {!filteredEvents && <Spinner />}
 
-      <EventsFilterBar filterField={filterField} options={options} />
+      <Flex justify="space-between">
+        <EventsFilterBar filterField={filterField} options={filterOptions} />
+        <EventsSortBar sortFields={sortField} options={sortOptions} />
+      </Flex>
 
       <Divider className="border-black mb-5" />
 

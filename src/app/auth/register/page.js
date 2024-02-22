@@ -18,11 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaMale, FaFemale, FaGenderless } from "react-icons/fa";
+import { MultiSelect } from "react-multi-select-component";
 
 const OCCUPATIONS = ["Student", "Unemployed", "Employed", "Others"];
+
 const IMMIGRATION_STATUS = [
   "Singapore Citizen",
   "Singapore PR",
@@ -31,6 +33,7 @@ const IMMIGRATION_STATUS = [
   "Foreigner",
   "Others",
 ];
+
 const EDUCATION = [
   "PSLE",
   "O Levels",
@@ -40,13 +43,31 @@ const EDUCATION = [
   "Others",
 ];
 
+const PREFFERED_CATEGORIES = [
+  "Environment",
+  "Tutoring",
+  "Mental Health",
+  "Migrant Workers",
+  "Children",
+  "Elderly Care",
+  "Special Needs",
+  "Underprivileged",
+  "Food",
+  "Healthcare",
+  "Others",
+].map((category) => {
+  return { label: category, value: category };
+});
+
 export default function page() {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    control,
   } = useForm();
+
   const [isLoading, setIsLoading] = useState(false);
   const password = watch("password", "");
   const router = useRouter();
@@ -353,15 +374,31 @@ export default function page() {
             </GridItem>
           </Grid>
 
-          <div className="mb-4">
+          <div className="mb-4 w-max-full">
             <label className="block text-gray-700 text-sm mb-2">
-              Relevant Skills for Volunteering
+              <span className="text-red-300">* </span>Preferred Event Category /
+              Skills
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              {...register("skills")}
+
+            <Controller
+              control={control}
+              name="skills"
+              rules={{
+                required: "This field is required",
+              }}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <MultiSelect
+                    options={PREFFERED_CATEGORIES}
+                    value={value ? value : []}
+                    onChange={onChange}
+                    labelledBy="Select"
+                    className="text-wrap whitespace-normal w-[517px]"
+                  />
+                );
+              }}
             />
+
             {errors.skills && (
               <p className="text-red-500 text-xs italic">
                 {errors.skills.message}

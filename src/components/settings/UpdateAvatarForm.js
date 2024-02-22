@@ -15,8 +15,8 @@ import {
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function UpdateAvatarForm() {
-  const [currImage, setCurrImage] = useState();
+export default function UpdateAvatarForm({ data }) {
+  const [currImage, setCurrImage] = useState(data.avatar);
   const [durations, setDurations] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,27 +34,53 @@ export default function UpdateAvatarForm() {
   const avatarList = [
     {
       url: "/assets/images/bear1.jpg",
+      label: "Bear",
       cost: 0,
     },
     {
       url: "/assets/images/bear2.jpg",
+      label: "Bear with Hat",
       cost: 100,
     },
     {
-      url: "/assets/images/bear3.jpg",
+      url: "/assets/images/bear4.jpg",
+      label: "Bear with bow",
       cost: 500,
     },
     {
+      url: "/assets/images/bear5.jpg",
+      label: "Bear with duck",
+      cost: 700,
+    },
+    {
+      url: "/assets/images/bear3.jpg",
+      label: "Bear with Noogler Hat",
+      cost: 1000,
+    },
+    {
       url: "/assets/images/dog1.jpg",
+      label: "Dog",
       cost: 0,
     },
     {
       url: "/assets/images/dog2.jpg",
+      label: "Dog with Hat",
       cost: 100,
     },
     {
-      url: "/assets/images/dog3.jpg",
+      url: "/assets/images/dog4.jpg",
+      label: "Dog with bow",
       cost: 500,
+    },
+    {
+      url: "/assets/images/dog5.jpg",
+      label: "Dog with duck",
+      cost: 700,
+    },
+    {
+      url: "/assets/images/dog3.jpg",
+      label: "Dog with Noogler Hat",
+      cost: 1000,
     },
   ];
 
@@ -81,30 +107,32 @@ export default function UpdateAvatarForm() {
             <Text fontWeight="medium">User Profile Photo</Text>
             <Text fontSize="sm">Duration Volunteered: {durations} mins</Text>
           </Flex>
-          <Flex gap={3} mt={2}>
+          <Flex gap={3} mt={2} flexWrap="wrap">
             {avatarList.map((avatar, i) => {
               if (avatar.cost < durations || avatar.cost == 0) {
                 return (
-                  <Image
-                    key={i}
-                    src={avatar.url}
-                    alt="profile photo"
-                    value={avatar.url}
-                    className="avatar_logo cursor-pointer"
-                    onClick={() => handleClick(avatar.url)}
-                  />
+                  <Tooltip key={i} label={avatar.label}>
+                    <Image
+                      src={avatar.url}
+                      alt="profile photo"
+                      value={avatar.url}
+                      className="avatar_logo_lg cursor-pointer"
+                      onClick={() => handleClick(avatar.url)}
+                    />
+                  </Tooltip>
                 );
               } else {
                 return (
                   <Tooltip
-                    label={`Requires ${avatar.cost} mins to unlock`}
+                    label={`${avatar.label} |  \n
+                    Requires ${avatar.cost} mins to unlock`}
                     key={i}
                   >
                     <Image
                       src={avatar.url}
                       alt="profile photo"
                       value={avatar.url}
-                      className="avatar_logo cursor-not-allowed opacity-50"
+                      className="avatar_logo_lg cursor-not-allowed opacity-50"
                     />
                   </Tooltip>
                 );
@@ -128,9 +156,9 @@ export default function UpdateAvatarForm() {
                 className="avatar_logo"
               />
               <Flex flexDir="column" ml={4} display="flex">
-                <Text size="md">Name</Text>
+                <Text size="md">{`${data.first_name} ${data.last_name}`}</Text>
                 <Text color="gray" fontSize="sm">
-                  Volunteer
+                  {data.role}
                 </Text>
               </Flex>
             </Flex>

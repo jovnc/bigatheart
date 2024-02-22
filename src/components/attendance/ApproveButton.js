@@ -23,7 +23,7 @@ export default function ApproveButton({ event_id, volunteer_id }) {
   return (
     <form action={action}>
       <button
-        className="border-2 border-green-300 hover:bg-green-300 px-2 py-1 rounded-lg"
+        className="border-2 border-green-400 hover:bg-green-400 hover:text-white px-2 py-1 rounded-lg"
         type="submit"
       >
         <Text fontSize="sm">Approve</Text>

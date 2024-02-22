@@ -68,6 +68,8 @@ export async function updateUserInfo({
   if (!user) return null;
   const userid = user.id;
 
+  const cleanedSkills = skills.map((skill) => skill.value);
+
   const { error } = await supabase
     .from("users")
     .update({
@@ -79,7 +81,7 @@ export async function updateUserInfo({
       occupation,
       phone,
       school,
-      skills,
+      skills: cleanedSkills,
     })
     .eq("user_id", userid);
 
@@ -95,4 +97,35 @@ export async function getAllUsers() {
   const { data: users, error } = await supabase.from("users").select();
   if (error) throw new Error(error.message);
   return { users };
+}
+
+export async function getUserProfile(id) {
+  const supabase = createServerActionClient({ cookies });
+
+  const { data: userProfile, error } = await supabase
+    .from("users")
+    .select(
+      "created_at, first_name, last_name, gender, role, avatar, skills, eventinfo(attended, finished, events!inner(name, category, date, time, duration, peopleImpacted))"
+    )
+    .eq("user_id", id);
+
+  if (error) throw new Error("No such user exists");
+
+  return { userProfile };
+}
+
+export async function getAllUserDetailsLeaderboard() {
+  const supabase = createServerActionClient({ cookies });
+
+  const { data: userData, error } = await supabase
+    .from("users")
+    .select(
+      "first_name, last_name, avatar, user_id, eventinfo(events!inner(duration, peopleImpacted))"
+    )
+    .eq("eventinfo.attended", true)
+    .eq("eventinfo.finished", true);
+
+  if (error) throw new Error(error.message);
+
+  return { userData };
 }

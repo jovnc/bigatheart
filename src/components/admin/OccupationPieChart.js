@@ -41,14 +41,12 @@ const renderCustomizedLabel = ({
 export default function OccupationPieChart({ events }) {
   const cleanedData = minsPerDemographic(events, "occupation");
 
-  console.log(cleanedData);
-
   return (
-    <Card className="flex w-full border-l-4 border-purple-500">
+    <Card className="flex w-full border-l-4 border-purple-500 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">
-            Proportion of Gender by volunteering minutes
+            Proportion of Occupation by volunteering minutes
           </Text>
 
           {events.length === 0 && (

@@ -5,6 +5,7 @@ import MyMinsPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
 import TopCategoriesCard from "@components/dashboard/TopCategoriesCard";
+import VolunteerLeaderboard from "@components/dashboard/VolunteerLeaderboard";
 import WelcomeBackCard from "@components/dashboard/WelcomeBackCard";
 import { getTodayDate } from "@utils/helpers";
 
@@ -38,9 +39,6 @@ export default async function page() {
     0
   );
 
-  // sort events by date
-  // const sortedEvents = sortByDate(data);
-
   return (
     <div className="flex-col flex gap-y-5 w-full">
       <WelcomeBackCard displayName={displayName} avatar={avatar} />
@@ -68,6 +66,8 @@ export default async function page() {
           <TopCategoriesCard events={attendedEvents} />
         </GridItem>
       </Grid>
+
+      <VolunteerLeaderboard />
     </div>
   );
 }

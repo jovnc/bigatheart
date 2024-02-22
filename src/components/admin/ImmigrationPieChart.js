@@ -49,7 +49,7 @@ export default function ImmigrationPieChart({ events }) {
   const cleanedData = minsPerDemographic(events, "immigration");
 
   return (
-    <Card className="flex w-full border-l-4 border-orange-200">
+    <Card className="flex w-full border-l-4 border-orange-200 h-full">
       <CardBody>
         <Flex flexDir="column" gap={8}>
           <Text fontWeight="bold" fontSize="sm" align="center">

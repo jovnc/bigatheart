@@ -1,23 +1,11 @@
 "use client";
 
 import { Flex, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UpdateUserForm from "./UpdateUserForm";
-import { getAllUserDetails } from "@actions/userActions";
 
-export default function UpdateUserFormPage() {
+export default function UpdateUserFormPage({ data }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
-  const [formReady, setFormReady] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { userData } = await getAllUserDetails();
-      setData(userData[0]);
-      setFormReady(true);
-    };
-    fetchData();
-  }, []);
 
   function handleOpen() {
     setIsOpen((curr) => !curr);
@@ -29,7 +17,7 @@ export default function UpdateUserFormPage() {
         <button
           className="text-sm border border-yellow-400 hover:bg-yellow-400 px-2 py-1 rounded-lg"
           onClick={handleOpen}
-          disabled={!formReady}
+          // disabled={!formReady}
         >
           {isOpen ? "Close" : "Update"}
         </button>

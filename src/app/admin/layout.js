@@ -6,7 +6,7 @@ export default async function RootLayout({ children }) {
   const res = await getUserDetails();
 
   // destructure res object
-  const { displayName, avatar, role } = res;
+  const { displayName, avatar, role, user_id } = res;
 
   return (
     <div className="w-full">
@@ -16,8 +16,8 @@ export default async function RootLayout({ children }) {
             displayName={displayName}
             avatar={avatar}
             role={role}
+            user_id={user_id}
           />
-          {/* <AdminDashboardNav /> */}
         </GridItem>
         <GridItem>{children}</GridItem>
       </Grid>

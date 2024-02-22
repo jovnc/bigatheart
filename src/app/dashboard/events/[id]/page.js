@@ -4,7 +4,7 @@ import { Spinner } from "@chakra-ui/react";
 import EventPage from "@components/events/EventPage";
 import { useEffect, useState } from "react";
 
-export default async function page({ params }) {
+export default function page({ params }) {
   const [eventData, setEventData] = useState();
 
   useEffect(() => {
