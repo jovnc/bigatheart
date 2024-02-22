@@ -20,18 +20,16 @@ export default async function RootLayout({ children }) {
       <body className="flex flex-col min-h-screen">
         <EdgeStoreProvider>
           <Providers>
-            <div id="app">
-              <div className="main bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
+            <div className="main bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
 
-              <main className="app w-full">
-                <Toaster position="top-center" />
-                <NavWrapper />
-                {children}
-              </main>
-              <div className="flex-grow"></div>
-              <div className="app w-full">
-                <Footer />
-              </div>
+            <main className="app w-full">
+              <Toaster position="top-center" />
+              <NavWrapper />
+              {children}
+            </main>
+            <div className="flex-grow"></div>
+            <div className="app w-full">
+              <Footer />
             </div>
           </Providers>
         </EdgeStoreProvider>

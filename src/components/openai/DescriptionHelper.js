@@ -33,7 +33,7 @@ export default function DescriptionHelper({ setValue, onClose }) {
   });
 
   return (
-    <Flex pt={8} flexDir="column" gap={8} className="p-8 h-[700px] w-full">
+    <Flex pt={8} flexDir="column" gap={8} className="w-full p-8 h-[700px]">
       <Box className="w-full flex">
         <Text className="mx-auto" fontWeight="bold" fontSize="xl">
           Poster Description Helper
