@@ -17,3 +17,12 @@ export async function sendMessageToOpenAI(message) {
 
   return res.choices[0];
 }
+
+export async function createOpenAIImage(message) {
+  const response = await openai.images.generate({
+    model: "dall-e-2",
+    prompt: "image of the beach",
+  });
+
+  return response.data[0].url;
+}

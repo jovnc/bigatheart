@@ -1,4 +1,3 @@
-import { getAllUserDetailsLeaderboard } from "@actions/userActions";
 import {
   Flex,
   Text,
@@ -12,9 +11,8 @@ import {
 import Link from "next/link";
 import { FaCalendar, FaTrophy } from "react-icons/fa6";
 
-export default async function VolunteerLeaderboard() {
+export default function VolunteerLeaderboard({ userData }) {
   // fetch all eventinfo data
-  const { userData } = await getAllUserDetailsLeaderboard();
 
   const userDataClean = userData.map((user) => {
     const duration = user.eventinfo.reduce(
@@ -45,7 +43,7 @@ export default async function VolunteerLeaderboard() {
 
   return (
     <Flex flexDir="column" className="w-full shadow-lg rounded-md pb-5" gap={4}>
-      <Flex className="w-full my-3 bg-pink-500 rounded-md p-4 opacity-50">
+      <Flex className="w-full my-3 bg-rose-400 rounded-md p-4 opacity-50">
         <Text fontWeight="bold" fontSize="xl" className="text-white mx-auto">
           Volunteer Leaderboard
         </Text>
@@ -156,17 +154,17 @@ export default async function VolunteerLeaderboard() {
         className="translate-y-[-40px]"
       >
         <Box
-          className="bg-pink-400 p-2 rounded-lg w-full h-[100px] mx-auto opacity-50"
+          className="bg-rose-300 p-2 rounded-lg w-full h-[100px] mx-auto opacity-50 hover:shadow-lg"
           alignSelf="flex-end"
         ></Box>
 
         <Box
-          className="bg-pink-400 p-2 rounded-lg w-full h-[150px] mx-auto opacity-50"
+          className="bg-rose-300 p-2 rounded-lg w-full h-[150px] mx-auto opacity-50 hover:shadow-lg"
           alignSelf="flex-end"
         />
 
         <Box
-          className="bg-pink-400 p-2 rounded-lg w-full h-[50px] mx-auto opacity-50"
+          className="bg-rose-300 p-2 rounded-lg w-full h-[50px] mx-auto opacity-50 hover:shadow-lg"
           alignSelf="flex-end"
         />
       </Grid>

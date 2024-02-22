@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -11,6 +12,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  PinInput,
+  PinInputField,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -23,25 +26,33 @@ export default function ConfirmMyAttendance({
   eventid,
   volunteerid,
   updateMyAttendance,
+  pin,
 }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const action = handleSubmit(async (data) => {
     try {
       if (data.confirmAttendance) {
-        const { error } = await updateMyAttendance(
-          eventid,
-          volunteerid,
-          data.reflection
-        );
-        toast.success(
-          `Confirmed attendance for event, please wait for admin to approve your request`
-        );
-        onClose();
+        if (data.pin != pin) {
+          onClose();
+          toast.error("Incorrect attendance PIN");
+        } else {
+          const { error } = await updateMyAttendance(
+            eventid,
+            volunteerid,
+            data.reflection,
+            data.pin
+          );
+          toast.success(
+            `Confirmed attendance for event, please wait for admin to approve your request`
+          );
+          onClose();
+        }
       }
     } catch (error) {
       onClose();
@@ -69,9 +80,38 @@ export default function ConfirmMyAttendance({
               event, and received approval from your supervisor to confirm your
               attendance for the event.
             </Text>
-            <FormLabel fontSize="sm" mt={3}>
-              Reflection
-            </FormLabel>
+
+            <Flex flexDir="column" gap={2}>
+              <FormLabel fontSize="sm" mt={3}>
+                Attendance PIN
+              </FormLabel>
+
+              <FormControl isInvalid={errors.pin} isRequired pb={5}>
+                <PinInput
+                  {...register("pin", {
+                    required: "Please enter attendance PIN",
+                    minLength: {
+                      value: 4,
+                      message: "Please input PIN",
+                    },
+                  })}
+                  onComplete={() => {}}
+                  onChange={(e) => {
+                    setValue("pin", e);
+                  }}
+                >
+                  <PinInputField />
+                  <PinInputField />
+                  <PinInputField />
+                  <PinInputField />
+                </PinInput>
+
+                <FormErrorMessage>
+                  {errors.pin && errors.pin.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Flex>
+
             <FormControl isInvalid={errors.reflection} isRequired>
               <Textarea
                 fontSize="sm"

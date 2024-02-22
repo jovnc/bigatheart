@@ -7,9 +7,12 @@ import {
   Text,
   Divider,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { BiCategory, BiError } from "react-icons/bi";
 import { CiClock1, CiLocationOn } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
 export default function EventCard({
   date,
@@ -19,6 +22,9 @@ export default function EventCard({
   id,
   image_url,
   hasEnded,
+  recommended,
+  category,
+  description,
 }) {
   return (
     <>
@@ -39,7 +45,29 @@ export default function EventCard({
         />
 
         <Stack className="w-full">
-          <CardBody>
+          <CardBody className="flex-column">
+            <Flex pb={4} className="w-full">
+              {recommended && (
+                <Tooltip label="Recommended based on your interests">
+                  <Flex
+                    gap={2}
+                    className="bg-rose-400 p-1 bg-opacity-70 rounded-md shadow-md text-white w-full"
+                  >
+                    <FaStar className="mt-1" />
+                    <Text fontWeight="bold">Recommended</Text>
+                  </Flex>
+                </Tooltip>
+              )}
+              {hasEnded && (
+                <Flex
+                  gap={2}
+                  className="bg-red-400 p-1 bg-opacity-70 rounded-md shadow-md text-white w-full"
+                >
+                  <BiError className="mt-1" />
+                  <Text fontWeight="bold">Event has Ended</Text>
+                </Flex>
+              )}
+            </Flex>
             <Flex justify="space-between">
               <Flex gap={1} pb={2}>
                 <CiClock1 />
@@ -52,35 +80,36 @@ export default function EventCard({
                 <Text fontSize="xs">Location: {location}</Text>
               </Flex>
             </Flex>
-            <Text fontSize="lg" fontWeight="bold">
-              {name}
-            </Text>
+            <Flex justify="space-between">
+              <Text fontSize="lg" fontWeight="bold">
+                {name}
+              </Text>
+              <Flex gap={2} className=" p-1 rounded-lg">
+                <Text fontSize="sm" fontWeight="medium">
+                  <BiCategory className="mr-1 inline" />
+                  {category}
+                </Text>
+              </Flex>
+            </Flex>
+            <Flex pt={4}>
+              <Text fontSize="sm" className="line-clamp-1">
+                {description}
+              </Text>
+            </Flex>
           </CardBody>
           <Divider />
           <CardFooter>
             <Flex className="w-full" justify="flex-end">
-              {!hasEnded && (
-                <button
-                  className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
-                  size="sm"
-                >
-                  <Link href={`/dashboard/events/${id}`}>
-                    <Text fontSize="sm" fontWeight="semibold">
-                      View Event Details
-                    </Text>
-                  </Link>
-                </button>
-              )}
-              {hasEnded && (
-                <button
-                  className="cursor-not-allowed bg-red-400 text-white w-1/2 px-2 py-1 rounded-lg"
-                  size="sm"
-                >
+              <button
+                className="border border-slate-800 hover:bg-slate-800 hover:text-white w-1/2 px-2 py-1 rounded-lg"
+                size="sm"
+              >
+                <Link href={`/dashboard/events/${id}`}>
                   <Text fontSize="sm" fontWeight="semibold">
-                    Event Registration Closed
+                    View Event Details
                   </Text>
-                </button>
-              )}
+                </Link>
+              </button>
             </Flex>
           </CardFooter>
         </Stack>

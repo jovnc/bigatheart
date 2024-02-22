@@ -158,7 +158,7 @@ export async function getMyEvents() {
       event_id, 
       volunteer_id,
     events!inner (
-      name, category, organiser, date, time, image, location, duration, peopleImpacted
+      name, category, organiser, date, time, image, location, duration, peopleImpacted, PIN
     )
   `
     )
@@ -272,8 +272,6 @@ export async function getEventInfoById(id) {
   return getEventInfo[0];
 }
 
-export async function getUnregisteredEvents() {}
-
 export async function getAllEventsAndVolunteers() {
   const { data: eventData, error: getDataError } = await supabase
     .from("eventinfo")
@@ -298,4 +296,13 @@ export async function adminDeleteEvent(eventid, volunteerid) {
   revalidatePath("/admin/manage");
 
   return { error };
+}
+
+export async function generateEventPIN(PIN, eventid) {
+  const { error } = await supabase
+    .from("events")
+    .update({ PIN: PIN })
+    .eq("id", eventid);
+
+  if (error) throw new Error(error.message);
 }

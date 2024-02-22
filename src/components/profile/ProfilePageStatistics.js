@@ -11,6 +11,7 @@ export default function ProfilePageStatistics({ userProfile }) {
   return (
     <Flex flexDir="column" gap={4}>
       <ProfileNav selected={selected} setSelected={setSelected} />
+
       {selected == "statistics" && (
         <ProfileStatistics userProfile={userProfile} />
       )}

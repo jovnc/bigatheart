@@ -6,6 +6,8 @@ import EventsSortBar from "@components/events/EventsSortBar";
 import { Divider, Flex } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
 import EventsFilterBar from "@components/events/EventsFilterBar";
+import SearchBox from "@components/SearchBox";
+import { useState } from "react";
 
 const sortField = ["By Date (earliest)", "By Date (latest)"];
 const sortOptions = ["date-earliest", "date-latest"];
@@ -14,6 +16,7 @@ const filterField = ["Past Events", "Current Events", "All Events"];
 const filterOptions = ["past", "current", "all"];
 
 export default function ManageEventPage({ events }) {
+  const [searchEvent, setSearchEvent] = useState("");
   let sortedEventsArray;
   let filteredEventsArray;
   const searchParams = useSearchParams();
@@ -23,7 +26,6 @@ export default function ManageEventPage({ events }) {
 
   if (filter == "current") {
     filteredEventsArray = events.filter((event) => {
-      console.log(event);
       const currDate = new Date();
       const targetDate = new Date(event[0].events.date);
       return targetDate >= currDate;
@@ -46,6 +48,12 @@ export default function ManageEventPage({ events }) {
     sortedEventsArray = sortByDateEarliestX(filteredEventsArray);
   }
 
+  // filter event
+  const filteredData = sortedEventsArray.filter((event) => {
+    const name = event[0].events.name;
+    return name.toUpperCase().includes(searchEvent.toUpperCase());
+  });
+
   return (
     <>
       <Flex flexDir="column" gap={4}>
@@ -53,8 +61,13 @@ export default function ManageEventPage({ events }) {
           <EventsFilterBar filterField={filterField} options={filterOptions} />
           <EventsSortBar sortFields={sortField} options={sortOptions} />
         </Flex>
+        <SearchBox
+          searchUser={searchEvent}
+          setSearchUser={setSearchEvent}
+          type="event"
+        />
         <Divider />
-        {sortedEventsArray.map((event, i) => {
+        {filteredData.map((event, i) => {
           return (
             <ManageEventCard
               key={i}

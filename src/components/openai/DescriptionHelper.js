@@ -39,6 +39,7 @@ export default function DescriptionHelper({ setValue, onClose }) {
           Poster Description Helper
         </Text>
       </Box>
+      <Divider />
 
       <Flex className="overflow-auto" flexDir="column">
         {output.length == 0 && (

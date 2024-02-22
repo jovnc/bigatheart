@@ -6,9 +6,8 @@ import toast from "react-hot-toast";
 
 export default function error({ error, reset }) {
   useEffect(() => {
-    console.log(error);
-    toast.error(error.message);
-  }, [error]);
+    // location.reload();
+  }, []);
 
   return (
     <Flex className="w-screen p-5 mx-5" flexDir="column" align="center" gap={4}>

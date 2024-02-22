@@ -97,6 +97,7 @@ export default async function page({ searchParams }) {
             finished={event.finished}
             eventid={event.event_id}
             volunteerid={event.volunteer_id}
+            pin={event.events.PIN}
           />
         );
       })}

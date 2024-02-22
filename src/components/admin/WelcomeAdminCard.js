@@ -11,7 +11,7 @@ import {
 
 export default function WelcomeAdminCard({ displayName, avatar }) {
   return (
-    <Card className="bg-yellow-50 bg-opacity-50 p-5 hover:shadow-lg">
+    <Card className="bg-rose-100 bg-opacity-50 p-5 hover:shadow-lg">
       <CardBody>
         <Box>
           <Grid templateColumns="1.5fr 1fr">

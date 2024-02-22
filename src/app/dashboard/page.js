@@ -1,11 +1,10 @@
 import { getUserDetails } from "@actions/authActions";
-import { getMyEvents } from "@actions/eventActions";
+import { getEvents, getMyEvents } from "@actions/eventActions";
+import { getAllUserDetailsLeaderboard } from "@actions/userActions";
 import { Grid, GridItem } from "@chakra-ui/react";
-import MyMinsPerMonthCard from "@components/dashboard/MyMinsPerMonthCard";
 import QuickStatsCard from "@components/dashboard/QuickStatsCard";
 import TodayEventCard from "@components/dashboard/TodayEventCard";
-import TopCategoriesCard from "@components/dashboard/TopCategoriesCard";
-import VolunteerLeaderboard from "@components/dashboard/VolunteerLeaderboard";
+import VolunteerDashboardFilter from "@components/dashboard/VolunteerDashboardFilter";
 import WelcomeBackCard from "@components/dashboard/WelcomeBackCard";
 import { getTodayDate } from "@utils/helpers";
 
@@ -13,12 +12,14 @@ export default async function page() {
   // Getting event details
   const res = await getMyEvents();
   if (!res) return null;
+  const { userData } = await getAllUserDetailsLeaderboard();
+  const { getEventError, eventData } = await getEvents();
 
   const { data, error } = res;
   if (error) return <div>Error retrieiving events. {error.message}</div>;
 
   // Getting user details
-  const { displayName, avatar } = await getUserDetails();
+  const { displayName, avatar, skills } = await getUserDetails();
 
   // filter events by today's date
   const date = getTodayDate();
@@ -58,16 +59,13 @@ export default async function page() {
           />
         </GridItem>
       </Grid>
-      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
-        <GridItem>
-          <MyMinsPerMonthCard events={attendedEvents} />
-        </GridItem>
-        <GridItem>
-          <TopCategoriesCard events={attendedEvents} />
-        </GridItem>
-      </Grid>
 
-      <VolunteerLeaderboard />
+      <VolunteerDashboardFilter
+        attendedEvents={attendedEvents}
+        skills={skills}
+        userData={userData}
+        events={eventData}
+      />
     </div>
   );
 }

@@ -15,6 +15,7 @@ export default function AdminDashboardNav({
   user_id,
 }) {
   const pathname = usePathname();
+  console.log(pathname);
 
   return (
     <Flex
@@ -28,22 +29,35 @@ export default function AdminDashboardNav({
       className="bg-stone-50 bg-opacity-50"
     >
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" as="nav">
-        <NavItem icon={FiHome} title="Admin Dashboard" linkTo="/admin" />
+        <NavItem
+          icon={FiHome}
+          title="Admin Dashboard"
+          linkTo="/admin"
+          active={pathname == "/admin"}
+        />
         <NavItem
           icon={FiCalendar}
           title="Manage Events"
           linkTo="/admin/manage"
+          active={pathname == "/admin/manage"}
         />
-        <NavItem icon={FiUsers} title="Manage Users" linkTo="/admin/users" />
+        <NavItem
+          icon={FiUsers}
+          title="Manage Users"
+          linkTo="/admin/users"
+          active={pathname == "/admin/users"}
+        />
         <NavItem
           icon={TiTickOutline}
           title="Approve Attendance"
           linkTo="/admin/attendance"
+          active={pathname == "/admin/attendance"}
         />
         <NavItem
           icon={FiBriefcase}
           title="Create Event"
           linkTo="/admin/create"
+          active={pathname == "/admin/create"}
         />
       </Flex>
 

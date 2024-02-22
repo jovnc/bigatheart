@@ -1,3 +1,4 @@
+import { getUserDetails } from "@actions/authActions";
 import { getEvents } from "@actions/eventActions";
 import { Divider, Flex, Spinner } from "@chakra-ui/react";
 import EventCard from "@components/events/EventCard";
@@ -8,6 +9,7 @@ import {
   convertDateFormat,
   sortByDateAlt,
   sortByDateEarliest,
+  recommendEvent,
 } from "@utils/helpers";
 
 const filterField = ["Current Events", "Past Events", "All Events"];
@@ -18,6 +20,7 @@ const sortOptions = ["date-latest", "date-earliest"];
 
 export default async function page({ searchParams }) {
   const { getEventError, eventData } = await getEvents();
+  const { skills } = await getUserDetails();
 
   if (getEventError) {
     return <div>Error retrieiving events. {getEventError.message}</div>;
@@ -29,7 +32,7 @@ export default async function page({ searchParams }) {
     return targetDate < currDate;
   };
 
-  let filteredEventData = eventData;
+  let filteredEventData = recommendEvent(JSON.parse(skills), eventData);
 
   if (searchParams.filter == "past") {
     filteredEventData = filteredEventData.filter((event) => {
@@ -55,6 +58,8 @@ export default async function page({ searchParams }) {
     sortByDateAlt(filteredEventData);
   }
 
+  filteredEventData.sort((a, b) => b.recommended - a.recommended);
+
   return (
     <>
       {!filteredEventData && <Spinner />}
@@ -69,7 +74,17 @@ export default async function page({ searchParams }) {
 
       {filteredEventData &&
         filteredEventData.map(
-          ({ name, date, time, description, location, id, image }) => {
+          ({
+            name,
+            date,
+            time,
+            description,
+            location,
+            id,
+            image,
+            recommended,
+            category,
+          }) => {
             return (
               <EventCard
                 key={id}
@@ -81,6 +96,8 @@ export default async function page({ searchParams }) {
                 id={id}
                 image_url={image}
                 hasEnded={checkHasEventEnded(date)}
+                recommended={recommended}
+                category={category}
               />
             );
           }

@@ -90,7 +90,7 @@ export async function getUserDetails() {
   // fetch data from users table
   const { data: userData, error: readUserError } = await supabase
     .from("users")
-    .select("first_name, last_name, role, avatar, user_id")
+    .select("first_name, last_name, role, avatar, user_id, skills")
     .eq("user_id", userid);
 
   if (readUserError) {
@@ -98,10 +98,10 @@ export async function getUserDetails() {
   }
 
   const userInfo = userData[0];
-  const { role, first_name, last_name, avatar, user_id } = userInfo;
+  const { role, first_name, last_name, avatar, user_id, skills } = userInfo;
   const displayName = `${first_name} ${last_name}`;
 
-  return { displayName, role, avatar, user_id };
+  return { displayName, role, avatar, user_id, skills };
 }
 
 export async function signUserOut() {

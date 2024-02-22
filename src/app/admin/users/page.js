@@ -53,7 +53,6 @@ export default function page() {
   if (isLoading) return <Spinner />;
   if (!data) return <Spinner />;
 
-  console.log(data);
   // filter users
   const filteredData = data.filter((user) => {
     const name = `${user.first_name} ${user.last_name}`.toUpperCase();
@@ -73,7 +72,11 @@ export default function page() {
         </Text>
         <Divider />
         <Flex>
-          <SearchBox searchUser={searchUser} setSearchUser={setSearchUser} />
+          <SearchBox
+            searchUser={searchUser}
+            setSearchUser={setSearchUser}
+            type="user"
+          />
         </Flex>
         <Divider />
         <Grid templateColumns="0.5fr 1fr 1fr 2fr 0.5fr" gap={2}>

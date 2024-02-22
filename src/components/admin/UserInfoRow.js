@@ -8,7 +8,9 @@ import {
   Grid,
   GridItem,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useState } from "react";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 
@@ -25,7 +27,11 @@ export default function UserInfoRow({ user }) {
     <>
       <Grid templateColumns="0.5fr 1fr 1fr 2fr 0.5fr" gap={2}>
         <GridItem>
-          <Avatar src={user.avatar} size="sm" />
+          <Tooltip label="View Profile">
+            <Link href={`/users/${user.user_id}`}>
+              <Avatar src={user.avatar} size="sm" />
+            </Link>
+          </Tooltip>
         </GridItem>
         <GridItem>
           <Text fontSize="sm">

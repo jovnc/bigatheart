@@ -13,6 +13,7 @@ import { CiClock1, CiLocationOn } from "react-icons/ci";
 import { BiArrowBack, BiCategory, BiHome, BiHourglass } from "react-icons/bi";
 import Link from "next/link";
 import EventRegistrationForm from "./EventRegistrationForm";
+import toast from "react-hot-toast";
 
 export default function EventPage({
   name,
@@ -27,6 +28,14 @@ export default function EventPage({
   duration,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const checkHasEventEnded = (date) => {
+    const todayDate = new Date();
+    const eventDate = new Date(date);
+    return eventDate < todayDate;
+  };
+
+  const eventEnded = checkHasEventEnded(date);
 
   return (
     <div className="shadow-md p-8 rounded-lg min-h-full bg-stone-50 bg-opacity-50">
@@ -44,10 +53,17 @@ export default function EventPage({
         <Box>
           <Button
             size="sm"
-            className="border border-slate-400 font-medium"
-            onClick={onOpen}
+            className="border border-black font-medium hover:bg-black hover:text-white"
+            onClick={
+              !eventEnded
+                ? onOpen
+                : () => {
+                    toast.error("Event has Ended");
+                  }
+            }
+            disabled={eventEnded}
           >
-            Register Now!
+            {eventEnded ? "Registration Closed" : "Register Now!"}
           </Button>
 
           <EventRegistrationForm
@@ -111,10 +127,17 @@ export default function EventPage({
       </Text>
 
       <Button
-        onClick={onOpen}
-        className="w-full mt-10 font-medium font-size text-sm border border-slate-500"
+        onClick={
+          !eventEnded
+            ? onOpen
+            : () => {
+                toast.error("Event has Ended");
+              }
+        }
+        className="w-full mt-10 text-sm border border-black font-medium hover:bg-black hover:text-white"
+        disabled={eventEnded}
       >
-        Register Now!
+        {eventEnded ? "Registration Closed" : "Register Now!"}
       </Button>
     </div>
   );

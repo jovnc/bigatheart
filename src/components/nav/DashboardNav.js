@@ -6,8 +6,10 @@ import UserProfileNav from "./UserProfileNav";
 import NavItem from "./NavItem";
 import { FiHome, FiCalendar, FiBriefcase, FiSettings } from "react-icons/fi";
 import { RiAdminLine } from "react-icons/ri";
+import { usePathname } from "next/navigation";
 
 export default function DashboardNav({ displayName, role, avatar, user_id }) {
+  const pathname = usePathname();
   return (
     <Flex
       pos="sticky"
@@ -20,22 +22,30 @@ export default function DashboardNav({ displayName, role, avatar, user_id }) {
       className="bg-stone-50 bg-opacity-50"
     >
       <Flex p="5%" flexDir="column" w="100%" alignItems="flex-start" as="nav">
-        <NavItem icon={FiHome} title="Dashboard" linkTo="/dashboard" />
+        <NavItem
+          icon={FiHome}
+          title="Dashboard"
+          linkTo="/dashboard"
+          active={pathname == "/dashboard"}
+        />
         <NavItem
           icon={FiCalendar}
           title="Explore New Events"
           linkTo="/dashboard/events"
+          active={pathname == "/dashboard/events"}
         />
 
         <NavItem
           icon={FiBriefcase}
           title="My Events"
           linkTo="/dashboard/manage"
+          active={pathname == "/dashboard/manage"}
         />
         <NavItem
           icon={FiSettings}
           title="Settings"
           linkTo="/dashboard/settings"
+          active={pathname == "/dashboard/settings"}
         />
         {role === "Admin" && (
           <NavItem

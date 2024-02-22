@@ -463,3 +463,46 @@ export function countInterests(dataArr) {
   });
   return result;
 }
+
+export function recommendEvent(userData, eventData) {
+  let recommendedNum = 0;
+  const limit = 3;
+  function isRecommended(event) {
+    const eventDate = new Date(event.date);
+    const todayDate = new Date();
+    for (let j = 0; j < userData.length; j++) {
+      if (event.category == userData[j] && eventDate > todayDate) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  if (eventData.filter(isRecommended).length > 0) {
+    const newEventData = eventData.map((event) => {
+      if (isRecommended(event) && recommendedNum < limit) {
+        recommendedNum++;
+        return { ...event, recommended: true };
+      } else {
+        return { ...event, recommended: false };
+      }
+    });
+    return newEventData;
+  }
+
+  let changed = false;
+
+  const newEventData = eventData.map((event) => {
+    const eventDate = new Date(event.date);
+    const todayDate = new Date();
+    if (eventDate > todayDate && !changed) {
+      changed = true;
+      return { ...event, recommended: true };
+    } else {
+      return { ...event, recommended: false };
+    }
+  });
+
+  return newEventData;
+}

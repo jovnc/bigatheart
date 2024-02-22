@@ -28,6 +28,7 @@ export default function OpenAIModal({ setValue }) {
         isOpen={isOpen}
         onClose={onClose}
         children
+        isCentered
       >
         <ModalOverlay />
         <ModalContent minW="500px" maxW="700px">
