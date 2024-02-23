@@ -27,7 +27,7 @@ export default function GeneratePINModal({ event }) {
   const eventid = event[0].event_id;
 
   const action = handleSubmit(async (data) => {
-    const randomNum = Math.floor(Math.random() * 9000);
+    const randomNum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
     try {
       generateEventPIN(randomNum, eventid);
       setPin(randomNum);

@@ -6,7 +6,6 @@ import { FaCog } from "react-icons/fa";
 import DeleteEventModal from "./DeleteEventModal";
 
 export default function AdminEventMenu({ event }) {
-  console.log(event);
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<FaCog />} size="xs">

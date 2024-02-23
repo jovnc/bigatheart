@@ -18,6 +18,10 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  if (!user && req.nextUrl.pathname.startsWith("/users")) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   // if user is signed in, check role, whether has Admin access
   if (user && req.nextUrl.pathname.startsWith("/admin")) {
     const { data } = await supabase
@@ -33,5 +37,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/admin/:path*"],
+  matcher: ["/", "/dashboard/:path*", "/admin/:path*", "/users/:path*"],
 };
