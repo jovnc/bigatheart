@@ -159,7 +159,7 @@ export async function getMyEvents() {
       volunteer_id,
       invitation,
     events!inner (
-      name, category, organiser, date, time, image, location, duration, peopleImpacted, PIN
+      name, category, organiser, date, time, image, location, duration, peopleImpacted
     )
   `
     )
@@ -314,4 +314,15 @@ export async function deleteEvent(eventid) {
   if (error) throw new Error(error.message);
 
   return { error };
+}
+
+export async function getEventPin(eventid) {
+  const { data: dataPIN, error } = await supabase
+    .from("events")
+    .select("PIN")
+    .eq("id", eventid);
+
+  if (error) throw new Error(error.message);
+
+  return dataPIN.PIN;
 }

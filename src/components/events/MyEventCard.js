@@ -27,7 +27,6 @@ export default function MyEventCard({
   finished,
   eventid,
   volunteerid,
-  pin,
   invitation,
 }) {
   return (
@@ -90,7 +89,6 @@ export default function MyEventCard({
                   eventid={eventid}
                   volunteerid={volunteerid}
                   updateMyAttendance={updateMyAttendance}
-                  pin={pin}
                 />
               )}
               {!finished && !attended && (

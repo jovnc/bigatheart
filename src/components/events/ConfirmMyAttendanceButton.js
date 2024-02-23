@@ -8,7 +8,6 @@ export default function ConfirmMyAttendanceButton({
   eventid,
   volunteerid,
   updateMyAttendance,
-  pin,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -28,7 +27,6 @@ export default function ConfirmMyAttendanceButton({
         eventid={eventid}
         volunteerid={volunteerid}
         updateMyAttendance={updateMyAttendance}
-        pin={pin}
       />
     </>
   );

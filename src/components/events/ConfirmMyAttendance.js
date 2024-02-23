@@ -1,3 +1,4 @@
+import { getEventPin } from "@actions/eventActions";
 import {
   Button,
   Checkbox,
@@ -26,7 +27,6 @@ export default function ConfirmMyAttendance({
   eventid,
   volunteerid,
   updateMyAttendance,
-  pin,
 }) {
   const {
     register,
@@ -36,11 +36,10 @@ export default function ConfirmMyAttendance({
   } = useForm();
 
   const action = handleSubmit(async (data) => {
-    console.log(data.pin);
-    console.log(pin);
     try {
       if (data.confirmAttendance) {
-        if (data.pin != pin) {
+        const PIN = await getEventPin(eventid);
+        if (data.pin != PIN) {
           onClose();
           toast.error("Incorrect attendance PIN");
         } else {
