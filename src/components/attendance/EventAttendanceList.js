@@ -1,13 +1,4 @@
-import {
-  AbsoluteCenter,
-  Avatar,
-  Box,
-  Card,
-  Divider,
-  Flex,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+import { AbsoluteCenter, Box, Card, Divider, Text } from "@chakra-ui/react";
 import VolunteerAttendanceRow from "./VolunteerAttendanceRow";
 
 export default function EventAttendanceList({ event }) {

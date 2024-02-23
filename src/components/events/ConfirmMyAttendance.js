@@ -36,6 +36,8 @@ export default function ConfirmMyAttendance({
   } = useForm();
 
   const action = handleSubmit(async (data) => {
+    console.log(data.pin);
+    console.log(pin);
     try {
       if (data.confirmAttendance) {
         if (data.pin != pin) {
