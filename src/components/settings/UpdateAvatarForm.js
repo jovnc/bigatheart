@@ -164,7 +164,7 @@ export default function UpdateAvatarForm({ data }) {
             </Flex>
             <Box className="flex flex-col-reverse w-1/2">
               <Button
-                className="border border-green-500 hover:bg-green-300 px-2 py-1"
+                className="border border-green-500 hover:bg-green-500 hover:text-white px-2 py-1"
                 type="submit"
                 size="sm"
                 fontWeight="semi-bold"

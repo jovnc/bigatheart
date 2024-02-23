@@ -15,7 +15,7 @@ export default function UpdateUserFormPage({ data }) {
       <Flex justifyContent="space-between">
         <Text fontWeight="medium">Update User Information</Text>
         <button
-          className="text-sm border border-yellow-400 hover:bg-yellow-400 px-2 py-1 rounded-lg"
+          className="text-sm border border-yellow-400 hover:bg-yellow-400 hover:text-white px-2 py-1 rounded-lg"
           onClick={handleOpen}
           // disabled={!formReady}
         >

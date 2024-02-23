@@ -31,7 +31,7 @@ export default function page({ params }) {
           </Link>
         </Button>
         <Button
-          className="px-2 py-1 border border-slate-400 rounded-lg"
+          className="px-2 py-1 border border-black hover:bg-black hover:text-white rounded-lg"
           size="sm"
         >
           <Link href="/dashboard/manage">View all my Events</Link>
