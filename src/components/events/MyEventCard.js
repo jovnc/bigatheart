@@ -13,6 +13,8 @@ import { unregisterEvent, updateMyAttendance } from "@actions/eventActions";
 import GenerateCertificateButton from "@components/certificate/GenerateCertificateButton";
 import PendingSign from "./PendingSign";
 import { CiClock1, CiLocationOn } from "react-icons/ci";
+import Link from "next/link";
+import ViewInviteButton from "./ViewInviteButton";
 
 export default function MyEventCard({
   date,
@@ -26,6 +28,7 @@ export default function MyEventCard({
   eventid,
   volunteerid,
   pin,
+  invitation,
 }) {
   return (
     <>
@@ -97,6 +100,7 @@ export default function MyEventCard({
                   unregisterEvent={unregisterEvent}
                 />
               )}
+              <ViewInviteButton invitation={invitation} />
             </Flex>
           </CardFooter>
         </Stack>

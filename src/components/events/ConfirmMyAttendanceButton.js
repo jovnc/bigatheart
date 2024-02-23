@@ -15,7 +15,7 @@ export default function ConfirmMyAttendanceButton({
     <>
       <button
         onClick={onOpen}
-        className="border border-green-500 px-2 py-1 rounded-lg hover:bg-green-300"
+        className="border border-green-500 px-2 py-1 rounded-lg hover:bg-green-500 hover:text-white"
       >
         <Flex gap={2}>
           <FcCheckmark size={14} />

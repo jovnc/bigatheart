@@ -73,14 +73,11 @@ export default async function page({ searchParams }) {
     <>
       <MyEventSummary totalEvents={len} attendedEvents={attendedLen} />
       {!filteredEvents && <Spinner />}
-
       <Flex justify="space-between">
         <EventsFilterBar filterField={filterField} options={filterOptions} />
         <EventsSortBar sortFields={sortField} options={sortOptions} />
       </Flex>
-
       <Divider className="border-black mb-5" />
-
       {filteredEvents.length === 0 && <p>No event matching filter</p>}
 
       {filteredEvents.map((event, i) => {
@@ -98,6 +95,7 @@ export default async function page({ searchParams }) {
             eventid={event.event_id}
             volunteerid={event.volunteer_id}
             pin={event.events.PIN}
+            invitation={event.invitation}
           />
         );
       })}

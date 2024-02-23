@@ -15,7 +15,6 @@ export default function AdminDashboardNav({
   user_id,
 }) {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <Flex

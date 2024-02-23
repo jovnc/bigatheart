@@ -20,7 +20,6 @@ export default function GeneratePINModal({ event }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     handleSubmit,
-    register,
     formState: { isLoading },
   } = useForm();
   const [pin, setPin] = useState();

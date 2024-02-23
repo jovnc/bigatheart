@@ -25,7 +25,7 @@ export default function GenerateCertificateButton({ eventid, volunteerid }) {
 
   return (
     <form action={action}>
-      <button className="border border-blue-400 px-2 py-1 rounded-lg hover:bg-blue-300">
+      <button className="border border-blue-500 px-2 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
         <Flex gap={2}>
           {pending ? (
             <Spinner size="sm" />

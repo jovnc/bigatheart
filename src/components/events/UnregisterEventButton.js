@@ -14,7 +14,7 @@ export default function UnregisterEventButton({
     <>
       <button
         onClick={onOpen}
-        className="border border-red-500 px-2 py-1 rounded-lg hover:bg-red-300"
+        className="border border-red-500 px-2 py-1 rounded-lg hover:bg-red-500 hover:text-white"
       >
         <Flex gap="2">
           <IoCloseCircle size={14} />

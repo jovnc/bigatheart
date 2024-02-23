@@ -6,6 +6,7 @@ import { useState } from "react";
 import { convertDateFormat, convertToAMPM } from "@utils/helpers";
 import { FcApproval, FcClock, FcHighPriority } from "react-icons/fc";
 import GeneratePINModal from "./GeneratePINModal";
+import AdminEventMenu from "@components/events/AdminEventMenu";
 
 export default function ManageEventCard({ eventName, event }) {
   const [show, setShow] = useState();
@@ -24,9 +25,10 @@ export default function ManageEventCard({ eventName, event }) {
             <FaCalendarAlt />
             <Text fontWeight="semibold">{eventName}</Text>
           </Flex>
-          <button onClick={handleClick}>
-            <Text fontSize="sm">{show ? "Hide" : "Show"}</Text>
-          </button>
+          <Flex gap={4}>
+            <AdminEventMenu event={event} />
+            <GeneratePINModal event={event} />
+          </Flex>
         </Flex>
         <Flex gap={2}>
           <FcClock />
@@ -42,7 +44,10 @@ export default function ManageEventCard({ eventName, event }) {
               Capacity: {event.length} / {event[0].events.capacity}
             </Text>
           </Flex>
-          <GeneratePINModal event={event} />
+
+          <button onClick={handleClick}>
+            <Text fontSize="sm">{show ? "Hide" : "Show"}</Text>
+          </button>
         </Flex>
 
         {show && (
