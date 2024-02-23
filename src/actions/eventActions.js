@@ -324,5 +324,5 @@ export async function getEventPin(eventid) {
 
   if (error) throw new Error(error.message);
 
-  return dataPIN.PIN;
+  return dataPIN[0].PIN;
 }

@@ -39,6 +39,7 @@ export default function ConfirmMyAttendance({
     try {
       if (data.confirmAttendance) {
         const PIN = await getEventPin(eventid);
+        console.log(PIN);
         if (data.pin != PIN) {
           onClose();
           toast.error("Incorrect attendance PIN");
